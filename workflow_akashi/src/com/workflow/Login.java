@@ -38,7 +38,7 @@ public class Login extends HttpServlet {
 		String[] employee = new String[5];
 
 		try {
-			br = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/employee_muster.csv"),
+			br = Files.newBufferedReader(Paths.get("C:/Users/Yusuke/git/workflow/workflow_akashi/WebContent/employee_muster.csv"),
 					Charset.forName("UTF-8"));
 			String line = "";
 
@@ -68,7 +68,7 @@ public class Login extends HttpServlet {
 		BufferedReader brBelongs = null;
 		String[] belongs = new String[2];
 		try {
-			brBelongs = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/belongs.csv"),
+			brBelongs = Files.newBufferedReader(Paths.get("C:/Users/Yusuke/git/workflow/workflow_akashi/WebContent/belongs.csv"),
 			Charset.forName("UTF-8"));
 			String lineBelongs = "";
 

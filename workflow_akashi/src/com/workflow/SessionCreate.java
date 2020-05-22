@@ -50,7 +50,7 @@ public class SessionCreate extends HttpServlet {
 		try {
 			// 申請データの取得
 			brData = Files.newBufferedReader(
-					Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/data.csv"),
+					Paths.get("C:/Users/Yusuke/git/workflow/workflow_akashi/WebContent/data.csv"),
 					Charset.forName("UTF-8"));
 			String lineData = "";
 
@@ -62,7 +62,7 @@ public class SessionCreate extends HttpServlet {
 			}
 
 			// 社員マスタの取得
-			brEmployee = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/employee_muster.csv"),
+			brEmployee = Files.newBufferedReader(Paths.get("C:/Users/Yusuke/git/workflow/workflow_akashi/WebContent/employee_muster.csv"),
 					Charset.forName("UTF-8"));
 			String lineEmployee = "";
 
@@ -74,7 +74,7 @@ public class SessionCreate extends HttpServlet {
 			}
 
 			// 承認者マスタの取得
-			brBelongs = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/belongs.csv"),
+			brBelongs = Files.newBufferedReader(Paths.get("C:/Users/Yusuke/git/workflow/workflow_akashi/WebContent/belongs.csv"),
 					Charset.forName("UTF-8"));
 			String lineBelongs = "";
 
@@ -86,7 +86,7 @@ public class SessionCreate extends HttpServlet {
 			}
 
 			// 承認者１の社員マスタの取得
-			brApprove1 = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/employee_muster.csv"),
+			brApprove1 = Files.newBufferedReader(Paths.get("C:/Users/Yusuke/git/workflow/workflow_akashi/WebContent/employee_muster.csv"),
 					Charset.forName("UTF-8"));
 			String lineApprove1 = "";
 
@@ -98,7 +98,7 @@ public class SessionCreate extends HttpServlet {
 			}
 
 			// 承認者２の社員マスタの取得
-			brApprove2 = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/employee_muster.csv"),
+			brApprove2 = Files.newBufferedReader(Paths.get("C:/Users/Yusuke/git/workflow/workflow_akashi/WebContent/employee_muster.csv"),
 					Charset.forName("UTF-8"));
 			String lineApprove2 = "";
 

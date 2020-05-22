@@ -37,16 +37,14 @@ table {
 			</tr>
 			<tr>
 				<td align="center">社員番号:</td>
-				<td align="center"><input type="text" name="id" id="id"
-					class="form-control"></td>
+				<td><input type="text" name="id"></td>
 			</tr>
 			<tr>
 				<td><br></td>
 			</tr>
 			<tr>
 				<td align="center">パスワード:</td>
-				<td align="center"><input type="password" name="pass" id="pass"
-					class="form-control"></td>
+				<td><input type="password" name="pass"></td>
 			</tr>
 			<tr>
 				<td><br></td>

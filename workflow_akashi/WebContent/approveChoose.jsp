@@ -18,7 +18,7 @@ String[] belongs = new String[4];
 
 try {
 
-	brData = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/data.csv"),
+	brData = Files.newBufferedReader(Paths.get("C:/Users/Yusuke/git/workflow/workflow_akashi/WebContent/data.csv"),
 	Charset.forName("UTF-8"));
 	String lineData = "";
 
@@ -106,7 +106,7 @@ table {
 				<%
 					try {
 
-					brEmployee = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/employee_muster.csv"),
+					brEmployee = Files.newBufferedReader(Paths.get("C:/Users/Yusuke/git/workflow/workflow_akashi/WebContent/employee_muster.csv"),
 					Charset.forName("UTF-8"));
 					String lineEmployee = "";
 
@@ -116,7 +116,7 @@ table {
 					break;
 						}
 					}
-					brBelongs = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/belongs.csv"),
+					brBelongs = Files.newBufferedReader(Paths.get("C:/Users/Yusuke/git/workflow/workflow_akashi/WebContent/belongs.csv"),
 					Charset.forName("UTF-8"));
 					String lineBelongs = "";
 

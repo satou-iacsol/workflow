@@ -69,7 +69,7 @@ public class Shinsei extends HttpServlet {
 				+ "," + "20" + toYear + toMonth + toDay + toTime + toMinutes + "," +
 				reason + "," + address + "," + remarks + "," + skip + "," + authorizer + "," + "," + ",";
 		BufferedWriter writer = Files
-				.newBufferedWriter(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/data.csv"),
+				.newBufferedWriter(Paths.get("C:/Users/Yusuke/git/workflow/workflow_akashi/WebContent/data.csv"),
 						StandardOpenOption.APPEND);
 		writer.write(str);
 		writer.newLine();
