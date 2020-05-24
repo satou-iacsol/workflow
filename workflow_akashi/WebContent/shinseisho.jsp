@@ -6,7 +6,9 @@
 	import="java.nio.file.Paths"%>
 <%@ page session="true"%>
 <%
-	String num = (String) session.getAttribute("id");
+final String referenceDirectory = "C:/Users/明石佑介/git/workflow/workflow_akashi/WebContent/";
+
+String num = (String) session.getAttribute("id");
 
 BufferedReader brEmployee = null;
 BufferedReader brBelongs = null;
@@ -17,7 +19,7 @@ String[] belongs = new String[4];
 String[] employeeBelongs2 = new String[6];
 String[] employeeBelongs3 = new String[6];
 try {
-	brEmployee = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/employee_muster.csv"),
+	brEmployee = Files.newBufferedReader(Paths.get(referenceDirectory + "employee_muster.csv"),
 	Charset.forName("UTF-8"));
 	String lineEmployee = "";
 
@@ -27,7 +29,7 @@ try {
 	break;
 		}
 	}
-	brBelongs = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/belongs.csv"),
+	brBelongs = Files.newBufferedReader(Paths.get(referenceDirectory + "belongs.csv"),
 	Charset.forName("UTF-8"));
 	String lineBelongs = "";
 
@@ -37,7 +39,7 @@ try {
 	break;
 		}
 	}
-	brEmployeeBelongs2 = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/employee_muster.csv"),
+	brEmployeeBelongs2 = Files.newBufferedReader(Paths.get(referenceDirectory + "employee_muster.csv"),
 	Charset.forName("UTF-8"));
 	String lineEmployeeBelongs2 = "";
 
@@ -47,7 +49,7 @@ try {
 	break;
 		}
 	}
-	brEmployeeBelongs3 = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/employee_muster.csv"),
+	brEmployeeBelongs3 = Files.newBufferedReader(Paths.get(referenceDirectory + "employee_muster.csv"),
 	Charset.forName("UTF-8"));
 	String lineEmployeeBelongs3 = "";
 

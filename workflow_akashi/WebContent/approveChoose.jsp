@@ -6,7 +6,9 @@
 	import="java.nio.file.Paths" import="java.util.ArrayList"%>
 <%@ page session="true"%>
 <%
-	// 社員番号取得
+final String referenceDirectory = "C:/Users/明石佑介/git/workflow/workflow_akashi/WebContent/";
+
+// 社員番号取得
 String id = (String) session.getAttribute("id");
 
 ArrayList<ArrayList<String>> list = new ArrayList<>();
@@ -18,7 +20,7 @@ String[] belongs = new String[4];
 
 try {
 
-	brData = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/data.csv"),
+	brData = Files.newBufferedReader(Paths.get(referenceDirectory + "data.csv"),
 	Charset.forName("UTF-8"));
 	String lineData = "";
 
@@ -106,7 +108,7 @@ table {
 				<%
 					try {
 
-					brEmployee = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/employee_muster.csv"),
+					brEmployee = Files.newBufferedReader(Paths.get(referenceDirectory + "employee_muster.csv"),
 					Charset.forName("UTF-8"));
 					String lineEmployee = "";
 
@@ -116,7 +118,7 @@ table {
 					break;
 						}
 					}
-					brBelongs = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/belongs.csv"),
+					brBelongs = Files.newBufferedReader(Paths.get(referenceDirectory + "belongs.csv"),
 					Charset.forName("UTF-8"));
 					String lineBelongs = "";
 

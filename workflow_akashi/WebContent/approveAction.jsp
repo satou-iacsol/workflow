@@ -8,6 +8,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 response.setContentType("text/html;charset=UTF-8");
+final String referenceDirectory = "C:/Users/明石佑介/git/workflow/workflow_akashi/WebContent/";
 
 String id = (String) session.getAttribute("id");
 
@@ -19,7 +20,7 @@ String[] preData = new String[15];
 try {
 
 	// 申請データの取得
-	brData = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/data.csv"),
+	brData = Files.newBufferedReader(Paths.get(referenceDirectory + "data.csv"),
 	Charset.forName("UTF-8"));
 	String lineData = "";
 
@@ -34,7 +35,7 @@ try {
 	String preNumber = data[0].substring(0, 15) + String.valueOf(Integer.parseInt(data[0].substring(15)) - 1);
 
 	// 申請データの連番 -1 の申請データを取得
-	brPreData = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/data.csv"),
+	brPreData = Files.newBufferedReader(Paths.get(referenceDirectory + "data.csv"),
 	Charset.forName("UTF-8"));
 	String linePreData = "";
 

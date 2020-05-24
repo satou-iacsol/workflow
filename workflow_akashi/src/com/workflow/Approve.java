@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/Approve")
 public class Approve extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final static String referenceDirectory = "C:/Users/明石佑介/git/workflow/workflow_akashi/WebContent/";
 
 	public Approve() {
 		super();
@@ -46,7 +47,7 @@ public class Approve extends HttpServlet {
 			ArrayList<String> list = new ArrayList<>();
 			String[] data = new String[15];
 			brData = Files.newBufferedReader(
-					Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/data.csv"),
+					Paths.get(referenceDirectory + "data.csv"),
 					Charset.forName("UTF-8"));
 
 			String lineData = "";
@@ -78,7 +79,7 @@ public class Approve extends HttpServlet {
 			}
 			// 申請データの書き込み
 			BufferedWriter writer = Files
-					.newBufferedWriter(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/data.csv"));
+					.newBufferedWriter(Paths.get(referenceDirectory + "data.csv"));
 			for (int i = 0; i < list.size(); i++) {
 				writer.write(list.get(i));
 				writer.newLine();
@@ -120,7 +121,7 @@ public class Approve extends HttpServlet {
 				nextDataLine += ",,,";
 
 				BufferedWriter writer = Files
-						.newBufferedWriter(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/data.csv"),
+						.newBufferedWriter(Paths.get(referenceDirectory + "data.csv"),
 								StandardOpenOption.APPEND);
 				writer.write(nextDataLine);
 				writer.newLine();
@@ -155,7 +156,7 @@ public class Approve extends HttpServlet {
 				nextDataLine += ",,,";
 
 				BufferedWriter writer = Files
-						.newBufferedWriter(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/data.csv"),
+						.newBufferedWriter(Paths.get(referenceDirectory + "data.csv"),
 								StandardOpenOption.APPEND);
 				writer.write(nextDataLine);
 				writer.newLine();

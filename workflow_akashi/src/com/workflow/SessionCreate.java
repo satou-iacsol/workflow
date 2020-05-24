@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/SessionCreate")
 public class SessionCreate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final static String referenceDirectory = "C:/Users/明石佑介/git/workflow/workflow_akashi/WebContent/";
 
 	public SessionCreate() {
 		super();
@@ -50,7 +51,7 @@ public class SessionCreate extends HttpServlet {
 		try {
 			// 申請データの取得
 			brData = Files.newBufferedReader(
-					Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/data.csv"),
+					Paths.get(referenceDirectory + "data.csv"),
 					Charset.forName("UTF-8"));
 			String lineData = "";
 
@@ -62,7 +63,7 @@ public class SessionCreate extends HttpServlet {
 			}
 
 			// 社員マスタの取得
-			brEmployee = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/employee_muster.csv"),
+			brEmployee = Files.newBufferedReader(Paths.get(referenceDirectory + "employee_muster.csv"),
 					Charset.forName("UTF-8"));
 			String lineEmployee = "";
 
@@ -74,7 +75,7 @@ public class SessionCreate extends HttpServlet {
 			}
 
 			// 承認者マスタの取得
-			brBelongs = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/belongs.csv"),
+			brBelongs = Files.newBufferedReader(Paths.get(referenceDirectory + "belongs.csv"),
 					Charset.forName("UTF-8"));
 			String lineBelongs = "";
 
@@ -86,7 +87,7 @@ public class SessionCreate extends HttpServlet {
 			}
 
 			// 承認者１の社員マスタの取得
-			brApprove1 = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/employee_muster.csv"),
+			brApprove1 = Files.newBufferedReader(Paths.get(referenceDirectory + "employee_muster.csv"),
 					Charset.forName("UTF-8"));
 			String lineApprove1 = "";
 
@@ -98,7 +99,7 @@ public class SessionCreate extends HttpServlet {
 			}
 
 			// 承認者２の社員マスタの取得
-			brApprove2 = Files.newBufferedReader(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/employee_muster.csv"),
+			brApprove2 = Files.newBufferedReader(Paths.get(referenceDirectory + "employee_muster.csv"),
 					Charset.forName("UTF-8"));
 			String lineApprove2 = "";
 

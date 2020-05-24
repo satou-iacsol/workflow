@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/SendMail")
 public class SendMail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final static String referenceDirectory = "C:/Users/明石佑介/git/workflow/workflow_akashi/WebContent/";
 
 	public SendMail() {
 		super();
@@ -40,7 +41,7 @@ public class SendMail extends HttpServlet {
 		String[] send = new String[6];
 		try {
 			brSend = Files.newBufferedReader(
-					Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/employee_muster.csv"),
+					Paths.get(referenceDirectory + "employee_muster.csv"),
 					Charset.forName("UTF-8"));
 			String lineSend = "";
 
@@ -67,7 +68,7 @@ public class SendMail extends HttpServlet {
 			String[] employee = new String[6];
 			try {
 				brEmployee = Files.newBufferedReader(
-						Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/employee_muster.csv"),
+						Paths.get(referenceDirectory + "employee_muster.csv"),
 						Charset.forName("UTF-8"));
 				String lineEmployee = "";
 
@@ -93,7 +94,7 @@ public class SendMail extends HttpServlet {
 			String[] employee = new String[6];
 			try {
 				brEmployee = Files.newBufferedReader(
-						Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/employee_muster.csv"),
+						Paths.get(referenceDirectory + "employee_muster.csv"),
 						Charset.forName("UTF-8"));
 				String lineEmployee = "";
 
@@ -119,7 +120,7 @@ public class SendMail extends HttpServlet {
 			String[] employee = new String[6];
 			try {
 				brEmployee = Files.newBufferedReader(
-						Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/employee_muster.csv"),
+						Paths.get(referenceDirectory + "employee_muster.csv"),
 						Charset.forName("UTF-8"));
 				String lineEmployee = "";
 

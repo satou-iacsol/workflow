@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/Shinsei")
 public class Shinsei extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final static String referenceDirectory = "C:/Users/明石佑介/git/workflow/workflow_akashi/WebContent/";
 
 	public Shinsei() {
 		super();
@@ -69,7 +70,7 @@ public class Shinsei extends HttpServlet {
 				+ "," + "20" + toYear + toMonth + toDay + toTime + toMinutes + "," +
 				reason + "," + address + "," + remarks + "," + skip + "," + authorizer + "," + "," + ",";
 		BufferedWriter writer = Files
-				.newBufferedWriter(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/data.csv"),
+				.newBufferedWriter(Paths.get(referenceDirectory + "data.csv"),
 						StandardOpenOption.APPEND);
 		writer.write(str);
 		writer.newLine();
