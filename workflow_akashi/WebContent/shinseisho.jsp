@@ -6,7 +6,7 @@
 	import="java.nio.file.Paths"%>
 <%@ page session="true"%>
 <%
-final String referenceDirectory = "C:/Users/明石佑介/git/workflow/workflow_akashi/WebContent/";
+	final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
 
 String num = (String) session.getAttribute("id");
 
@@ -564,7 +564,7 @@ table {
 			</tr>
 			<tr>
 				<td align="left" valign="top">連絡先:</td>
-				<td>(不在の連絡先)<br>TEL<input type="number" name="address"/></td>
+				<td>(不在の連絡先)<br>TEL<input type="number" name="address" /></td>
 			</tr>
 			<tr>
 				<td align="left" valign="top">備考:</td>
@@ -577,9 +577,10 @@ table {
 			<tr>
 				<td align="left" valign="top">承認者:</td>
 				<td><select name="authorizer">
-						<option value=<%= belongs[2] %>><%= employeeBelongs2[3] %>
-						<option value=<%= belongs[3] %>><%= employeeBelongs3[3] %>
-				</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一次承認者スキップ<select name="skip" id="skip" class="form-control">
+						<option value=<%=belongs[2]%>><%=employeeBelongs2[3]%>
+						<option value=<%=belongs[3]%>><%=employeeBelongs3[3]%>
+				</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一次承認者スキップ<select
+					name="skip" id="skip" class="form-control">
 						<option value="0">なし
 						<option value="1">あり
 				</select></td>

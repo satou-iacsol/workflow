@@ -4,6 +4,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 response.setContentType("text/html;charset=UTF-8");
+final String referenceDirectory = (String)session.getAttribute("referenceDirectory");
 String id = (String) session.getAttribute("id");
 session.setAttribute("approvedComment", request.getParameter("comment"));
 session.setAttribute("approvedAction", request.getParameter("action"));

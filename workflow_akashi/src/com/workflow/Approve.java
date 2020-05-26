@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/Approve")
 public class Approve extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final static String referenceDirectory = "C:/Users/明石佑介/git/workflow/workflow_akashi/WebContent/";
+
 
 	public Approve() {
 		super();
@@ -37,6 +37,7 @@ public class Approve extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 
 		HttpSession session = request.getSession();
+		final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
 
 		String number = (String) session.getAttribute("approvedNumber");
 		String[] preData = new String[15];

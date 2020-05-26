@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/SessionCreate")
 public class SessionCreate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final static String referenceDirectory = "C:/Users/明石佑介/git/workflow/workflow_akashi/WebContent/";
 
 	public SessionCreate() {
 		super();
@@ -33,6 +32,7 @@ public class SessionCreate extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 
 		HttpSession session = request.getSession();
+		final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
 
 		String number = request.getParameter("radio");
 
@@ -41,12 +41,14 @@ public class SessionCreate extends HttpServlet {
 		BufferedReader brBelongs = null;
 		BufferedReader brApprove1 = null;
 		BufferedReader brApprove2 = null;
+		BufferedReader brPreData = null;
 
 		String[] data = new String[15];
 		String[] employee = new String[6];
 		String[] belongs = new String[6];
 		String[] approve1 = new String[6];
 		String[] approve2 = new String[6];
+		String[] preData = new String[15];
 
 		try {
 			// 申請データの取得
@@ -110,6 +112,20 @@ public class SessionCreate extends HttpServlet {
 				}
 			}
 
+			// 申請データの連番 -1 の連番を作成
+			String preNumber = data[0].substring(0, 15) + String.valueOf(Integer.parseInt(data[0].substring(15)) - 1);
+
+			// 申請データの連番 -1 の申請データを取得
+			brPreData = Files.newBufferedReader(Paths.get(referenceDirectory + "data.csv"),
+			Charset.forName("UTF-8"));
+			String linePreData = "";
+
+			while ((linePreData = brPreData.readLine()) != null) {
+				preData = linePreData.split(",", -1);
+				if (preData[0].equals(preNumber)) {
+			break;
+				}
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -121,6 +137,7 @@ public class SessionCreate extends HttpServlet {
 				brBelongs.close();
 				brApprove1.close();
 				brApprove2.close();
+				brPreData.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -215,6 +232,8 @@ public class SessionCreate extends HttpServlet {
 		session.setAttribute("approvedReason", data[7]);
 		session.setAttribute("approvedAddress", data[8]);
 		session.setAttribute("approvedRemarks", data[9]);
+		session.setAttribute("approvedStatus", data[14]);
+		session.setAttribute("preComment", preData[12]);
 
 		response.sendRedirect("approveAction.jsp");
 	}

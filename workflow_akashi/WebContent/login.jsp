@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<% session.setAttribute("referenceDirectory","C:/Users/明石佑介/git/workflow/workflow_akashi/WebContent/"); %>
 <html>
 <head>
 <meta charset="UTF-8"></meta>

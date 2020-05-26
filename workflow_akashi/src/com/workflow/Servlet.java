@@ -1,4 +1,4 @@
-package workflow2;
+package com.workflow;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -45,7 +45,11 @@ public class Servlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		String id = request.getParameter("id");
+
+		HttpSession session = request.getSession();
+		final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
+
+		String user = request.getParameter("number");
 		String pass = request.getParameter("passcode");
 
 		BufferedReader br = null;
@@ -60,31 +64,31 @@ public class Servlet extends HttpServlet {
 
 		try {
 			br = Files.newBufferedReader(
-					Paths.get("C:\\Users\\Seiya\\git\\workflow\\WorkFlow2\\employee_muster.csv"),
+					Paths.get(referenceDirectory + "employee_muster.csv"),
 					Charset.forName("UTF-8"));
 
 			String line = "";
 
 			while ((line = br.readLine()) != null) {
 				//array配列にcsvの情報をカンマ区切りで格納
-				array = line.split(",",-1);
+				array = line.split(",", -1);
 				//array配列とログイン画面で入力された、情報を突合させ、等しければbreak
-				if(array[0].equals(id) && array[1].equals(pass)){
+				if (array[0].equals(user) && array[1].equals(pass)) {
 					break;
 				}
 				//if文に入らなければ、array配列を初期化
 				array = new String[5];
 			}
 
-				br_2 = Files.newBufferedReader(
-						Paths.get("C:\\Users\\Seiya\\git\\workflow\\WorkFlow2\\belongs.csv"),
-						Charset.forName("UTF-8"));
+			br_2 = Files.newBufferedReader(
+					Paths.get(referenceDirectory + "belongs.csv"),
+					Charset.forName("UTF-8"));
 
 			while ((line = br_2.readLine()) != null) {
 				//array配列にcsvの情報をカンマ区切りで格納
-				array_2 = line.split(",",-1);
+				array_2 = line.split(",", -1);
 				//array配列とログイン画面で入力された、情報を突合させ、等しければbreak
-				if(array_2[0].equals(array[4])){
+				if (array_2[0].equals(array[4])) {
 					break;
 				}
 				//if文に入らなければ、array配列を初期化
@@ -92,40 +96,40 @@ public class Servlet extends HttpServlet {
 			}
 
 			br_3 = Files.newBufferedReader(
-					Paths.get("C:\\Users\\Seiya\\git\\workflow\\WorkFlow2\\employee_muster.csv"),
+					Paths.get(referenceDirectory + "employee_muster.csv"),
 					Charset.forName("UTF-8"));
 
-		while ((line = br_3.readLine()) != null) {
-			//array配列にcsvの情報をカンマ区切りで格納
-			array_3 = line.split(",",-1);
-			//array配列とログイン画面で入力された、情報を突合させ、等しければbreak
-			if(array_2[2].equals(array_3[0])){
-				break;
+			while ((line = br_3.readLine()) != null) {
+				//array配列にcsvの情報をカンマ区切りで格納
+				array_3 = line.split(",", -1);
+				//array配列とログイン画面で入力された、情報を突合させ、等しければbreak
+				if (array_2[2].equals(array_3[0])) {
+					break;
+				}
+				//if文に入らなければ、array配列を初期化
+				array_3 = new String[3];
 			}
-			//if文に入らなければ、array配列を初期化
-			array_3 = new String[3];
-		}
 
-		br_4 = Files.newBufferedReader(
-				Paths.get("C:\\Users\\Seiya\\git\\workflow\\WorkFlow2\\employee_muster.csv"),
-				Charset.forName("UTF-8"));
+			br_4 = Files.newBufferedReader(
+					Paths.get(referenceDirectory + "employee_muster.csv"),
+					Charset.forName("UTF-8"));
 
-		while ((line = br_4.readLine()) != null) {
-			//array配列にcsvの情報をカンマ区切りで格納
-			array_4 = line.split(",",-1);
-			//array配列とログイン画面で入力された、情報を突合させ、等しければbreak
-			if(array_2[3].equals(array_4[0])){
-				break;
+			while ((line = br_4.readLine()) != null) {
+				//array配列にcsvの情報をカンマ区切りで格納
+				array_4 = line.split(",", -1);
+				//array配列とログイン画面で入力された、情報を突合させ、等しければbreak
+				if (array_2[3].equals(array_4[0])) {
+					break;
+				}
+				//if文に入らなければ、array配列を初期化
+				array_4 = new String[3];
 			}
-			//if文に入らなければ、array配列を初期化
-			array_4 = new String[3];
-		}
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}catch(NullPointerException e) {
+		} catch (NullPointerException e) {
 			e.printStackTrace();
 		} finally {
 			try {
@@ -138,13 +142,11 @@ public class Servlet extends HttpServlet {
 			}
 		}
 
-		if(array[0] == null){
+		if (array[0] == null) {
 			response.sendRedirect("error.jsp");
-		}else{
-			
-			HttpSession session = request.getSession();
-			session.setAttribute("id", id);
-			session.setAttribute("authority",array[2]);
+		} else {
+			session.setAttribute("user", user);
+			session.setAttribute("authority", array[2]);
 			session.setAttribute("fullname", array[3]);
 			session.setAttribute("affiliationCode", array[4]);
 			session.setAttribute("mail", array[5]);
@@ -153,11 +155,9 @@ public class Servlet extends HttpServlet {
 			session.setAttribute("approverName_1", array_3[3]);
 			session.setAttribute("approverNumber_2", array_2[3]);
 			session.setAttribute("approverName_2", array_4[3]);
-			
-			if(array[2].equals("1")) {
+			if (array[2].equals("1")) {
 				response.sendRedirect("menu2.jsp");
-			}else {
-			
+			} else {
 				response.sendRedirect("menu1.jsp");
 			}
 

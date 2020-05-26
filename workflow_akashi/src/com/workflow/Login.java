@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/Login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final static String referenceDirectory = "C:/Users/明石佑介/git/workflow/workflow_akashi/WebContent/";
 
 
 	public Login() {
@@ -32,6 +31,9 @@ public class Login extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
+
+		HttpSession session = request.getSession();
+		final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
 
 		String id = request.getParameter("id");
 		String pass = request.getParameter("pass");
@@ -123,7 +125,6 @@ public class Login extends HttpServlet {
 		if (employee[0] == null) {
 			response.sendRedirect("error.jsp");
 		} else {
-			HttpSession session = request.getSession();
 			session.setAttribute("id", id);
 			session.setAttribute("authority", employee[2]);
 			session.setAttribute("fullname", employee[3]);
