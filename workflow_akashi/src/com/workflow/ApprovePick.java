@@ -96,6 +96,8 @@ public class ApprovePick extends HttpServlet {
 				sort.add(sortList.get(i).get(3));
 			}
 
+			session.setAttribute("approvedItems", sort.size());
+
 			// 取得期間(FROM)順にソート
 			Collections.sort(sort);
 
