@@ -8,7 +8,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 response.setContentType("text/html;charset=UTF-8");
-final String referenceDirectory = (String)session.getAttribute("referenceDirectory");
+final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
 %>
 <!DOCTYPE html>
 <html>
@@ -28,7 +28,7 @@ table {
 </head>
 <body>
 	<br>
-	<form action="approveCheck.jsp" method="post">
+	<form action="ApproveActionCheck" method="post">
 		<table style="border: 0">
 			<tr>
 				<td colspan="2" align="center">有給休暇取得申請システム 承認明細画面</td>
@@ -79,7 +79,12 @@ table {
 				<td><%=session.getAttribute("approvedRemarks")%></td>
 			</tr>
 			<tr>
-				<td><br></td>
+				<td colspan="2" align="center"><font color="red"> <%
+ 	if (!(session.getAttribute("approvedCommentError") == null)) {
+ %> <%=session.getAttribute("approvedCommentError")%> <%
+ 	}
+ %>
+				</font><br></td>
 			</tr>
 
 			<!-- 承認者２ではない時表示 -->
@@ -132,11 +137,20 @@ table {
 				<td colspan="2">
 					<!-- ステータスが空白の時ラジオボタンと確認ボタン表示 --> <%
  	if (session.getAttribute("approvedStatus").equals("")) {
+ 	if (session.getAttribute("approvedCommentError").equals("")) {
  %> <input type="radio" name="action" id="承認" value="承認" checked><label
 					for="承認">&nbsp;承認&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><input
 					type="radio" name="action" id="差戻" value="差戻"><label
-					for="差戻">&nbsp;差戻</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="submit" value=" 確認 " class="btn"> <%
+					for="差戻">&nbsp;差戻</label> <%
+ 	} else {
+ %> <input type="radio" name="action" id="承認" value="承認"><label
+					for="承認">&nbsp;承認&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><input
+					type="radio" name="action" id="差戻" value="差戻" checked><label
+					for="差戻">&nbsp;差戻</label> <%
+ 	session.setAttribute("approvedCommentError", "");
+ }
+ %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
+					type="submit" value=" 確認 " class="btn"> <%
  	}
  %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<button type="button" onclick="history.back()">&nbsp;戻る&nbsp;</button>

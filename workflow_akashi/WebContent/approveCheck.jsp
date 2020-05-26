@@ -6,8 +6,6 @@
 response.setContentType("text/html;charset=UTF-8");
 final String referenceDirectory = (String)session.getAttribute("referenceDirectory");
 String id = (String) session.getAttribute("id");
-session.setAttribute("approvedComment", request.getParameter("comment"));
-session.setAttribute("approvedAction", request.getParameter("action"));
 %>
 <!DOCTYPE html>
 <html>
@@ -91,7 +89,7 @@ table {
 			</tr>
 			<tr>
 				<td align="left">承認者１コメント:</td>
-				<td><%=request.getParameter("comment")%></td>
+				<td><%=session.getAttribute("approvedComment")%></td>
 			</tr>
 			<%
 				if (!((String) session.getAttribute("approvedNumber")).substring(14).equals("01")) {
@@ -112,7 +110,7 @@ table {
 			</tr>
 			<tr>
 				<td align="left">承認者２コメント:</td>
-				<td><%=request.getParameter("comment")%></td>
+				<td><%=session.getAttribute("approvedComment")%></td>
 			</tr>
 
 			<%
@@ -124,7 +122,7 @@ table {
 			</tr>
 			<tr>
 				<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="submit" value=" <%=request.getParameter("action")%> "
+					<input type="submit" value=" <%=session.getAttribute("approvedAction")%> "
 					class="btn">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<button type="button" onclick="history.back()">&nbsp;戻る&nbsp;</button>
 				</td>

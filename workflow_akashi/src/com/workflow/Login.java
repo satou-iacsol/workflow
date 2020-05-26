@@ -123,7 +123,8 @@ public class Login extends HttpServlet {
 			}
 		}
 		if (employee[0] == null) {
-			response.sendRedirect("error.jsp");
+			session.setAttribute("loginError", "ユーザーID／パスワードが間違っています。");
+			response.sendRedirect("login.jsp");
 		} else {
 			session.setAttribute("id", id);
 			session.setAttribute("authority", employee[2]);

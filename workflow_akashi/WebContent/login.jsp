@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<% session.setAttribute("referenceDirectory","C:/Users/明石佑介/git/workflow/workflow_akashi/WebContent/"); %>
+<%
+	session.setAttribute("referenceDirectory", "C:/Users/明石佑介/git/workflow/workflow_akashi/WebContent/");
+%>
 <html>
 <head>
 <meta charset="UTF-8"></meta>
@@ -28,7 +30,13 @@ table {
 				<td><br></td>
 			</tr>
 			<tr>
-				<td><br></td>
+				<td colspan="2" align="center"><font color="red"> <%
+ 	if (!(session.getAttribute("loginError") == null)) {
+ %> <%=session.getAttribute("loginError")%> <%
+ 	session.setAttribute("loginError", "");
+ }
+ %>
+				</font><br></td>
 			</tr>
 			<tr>
 				<td><br></td>
