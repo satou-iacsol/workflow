@@ -137,7 +137,7 @@ table {
 				<td colspan="2">
 					<!-- ステータスが空白の時ラジオボタンと確認ボタン表示 --> <%
  	if (session.getAttribute("approvedStatus").equals("")) {
- 	if (session.getAttribute("approvedCommentError").equals("")) {
+ 	if (session.getAttribute("approvedCommentError") == null || session.getAttribute("approvedCommentError").equals("")) {
  %> <input type="radio" name="action" id="承認" value="承認" checked><label
 					for="承認">&nbsp;承認&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><input
 					type="radio" name="action" id="差戻" value="差戻"><label
