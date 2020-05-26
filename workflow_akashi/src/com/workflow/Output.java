@@ -48,7 +48,7 @@ public class Output extends HttpServlet {
 		HttpSession session = request.getSession();
 		final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
 
-		String user = (String) session.getAttribute("user");
+		String id = (String) session.getAttribute("id");
 		String authority = (String) session.getAttribute("authority");
 		String fullname = (String) session.getAttribute("fullname");
 		String affiliationCode = (String) session.getAttribute("affiliationCode");
@@ -97,8 +97,8 @@ public class Output extends HttpServlet {
 			FileWriter fw = new FileWriter(referenceDirectory + "data.csv", true); //※１
 			PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
 
-			pw.print(sdf.format(c.getTime()) + user + date_1_1 + "01" + ",");
-			pw.print(user + ",");
+			pw.print(sdf.format(c.getTime()) + id + date_1_1 + "01" + ",");
+			pw.print(id + ",");
 
 			if(type.equals("有給休暇")) {
 				pw.print(type_1 + ",");
@@ -160,7 +160,7 @@ public class Output extends HttpServlet {
 				response.sendRedirect("menu2.jsp");
 			}
 		}
-		session.setAttribute("user", user);
+		session.setAttribute("id", id);
 		session.setAttribute("authority", authority);
 		session.setAttribute("fullname", fullname);
 		session.setAttribute("affiliationCode", affiliationCode);

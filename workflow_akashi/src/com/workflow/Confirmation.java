@@ -39,7 +39,7 @@ public class Confirmation extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		HttpSession session = request.getSession();
-		String user = (String) session.getAttribute("user");
+		String id = (String) session.getAttribute("id");
 		String authority = (String) session.getAttribute("authority");
 		String fullname = (String) session.getAttribute("fullname");
 		String affiliationCode = (String) session.getAttribute("affiliationCode");
@@ -71,7 +71,7 @@ public class Confirmation extends HttpServlet {
 			approver_1_2 = approverName_2;
 		}
 
-		session.setAttribute("user", user);
+		session.setAttribute("id", id);
 		session.setAttribute("authority",authority);
 		session.setAttribute("fullname", fullname);
 		session.setAttribute("affiliationCode", affiliationCode);

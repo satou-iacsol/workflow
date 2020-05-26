@@ -23,7 +23,7 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 		<div class="margin">
 			<p>
 				所属:
-				<%=session.getAttribute("affiliationCode")%></p>
+				<%=session.getAttribute("affiliationName")%></p>
 			<p>
 				氏名:
 				<%=session.getAttribute("fullname")%></p>

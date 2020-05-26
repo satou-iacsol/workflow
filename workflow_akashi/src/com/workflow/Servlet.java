@@ -49,7 +49,7 @@ public class Servlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
 
-		String user = request.getParameter("number");
+		String id = request.getParameter("id");
 		String pass = request.getParameter("passcode");
 
 		BufferedReader br = null;
@@ -73,7 +73,7 @@ public class Servlet extends HttpServlet {
 				//array配列にcsvの情報をカンマ区切りで格納
 				array = line.split(",", -1);
 				//array配列とログイン画面で入力された、情報を突合させ、等しければbreak
-				if (array[0].equals(user) && array[1].equals(pass)) {
+				if (array[0].equals(id) && array[1].equals(pass)) {
 					break;
 				}
 				//if文に入らなければ、array配列を初期化
@@ -145,7 +145,7 @@ public class Servlet extends HttpServlet {
 		if (array[0] == null) {
 			response.sendRedirect("error.jsp");
 		} else {
-			session.setAttribute("user", user);
+			session.setAttribute("id", id);
 			session.setAttribute("authority", array[2]);
 			session.setAttribute("fullname", array[3]);
 			session.setAttribute("affiliationCode", array[4]);
