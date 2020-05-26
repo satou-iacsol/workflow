@@ -48,7 +48,7 @@ public class ApprovePick extends HttpServlet {
 		String[] belongs = new String[4];
 
 		try {
-
+			// ソート前データの取得
 			brData = Files.newBufferedReader(
 					Paths.get(referenceDirectory + "data.csv"),
 					Charset.forName("UTF-8"));
@@ -89,17 +89,20 @@ public class ApprovePick extends HttpServlet {
 				}
 			}
 
+			// 取得期間(FROM)を取得
 			ArrayList<String> sort = new ArrayList<>();
 
 			for (int i = 0; i < sortList.size(); i++) {
-				sort.add(sortList.get(i).get(0).substring(10));
+				sort.add(sortList.get(i).get(3));
 			}
 
+			// 取得期間(FROM)順にソート
 			Collections.sort(sort);
 
+			// ソートしたデータをリストに入れる
 			for (int i = 0; i < sort.size(); i++) {
 				for (int j = 0; j < sortList.size(); j++) {
-					if ((sortList.get(j).get(0).substring(10)).equals(sort.get(i))) {
+					if ((sortList.get(j).get(3)).equals(sort.get(i))) {
 						list.add(sortList.get(j));
 						sortList.remove(j);
 						break;
@@ -107,6 +110,7 @@ public class ApprovePick extends HttpServlet {
 				}
 			}
 
+			// 申請データの承認者が一致したデータ(差戻)をリストに入れる
 			brData1 = Files.newBufferedReader(Paths.get(referenceDirectory + "data.csv"),
 					Charset.forName("UTF-8"));
 			String lineData1 = "";
@@ -139,12 +143,12 @@ public class ApprovePick extends HttpServlet {
 						break;
 					}
 				}
-				// 申請データの承認者が一致したデータ(承認差戻なし)をリストに入れる
 				if (data[11].equals(id) && data[14].equals("差戻")) {
 					list.add(listSub);
 				}
 			}
 
+			// 申請データの承認者が一致したデータ(承認)をリストに入れる
 			brData2 = Files.newBufferedReader(Paths.get(referenceDirectory + "data.csv"),
 					Charset.forName("UTF-8"));
 			String lineData2 = "";
@@ -177,7 +181,6 @@ public class ApprovePick extends HttpServlet {
 						break;
 					}
 				}
-				// 申請データの承認者が一致したデータ(承認差戻なし)をリストに入れる
 				if (data[11].equals(id) && data[14].equals("承認")) {
 					list.add(listSub);
 				}
