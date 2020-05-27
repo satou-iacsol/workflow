@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 public class Approve extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+
 	public Approve() {
 		super();
 	}
@@ -36,6 +37,7 @@ public class Approve extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 
 		HttpSession session = request.getSession();
+		final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
 
 		String number = (String) session.getAttribute("approvedNumber");
 		String[] preData = new String[15];
@@ -46,7 +48,7 @@ public class Approve extends HttpServlet {
 			ArrayList<String> list = new ArrayList<>();
 			String[] data = new String[15];
 			brData = Files.newBufferedReader(
-					Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/data.csv"),
+					Paths.get(referenceDirectory + "data.csv"),
 					Charset.forName("UTF-8"));
 
 			String lineData = "";
@@ -78,7 +80,7 @@ public class Approve extends HttpServlet {
 			}
 			// 申請データの書き込み
 			BufferedWriter writer = Files
-					.newBufferedWriter(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/data.csv"));
+					.newBufferedWriter(Paths.get(referenceDirectory + "data.csv"));
 			for (int i = 0; i < list.size(); i++) {
 				writer.write(list.get(i));
 				writer.newLine();
@@ -120,7 +122,7 @@ public class Approve extends HttpServlet {
 				nextDataLine += ",,,";
 
 				BufferedWriter writer = Files
-						.newBufferedWriter(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/data.csv"),
+						.newBufferedWriter(Paths.get(referenceDirectory + "data.csv"),
 								StandardOpenOption.APPEND);
 				writer.write(nextDataLine);
 				writer.newLine();
@@ -155,7 +157,7 @@ public class Approve extends HttpServlet {
 				nextDataLine += ",,,";
 
 				BufferedWriter writer = Files
-						.newBufferedWriter(Paths.get("C:/pleiades/workspace/workflow_akashi/WebContent/data.csv"),
+						.newBufferedWriter(Paths.get(referenceDirectory + "data.csv"),
 								StandardOpenOption.APPEND);
 				writer.write(nextDataLine);
 				writer.newLine();
