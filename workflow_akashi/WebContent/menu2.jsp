@@ -17,11 +17,10 @@
 </head>
 
 <body>
-	<div class="container">
+	<div class="content">
 		<header>
 			<h1>有給休暇取得申請システム　メニュー画面</h1>
 		</header>
-	</div>
 	<br>
 	<form action="<%=request.getContextPath()%>/Shinsei" method="post">
 		<div class="hoge">
@@ -36,8 +35,7 @@
 			<button type="submit">承認画面</button>
 		</div>
 	</form>
-
-
+	</div>
 
 </body>
 </html>

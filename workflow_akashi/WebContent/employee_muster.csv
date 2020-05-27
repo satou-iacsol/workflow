@@ -1,3 +1,4 @@
+社員番号,パスワード,承認権限,氏名,所属コード,メールアドレス
 1111,pass1111,1,佐藤　賢一,2120,yuusuke_akashi@iacsol.co.jp
 2222,pass2222,1,桑野　修一,2130,yuusuke_akashi@iacsol.co.jp
 3333,pass3333,0,齊藤　誠也,2120,yuusuke_akashi@iacsol.co.jp
