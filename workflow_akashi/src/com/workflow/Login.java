@@ -138,7 +138,7 @@ public class Login extends HttpServlet {
 			session.setAttribute("approverName_2", approver2[3]);
 
 
-			response.sendRedirect("C:/Users/akashi-iacsol/git/workflow/WorkFlow3/WebContent/menu.jsp");
+			response.sendRedirect("menu.jsp");
 		}
 
 	}
