@@ -49,6 +49,9 @@ public class SessionCreate extends HttpServlet {
 		String[] approve1 = new String[6];
 		String[] approve2 = new String[6];
 		String[] preData = new String[15];
+		for (int i = 0; i < 15; i++) {
+			preData[i] = "";
+		}
 
 		try {
 			// 申請データの取得
@@ -112,18 +115,23 @@ public class SessionCreate extends HttpServlet {
 				}
 			}
 
+			// 連番の抽出
+			String number00 = data[0].substring(14);
+
 			// 申請データの連番 -1 の連番を作成
-			String preNumber = data[0].substring(0, 15) + String.valueOf(Integer.parseInt(data[0].substring(15)) - 1);
+			String preNumber = data[0].substring(0, 14) + String.format("%02d",Integer.parseInt(number00) - 1);
 
 			// 申請データの連番 -1 の申請データを取得
 			brPreData = Files.newBufferedReader(Paths.get(referenceDirectory + "data.csv"),
-			Charset.forName("UTF-8"));
+					Charset.forName("UTF-8"));
 			String linePreData = "";
 
-			while ((linePreData = brPreData.readLine()) != null) {
-				preData = linePreData.split(",", -1);
-				if (preData[0].equals(preNumber)) {
-			break;
+			if (!(number00.equals("01"))) {
+				while ((linePreData = brPreData.readLine()) != null) {
+					preData = linePreData.split(",", -1);
+					if (preData[0].equals(preNumber)) {
+						break;
+					}
 				}
 			}
 		} catch (FileNotFoundException e) {

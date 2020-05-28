@@ -124,7 +124,7 @@ table {
 				<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="submit" value=" <%=session.getAttribute("approvedAction")%> "
 					class="btn">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button" onclick="history.back()">&nbsp;戻る&nbsp;</button>
+					<button type="button" onclick="location.href='./approveAction.jsp'">&nbsp;戻る&nbsp;</button>
 				</td>
 			</tr>
 		</table>

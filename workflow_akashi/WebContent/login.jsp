@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-	session.setAttribute("referenceDirectory", "C:/Users/明石佑介/git/workflow/workflow_akashi/WebContent/");
+	session.setAttribute("referenceDirectory", "C:/Users/akashi-iacsol/git/workflow/workflow_akashi/WebContent/");
 %>
 <html>
 <head>

@@ -107,8 +107,8 @@ public class Approve extends HttpServlet {
 			} else {
 				// 次申請番号の作成
 				String[] nextData = new String[15];
-				nextData[0] = number.substring(0, 15)
-						+ String.valueOf(Integer.parseInt(number.substring(15)) + 1);
+				nextData[0] = number.substring(0, 14)
+						+ String.format("%02d",Integer.parseInt(number.substring(14)) + 1);
 				for (int i = 1; i < 11; i++) {
 					nextData[i] = preData[i];
 				}
