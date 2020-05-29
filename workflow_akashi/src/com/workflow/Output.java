@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/Output")
 public class Output extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -69,15 +70,13 @@ public class Output extends HttpServlet {
 		String comment = (String) session.getAttribute("comment");
 		String tellnumber = (String) session.getAttribute("tellnumber");
 		String bikou = (String) session.getAttribute("bikou");
-//		String approver = (String) session.getAttribute("approver");
+		//		String approver = (String) session.getAttribute("approver");
 		String approver_1_2 = (String) session.getAttribute("approver_1_2");
 		String flag = (String) session.getAttribute("flag");
 
 		String type_1 = "01", type_2 = "02", type_3 = "03", type_4 = "04", type_5 = "05", type_6 = "06", type_7 = "07",
-				type_8 = "08", type_9 = "09", type_10 = "10", type_11 = "11", type_12 = "12", type_13 = "13", type_14 = "14";
-
-
-
+				type_8 = "08", type_9 = "09", type_10 = "10", type_11 = "11", type_12 = "12", type_13 = "13",
+				type_14 = "14";
 
 		//各変数に含まれる"/"と":"を削除
 		date_1 = date_1.replace("-", "");
@@ -100,33 +99,33 @@ public class Output extends HttpServlet {
 			pw.print(sdf.format(c.getTime()) + id + date_1_1 + "01" + ",");
 			pw.print(id + ",");
 
-			if(type.equals("有給休暇")) {
+			if (type.equals("有給休暇")) {
 				pw.print(type_1 + ",");
-			}else if(type.equals("代休")) {
+			} else if (type.equals("代休")) {
 				pw.print(type_2 + ",");
-			}else if(type.equals("生理休暇")) {
+			} else if (type.equals("生理休暇")) {
 				pw.print(type_3 + ",");
-			}else if(type.equals("慶弔休暇")) {
+			} else if (type.equals("慶弔休暇")) {
 				pw.print(type_4 + ",");
-			}else if(type.equals("特別休暇")) {
+			} else if (type.equals("特別休暇")) {
 				pw.print(type_5 + ",");
-			}else if(type.equals("罹災休暇")) {
+			} else if (type.equals("罹災休暇")) {
 				pw.print(type_6 + ",");
-			}else if(type.equals("半休")) {
+			} else if (type.equals("半休")) {
 				pw.print(type_7 + ",");
-			}else if(type.equals("結婚休暇")) {
+			} else if (type.equals("結婚休暇")) {
 				pw.print(type_8 + ",");
-			}else if(type.equals("出産休暇")) {
+			} else if (type.equals("出産休暇")) {
 				pw.print(type_9 + ",");
-			}else if(type.equals("忌引き休暇")) {
+			} else if (type.equals("忌引き休暇")) {
 				pw.print(type_10 + ",");
-			}else if(type.equals("隔離休暇")) {
+			} else if (type.equals("隔離休暇")) {
 				pw.print(type_11 + ",");
-			}else if(type.equals("一周忌")) {
+			} else if (type.equals("一周忌")) {
 				pw.print(type_12 + ",");
-			}else if(type.equals("受験休暇")) {
+			} else if (type.equals("受験休暇")) {
 				pw.print(type_13 + ",");
-			}else if(type.equals("産前産後休暇")) {
+			} else if (type.equals("産前産後休暇")) {
 				pw.print(type_14 + ",");
 			}
 
@@ -141,9 +140,9 @@ public class Output extends HttpServlet {
 			pw.print(bikou + ",");
 
 			pw.print(flag + ",");
-			if(approver_1_2.equals(approverName_1)) {
+			if (approver_1_2.equals(approverName_1)) {
 				pw.print(approverNumber_1 + ",");
-			}else if(approver_1_2.equals(approverName_2)) {
+			} else if (approver_1_2.equals(approverName_2)) {
 				pw.print(approverNumber_2 + ",");
 			}
 			pw.println(",,");
@@ -170,11 +169,9 @@ public class Output extends HttpServlet {
 		session.setAttribute("approverName_1", approverName_1);
 		session.setAttribute("approverNumber_2", approverNumber_2);
 		session.setAttribute("approverName_2", approverName_2);
-		if (authority.equals("0")) {
-			response.sendRedirect("menu1.jsp");
-		} else {
-			response.sendRedirect("menu2.jsp");
-		}
+
+		response.sendRedirect("menu.jsp");
+
 	}
 
 }
