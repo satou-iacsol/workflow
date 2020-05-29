@@ -232,8 +232,13 @@ public class SessionCreate extends HttpServlet {
 		session.setAttribute("approvedReason", data[7]);
 		session.setAttribute("approvedAddress", data[8]);
 		session.setAttribute("approvedRemarks", data[9]);
+		session.setAttribute("approvedOverComment", data[12]);
 		session.setAttribute("approvedStatus", data[14]);
-		session.setAttribute("preComment", preData[12]);
+		if (data[10].equals("1")) {
+			session.setAttribute("preComment", "承認者１はスキップされました。");
+		} else {
+			session.setAttribute("preComment", preData[12]);
+		}
 
 		response.sendRedirect("approveAction.jsp");
 	}

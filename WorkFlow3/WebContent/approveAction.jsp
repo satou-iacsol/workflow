@@ -79,10 +79,11 @@ table {
 				<td><%=session.getAttribute("approvedRemarks")%></td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"><font color="red"> 
-	<%	if (!(session.getAttribute("approvedCommentError") == null)) {%> 
-	<%=session.getAttribute("approvedCommentError")%> 
-	<% 	} %>
+				<td colspan="2" align="center"><font color="red"> <%
+ 	if (!(session.getAttribute("approvedCommentError") == null)) {
+ %> <%=session.getAttribute("approvedCommentError")%> <%
+ 	}
+ %>
 				</font><br></td>
 			</tr>
 
@@ -97,7 +98,14 @@ table {
 			</tr>
 			<tr>
 				<td align="left">承認者１コメント:</td>
-				<td><textarea name="comment" rows="1" cols="28" maxlength="50"></textarea></td>
+				<td>
+					<%
+						if (session.getAttribute("approvedStatus").equals("")) {
+					%><textarea name="comment" rows="1" cols="28" maxlength="50"></textarea>
+					<%=session.getAttribute("approvedOverComment")%> <%
+ 	}
+ %>
+				</td>
 			</tr>
 
 			<!-- 申請データの連番が01の時に非表示 -->
@@ -122,7 +130,14 @@ table {
 			</tr>
 			<tr>
 				<td align="left">承認者２コメント:</td>
-				<td><textarea name="comment" rows="1" cols="28" maxlength="50"></textarea></td>
+				<td>
+					<%
+						if (session.getAttribute("approvedStatus").equals("")) {
+					%> <textarea name="comment" rows="1" cols="28" maxlength="50"></textarea>
+					<%=session.getAttribute("approvedOverComment")%> <%
+ 	}
+ %>
+				</td>
 			</tr>
 
 			<%
@@ -136,7 +151,8 @@ table {
 				<td colspan="2">
 					<!-- ステータスが空白の時ラジオボタンと確認ボタン表示 --> <%
  	if (session.getAttribute("approvedStatus").equals("")) {
- 	if (session.getAttribute("approvedCommentError") == null || session.getAttribute("approvedCommentError").equals("")) {
+ 	if (session.getAttribute("approvedCommentError") == null
+ 	|| session.getAttribute("approvedCommentError").equals("")) {
  %> <input type="radio" name="action" id="承認" value="承認" checked><label
 					for="承認">&nbsp;承認&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><input
 					type="radio" name="action" id="差戻" value="差戻"><label
