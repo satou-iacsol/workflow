@@ -240,6 +240,7 @@ public class SessionCreate extends HttpServlet {
 		session.setAttribute("approvedReason", data[7]);
 		session.setAttribute("approvedAddress", data[8]);
 		session.setAttribute("approvedRemarks", data[9]);
+		session.setAttribute("approvedOverComment", data[12]);
 		session.setAttribute("approvedStatus", data[14]);
 		session.setAttribute("preComment", preData[12]);
 

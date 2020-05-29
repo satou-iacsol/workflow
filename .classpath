@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="workflow_akashi/src"/>
+	<classpathentry kind="src" path="workflow/src"/>
+	<classpathentry kind="src" path="WorkFlow2/src"/>
+	<classpathentry kind="src" path="WorkFlow3/src"/>
+	<classpathentry kind="output" path="WorkFlow3/bin"/>
+</classpath>
