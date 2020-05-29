@@ -41,7 +41,7 @@ table {
 	<br>
 	<div align="center">有給休暇取得申請システム 承認画面</div>
 	<br>
-	<div align="center"><font color="red">未承認の申請<%=session.getAttribute("approvedItems") %>件</font></div>
+	<div align="center"><font color="red">未処理の申請<%=session.getAttribute("approvedItems") %>件</font></div>
 	<br>
 	<form action="SessionCreate" method="post">
 		<table>

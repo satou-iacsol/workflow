@@ -102,7 +102,9 @@ table {
 					<%
 						if (session.getAttribute("approvedStatus").equals("")) {
 					%><textarea name="comment" rows="1" cols="28" maxlength="50"></textarea>
-					<%=session.getAttribute("approvedOverComment")%> <%
+					<%
+						} else {
+					%> <%=session.getAttribute("approvedOverComment")%> <%
  	}
  %>
 				</td>
@@ -134,7 +136,9 @@ table {
 					<%
 						if (session.getAttribute("approvedStatus").equals("")) {
 					%> <textarea name="comment" rows="1" cols="28" maxlength="50"></textarea>
-					<%=session.getAttribute("approvedOverComment")%> <%
+					<%
+						} else {
+					%> <%=session.getAttribute("approvedOverComment")%> <%
  	}
  %>
 				</td>
