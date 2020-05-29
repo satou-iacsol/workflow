@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-
 	public Login() {
 		super();
 	}
@@ -122,6 +121,10 @@ public class Login extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		if (employee[0] == null) {
+			session.setAttribute("loginError", "ユーザーID／パスワードが間違っています。");
+			response.sendRedirect("login.jsp");
+		} else {
 			session.setAttribute("id", id);
 			session.setAttribute("authority", employee[2]);
 			session.setAttribute("fullname", employee[3]);
@@ -132,8 +135,7 @@ public class Login extends HttpServlet {
 			session.setAttribute("approverName_1", approver1[3]);
 			session.setAttribute("approverNumber_2", belongs[3]);
 			session.setAttribute("approverName_2", approver2[3]);
-
 			response.sendRedirect("menu.jsp");
-
+		}
 	}
 }
