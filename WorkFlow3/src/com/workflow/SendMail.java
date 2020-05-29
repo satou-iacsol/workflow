@@ -142,7 +142,7 @@ public class SendMail extends HttpServlet {
 				}
 			}
 		}
-	response.sendRedirect("login.jsp");
+	response.sendRedirect("menu.jsp");
 	}
 
 }
