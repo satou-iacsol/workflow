@@ -61,11 +61,9 @@ public class Approve extends HttpServlet {
 					data[12] = (String) session.getAttribute("approvedComment");
 					// ステータスを実行内容で更新
 					data[14] = (String) session.getAttribute("approvedAction");
-					// 承認日を当日のデータに更新
-					if (((String) session.getAttribute("approvedAction")).equals("承認")) {
-						LocalDate localDateTime = LocalDate.now();
-						data[13] = DateTimeFormatter.ofPattern("yyyyMMdd").format(localDateTime);
-					}
+					// 承認差戻日を当日のデータに更新
+					LocalDate localDateTime = LocalDate.now();
+					data[13] = DateTimeFormatter.ofPattern("yyyyMMdd").format(localDateTime);
 					// 更新内容を反映したデータの作成
 					String newData = data[0];
 					for (int i = 1; i <= 14; i++) {
