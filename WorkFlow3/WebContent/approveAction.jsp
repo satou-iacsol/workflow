@@ -27,8 +27,28 @@ table {
 </style>
 </head>
 <body>
+	<script type="text/javascript">
+	<!--
+		function formCheck() {
+			if (document.approveForm.action.value == "差戻") {
+				if (document.approveForm.comment.value == "") {
+					window.alert('差戻時はコメントが必須です');
+					document.getElementById('notice').style.display = "block";
+					return false;
+				} else {
+					document.getElementById('notice').style.display = "none";
+					return true;
+				}
+			} else {
+				document.getElementById('notice').style.display = "none";
+				return true;
+			}
+		}
+	// -->
+	</script>
 	<br>
-	<form action="ApproveActionCheck" method="post">
+	<form name="approveForm" action="approveCheck.jsp" method="post"
+		onsubmit="return formCheck()">
 		<table style="border: 0">
 			<tr>
 				<td colspan="2" align="center">有給休暇取得申請システム 承認明細画面</td>
@@ -79,12 +99,9 @@ table {
 				<td><%=session.getAttribute("approvedRemarks")%></td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"><font color="red"> <%
- 	if (!(session.getAttribute("approvedCommentError") == null)) {
- %> <%=session.getAttribute("approvedCommentError")%> <%
- 	}
- %>
-				</font><br></td>
+				<td colspan="2" align="center"><br>
+				<a id="notice" style="display: none; color: red;"> 差戻時はコメントが必須です</a>
+				</td>
 			</tr>
 
 			<!-- 承認者２ではない時表示 -->
@@ -155,24 +172,15 @@ table {
 				<td colspan="2">
 					<!-- ステータスが空白の時ラジオボタンと確認ボタン表示 --> <%
  	if (session.getAttribute("approvedStatus").equals("")) {
- 	if (session.getAttribute("approvedCommentError") == null
- 	|| session.getAttribute("approvedCommentError").equals("")) {
  %> <input type="radio" name="action" id="承認" value="承認" checked><label
 					for="承認">&nbsp;承認&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><input
 					type="radio" name="action" id="差戻" value="差戻"><label
-					for="差戻">&nbsp;差戻</label> <%
- 	} else {
- %> <input type="radio" name="action" id="承認" value="承認"><label
-					for="承認">&nbsp;承認&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><input
-					type="radio" name="action" id="差戻" value="差戻" checked><label
-					for="差戻">&nbsp;差戻</label> <%
- 	session.setAttribute("approvedCommentError", "");
- }
- %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
-					type="submit" value=" 確認 " class="btn"> <%
+					for="差戻">&nbsp;差戻</label>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="submit" value=" 確認 " class="btn"> <%
  	}
  %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button" onclick="location.href='./approveChoose.jsp'">&nbsp;戻る&nbsp;</button>
+					<button type="button" onclick="history.back()">&nbsp;戻る&nbsp;</button>
 				</td>
 			</tr>
 		</table>
