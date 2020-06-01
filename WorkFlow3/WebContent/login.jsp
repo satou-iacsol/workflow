@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-	session.setAttribute("referenceDirectory", "C:/Users/Yusuke/git/workflow/WorkFlow3/WebContent/");
+	session.setAttribute("referenceDirectory", "C:\\Users\\seiya_saitou\\git\\workflow\\WorkFlow3\\WebContent\\");
 %>
 <html>
 <head>
