@@ -100,8 +100,11 @@ table {
 			</tr>
 			<tr>
 				<td colspan="2" align="center"><br>
-				<a id="notice" style="display: none; color: red;"> 差戻時はコメントが必須です</a>
-				</td>
+				<noscript>
+						<a><font color="red">差戻時はコメントが必須です</font></a>
+					</noscript>
+					<a id="notice" style="display: none; color: red;">
+						差戻時はコメントが必須です</a></td>
 			</tr>
 
 			<!-- 承認者２ではない時表示 -->
