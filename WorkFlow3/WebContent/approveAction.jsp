@@ -32,7 +32,6 @@ table {
 		function formCheck() {
 			if (document.approveForm.action.value == "差戻") {
 				if (document.approveForm.comment.value == "") {
-					window.alert('差戻時はコメントが必須です');
 					document.getElementById('notice').style.display = "block";
 					return false;
 				} else {
