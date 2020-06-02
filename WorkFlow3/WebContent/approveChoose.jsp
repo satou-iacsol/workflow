@@ -11,7 +11,7 @@
 
 // 社員番号取得
 String id = (String) session.getAttribute("id");
-
+@SuppressWarnings("unchecked")
 ArrayList<ArrayList<String>> list = (ArrayList<ArrayList<String>>) session.getAttribute("list");
 %>
 <!DOCTYPE html>
@@ -112,46 +112,46 @@ table {
 					case 1:
 					%> 1.有給休暇<%
 						break;
-					case 2:
+								case 2:
 					%> 2.代休<%
 						break;
-					case 3:
+								case 3:
 					%> 3.生理休暇<%
 						break;
-					case 4:
+								case 4:
 					%> 4.慶弔休暇<%
 						break;
-					case 5:
+								case 5:
 					%> 5.特別休暇<%
 						break;
-					case 6:
+								case 6:
 					%> 6.罹災休暇<%
 						break;
-					case 7:
+								case 7:
 					%> 7.半休<%
 						break;
-					case 8:
+								case 8:
 					%> 8.結婚休暇<%
 						break;
-					case 9:
+								case 9:
 					%> 9.出産休暇<%
 						break;
-					case 10:
+								case 10:
 					%> 10.忌引き休暇<%
 						break;
-					case 11:
+								case 11:
 					%> 11.隔離休暇<%
 						break;
-					case 12:
+								case 12:
 					%> 12.一周忌<%
 						break;
-					case 13:
+								case 13:
 					%> 13.受験休暇<%
 						break;
-					case 14:
+								case 14:
 					%> 14.産前産後休暇<%
 						break;
-							}
+								}
 					%>&nbsp;
 				</td>
 				<td align="left">&nbsp;<%=list.get(i).get(14)%></td>
