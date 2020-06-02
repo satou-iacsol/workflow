@@ -261,6 +261,18 @@ public class ApprovePickSQL extends HttpServlet {
 				if (stmtData != null) {
 					stmtData.close();
 				}
+				if (resultData1 != null) {
+					resultData1.close();
+				}
+				if (stmtData1 != null) {
+					stmtData1.close();
+				}
+				if (resultData2 != null) {
+					resultData2.close();
+				}
+				if (stmtData2 != null) {
+					stmtData2.close();
+				}
 
 				if (con != null) {
 					con.close();
