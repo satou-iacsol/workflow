@@ -47,8 +47,6 @@ public class ApprovePickSQL extends HttpServlet {
 		ResultSet resultData1 = null;
 		Statement stmtData2 = null;
 		ResultSet resultData2 = null;
-		Statement stmtData3 = null;
-		ResultSet resultData3 = null;
 
 		// 接続文字列の設定
 		String url = "jdbc:postgresql://localhost:5432/postgres";
@@ -63,22 +61,86 @@ public class ApprovePickSQL extends HttpServlet {
 			stmtData = con.createStatement();
 			String sqlData = "SELECT * from data";
 			resultData = stmtData.executeQuery(sqlData);
-
-			ArrayList<String> sort = new ArrayList<>();
+			ArrayList<ArrayList<String>> sortList = new ArrayList<>();
 			while (resultData.next()) {
-				sort.add(resultData.getString("date_1"));
+				Statement stmtEmployee = null;
+				ResultSet resultEmployee = null;
+				Statement stmtBelongs = null;
+				ResultSet resultBelongs = null;
+
+				if (resultData.getString("approverNumber").equals(id)
+						&& resultData.getString("status").equals("")) {
+					ArrayList<String> listSub = new ArrayList<>();
+
+					for (int i = 1; i <= 5; i++) {
+						listSub.add(resultData.getString(i));
+					}
+					stmtEmployee = con.createStatement();
+					String sqlEmployee = "SELECT * from employee_muster";
+					resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
+					while (resultEmployee.next()) {
+						if (resultEmployee.getString("id").equals(resultData.getString("id"))) {
+							listSub.add(resultEmployee.getString("fullname"));
+							break;
+						}
+					}
+					stmtBelongs = con.createStatement();
+					String sqlBelongs = "SELECT * from belongs";
+					resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
+					while (resultBelongs.next()) {
+						if (resultBelongs.getString("affiliationCode")
+								.equals(resultEmployee.getString("affiliationCode"))) {
+							listSub.add(resultBelongs.getString("affiliationName"));
+							break;
+						}
+					}
+					for (int i = 8; i <= 15; i++) {
+						listSub.add(resultData.getString(i));
+					}
+					sortList.add(listSub);
+				}
+
+				if (stmtEmployee != null) {
+					stmtEmployee.close();
+				}
+				if (resultEmployee != null) {
+					resultEmployee.close();
+				}
+				if (stmtBelongs != null) {
+					stmtBelongs.close();
+				}
+				if (resultBelongs != null) {
+					resultBelongs.close();
+				}
+
 			}
 
+			ArrayList<String> sort = new ArrayList<>();
+
 			// 取得期間(FROM)を取得
+			for (int i = 0; i < sortList.size(); i++) {
+				sort.add(sortList.get(i).get(3));
+			}
+
 			session.setAttribute("approvedItems", sort.size());
 
 			// 取得期間(FROM)順にソート
 			Collections.sort(sort);
 
+			// ソートしたデータをリストに入れる
+			for (int i = 0; i < sort.size(); i++) {
+				for (int j = 0; j < sortList.size(); j++) {
+					if ((sortList.get(j).get(3)).equals(sort.get(i))) {
+						list.add(sortList.get(j));
+						sortList.remove(j);
+						break;
+					}
+				}
+			}
+
 			stmtData1 = con.createStatement();
 			String sqlData1 = "SELECT * from data";
 			resultData1 = stmtData1.executeQuery(sqlData1);
-			int count = 0;
 
 			while (resultData1.next()) {
 				Statement stmtEmployee = null;
@@ -86,25 +148,24 @@ public class ApprovePickSQL extends HttpServlet {
 				Statement stmtBelongs = null;
 				ResultSet resultBelongs = null;
 
-				if (resultData1.getString("date_1").equals(sort.get(count++))
-						&& resultData1.getString("approverNumber").equals(id)
-						&& resultData1.getString("status").equals("")) {
+				if (resultData1.getString("approverNumber").equals(id)
+						&& resultData1.getString("status").equals("差戻")) {
 					ArrayList<String> listSub = new ArrayList<>();
 
 					for (int i = 1; i <= 5; i++) {
 						listSub.add(resultData1.getString(i));
 					}
 					stmtEmployee = con.createStatement();
-					String sqlEmployee = "SELECT * from data";
+					String sqlEmployee = "SELECT * from employee_muster";
 					resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
 					while (resultEmployee.next()) {
-						if (resultEmployee.getString("id").equals(resultData1.getString("approverNumber"))) {
-							listSub.add(resultData1.getString("fullname"));
+						if (resultEmployee.getString("id").equals(resultData1.getString("id"))) {
+							listSub.add(resultEmployee.getString("fullname"));
 							break;
 						}
 					}
 					stmtBelongs = con.createStatement();
-					String sqlBelongs = "SELECT * from data";
+					String sqlBelongs = "SELECT * from belongs";
 					resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
 					while (resultBelongs.next()) {
 						if (resultBelongs.getString("affiliationCode")
@@ -144,23 +205,23 @@ public class ApprovePickSQL extends HttpServlet {
 				ResultSet resultBelongs = null;
 
 				if (resultData2.getString("approverNumber").equals(id)
-						&& resultData2.getString("status").equals("差戻")) {
+						&& resultData2.getString("status").equals("承認")) {
 					ArrayList<String> listSub = new ArrayList<>();
 
 					for (int i = 1; i <= 5; i++) {
 						listSub.add(resultData2.getString(i));
 					}
 					stmtEmployee = con.createStatement();
-					String sqlEmployee = "SELECT * from data";
+					String sqlEmployee = "SELECT * from employee_muster";
 					resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
 					while (resultEmployee.next()) {
-						if (resultEmployee.getString("id").equals(resultData2.getString("approverNumber"))) {
-							listSub.add(resultData2.getString("fullname"));
+						if (resultEmployee.getString("id").equals(resultData2.getString("id"))) {
+							listSub.add(resultEmployee.getString("fullname"));
 							break;
 						}
 					}
 					stmtBelongs = con.createStatement();
-					String sqlBelongs = "SELECT * from data";
+					String sqlBelongs = "SELECT * from belongs";
 					resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
 					while (resultBelongs.next()) {
 						if (resultBelongs.getString("affiliationCode")
@@ -171,62 +232,6 @@ public class ApprovePickSQL extends HttpServlet {
 					}
 					for (int i = 8; i <= 15; i++) {
 						listSub.add(resultData2.getString(i));
-					}
-					list.add(listSub);
-				}
-
-				if (stmtEmployee != null) {
-					stmtEmployee.close();
-				}
-				if (resultEmployee != null) {
-					resultEmployee.close();
-				}
-				if (stmtBelongs != null) {
-					stmtBelongs.close();
-				}
-				if (resultBelongs != null) {
-					resultBelongs.close();
-				}
-			}
-
-			stmtData3 = con.createStatement();
-			String sqlData3 = "SELECT * from data";
-			resultData3 = stmtData3.executeQuery(sqlData3);
-
-			while (resultData3.next()) {
-				Statement stmtEmployee = null;
-				ResultSet resultEmployee = null;
-				Statement stmtBelongs = null;
-				ResultSet resultBelongs = null;
-
-				if (resultData3.getString("approverNumber").equals(id)
-						&& resultData3.getString("status").equals("承認")) {
-					ArrayList<String> listSub = new ArrayList<>();
-
-					for (int i = 1; i <= 5; i++) {
-						listSub.add(resultData3.getString(i));
-					}
-					stmtEmployee = con.createStatement();
-					String sqlEmployee = "SELECT * from data";
-					resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
-					while (resultEmployee.next()) {
-						if (resultEmployee.getString("id").equals(resultData3.getString("approverNumber"))) {
-							listSub.add(resultData3.getString("fullname"));
-							break;
-						}
-					}
-					stmtBelongs = con.createStatement();
-					String sqlBelongs = "SELECT * from data";
-					resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
-					while (resultBelongs.next()) {
-						if (resultBelongs.getString("affiliationCode")
-								.equals(resultEmployee.getString("affiliationCode"))) {
-							listSub.add(resultBelongs.getString("affiliationName"));
-							break;
-						}
-					}
-					for (int i = 8; i <= 15; i++) {
-						listSub.add(resultData3.getString(i));
 					}
 					list.add(listSub);
 				}
