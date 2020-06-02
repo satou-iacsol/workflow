@@ -3,16 +3,8 @@
 <!DOCTYPE html>
 <%@ page import="java.util.Enumeration"%>
 <%
-// セッションにある全ての要素名を取得する
-Enumeration<String> names = session.getAttributeNames();
-
-// 取得した要素名をループ処理で全て削除する
-while (names.hasMoreElements()) {
-	String name = (String) names.nextElement();
-	session.removeAttribute(name);
-}
-// csvのディレクトリを設定
-session.setAttribute("referenceDirectory", "C:/Users/Yusuke/git/workflow/WorkFlow3/WebContent/");
+	//csvのディレクトリを設定
+String referenceDirectory = "C:/Users/Yusuke/git/workflow/WorkFlow3/WebContent/";
 %>
 <html>
 <head>
@@ -31,7 +23,7 @@ table {
 </head>
 <body>
 	<br>
-	<form action="Login" method="post">
+	<form action="LoginSQL" method="post">
 		<table>
 			<tr>
 				<td colspan="2">有給休暇取得申請システム ログイン</td>
@@ -45,6 +37,16 @@ table {
  %> <%=session.getAttribute("loginError")%> <%
  	session.setAttribute("loginError", "");
  }
+
+ //セッションにある全ての要素名を取得する
+ Enumeration<String> names = session.getAttributeNames();
+
+ //取得した要素名をループ処理で全て削除する
+ while (names.hasMoreElements()) {
+ 	String name = (String) names.nextElement();
+ 	session.removeAttribute(name);
+ }
+ session.setAttribute("referenceDirectory", referenceDirectory);
  %>
 				</font><br></td>
 			</tr>
