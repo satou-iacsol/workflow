@@ -6,7 +6,6 @@
 	// Shinsei.javaのデータ受け取り
 request.setCharacterEncoding("UTF8");
 final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
-
 %>
 
 <!DOCTYPE html>
@@ -17,6 +16,31 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 <link rel="stylesheet" href="shinsei.css">
 </head>
 <body>
+	<script type="text/javascript">
+	<!--
+		function logout() {
+			if (confirm("ログアウトしますか？")) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	// -->
+	</script>
+	<%
+		try {
+		if (session.equals(null)) {
+			throw new Exception();
+		}
+	%>
+	<br>
+	<form name="login_logout" action="login.jsp" method="post"
+		onsubmit="return logout()">
+		<div align="right">
+			ログイン：<%=session.getAttribute("fullname")%>
+			<input type="submit" value="ログアウト">
+		</div>
+	</form>
 	<div class="hoge">
 		<h1>有給休暇取得申請システム 申請画面</h1>
 	</div>
@@ -56,11 +80,13 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 				type="time" name="time_2" required="required"> <br> <br>
 
 			取得事由:
-			<textarea maxlength="50" name="comment" cols="50" rows="1" required="required"></textarea>
-			<br> 連絡先　: <input maxlength="11" type="tel" name="tellnumber" id="number" onKeyup="this.value=this.value.replace(/[^0-9]+/i,'')"
-				required="required" /> <br> 備考　　:
+			<textarea maxlength="50" name="comment" cols="50" rows="1"
+				required="required"></textarea>
+			<br> 連絡先 : <input maxlength="11" type="tel" name="tellnumber"
+				id="number" onKeyup="this.value=this.value.replace(/[^0-9]+/i,'')"
+				required="required" /> <br> 備考 :
 			<textarea maxlength="50" name="bikou" cols="50" rows="1"></textarea>
-			<br> 承認者　: <select name="approver">
+			<br> 承認者 : <select name="approver">
 				<option value="<%=session.getAttribute("approverName_1")%>"><%=session.getAttribute("approverName_1")%></option>
 				<option value="<%=session.getAttribute("approverName_2")%>"><%=session.getAttribute("approverName_2")%></option>
 			</select> 一次承認者スキップ: <select name="flag">
@@ -69,9 +95,13 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 			</select> <br> <br>
 
 		</form>
-				<button type="submit" form="Confirmation">確認</button>
-				<button onclick="history.back();">キャンセル</button>
-		</div>
-
+		<button type="submit" form="Confirmation">確認</button>
+		<button onclick="history.back();">キャンセル</button>
+	</div>
+	<%
+		} catch (Exception e) {
+		response.sendRedirect("login.jsp");
+	}
+	%>
 </body>
 </html>

@@ -1,8 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ page import="java.util.Enumeration"%>
 <%
-	session.setAttribute("referenceDirectory", "C:/Users/akashi-iacsol/git/workflow/WorkFlow3/WebContent/");
+// セッションにある全ての要素名を取得する
+Enumeration<String> names = session.getAttributeNames();
+
+// 取得した要素名をループ処理で全て削除する
+while (names.hasMoreElements()) {
+	String name = (String) names.nextElement();
+	session.removeAttribute(name);
+}
+// csvのディレクトリを設定
+session.setAttribute("referenceDirectory", "C:/Users/Yusuke/git/workflow/WorkFlow3/WebContent/");
 %>
 <html>
 <head>
