@@ -8,7 +8,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -18,10 +18,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 @WebServlet("/Approve")
 public class Approve extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
 
 	public Approve() {
 		super();
@@ -62,8 +62,8 @@ public class Approve extends HttpServlet {
 					// ステータスを実行内容で更新
 					data[14] = (String) session.getAttribute("approvedAction");
 					// 承認差戻日を当日のデータに更新
-					LocalDate localDateTime = LocalDate.now();
-					data[13] = DateTimeFormatter.ofPattern("yyyyMMdd").format(localDateTime);
+					LocalDateTime localDateTime = LocalDateTime.now();
+					data[13] = DateTimeFormatter.ofPattern("yyyyMMddHHmm").format(localDateTime);
 					// 更新内容を反映したデータの作成
 					String newData = data[0];
 					for (int i = 1; i <= 14; i++) {
@@ -105,8 +105,8 @@ public class Approve extends HttpServlet {
 			} else {
 				// 次申請番号の作成
 				String[] nextData = new String[15];
-				nextData[0] = number.substring(0, 15)
-						+ String.valueOf(Integer.parseInt(number.substring(15)) + 1);
+				nextData[0] = number.substring(0, 14)
+						+ String.format("%02d", Integer.parseInt(number.substring(14)) + 1);
 				for (int i = 1; i < 11; i++) {
 					nextData[i] = preData[i];
 				}
@@ -140,8 +140,8 @@ public class Approve extends HttpServlet {
 			} else {
 				// 次申請番号の作成
 				String[] nextData = new String[15];
-				nextData[0] = number.substring(0, 15)
-						+ String.valueOf(Integer.parseInt(number.substring(15)) + 1);
+				nextData[0] = number.substring(0, 14)
+						+ String.format("%02d", Integer.parseInt(number.substring(14)) + 1);
 				for (int i = 1; i < 11; i++) {
 					nextData[i] = preData[i];
 				}
