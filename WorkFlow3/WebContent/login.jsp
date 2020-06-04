@@ -23,7 +23,7 @@ table {
 </head>
 <body>
 	<br>
-	<form action="LoginSQL" method="post">
+	<form action="Login" method="post">
 		<table>
 			<tr>
 				<td colspan="2">有給休暇取得申請システム ログイン</td>
