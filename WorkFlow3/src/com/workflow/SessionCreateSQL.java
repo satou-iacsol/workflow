@@ -151,7 +151,7 @@ public class SessionCreateSQL extends HttpServlet {
 			}
 
 			// 申請データの連番 -1 の連番を作成
-			String preNumber = number.substring(0, 15) + String.valueOf(Integer.parseInt(number.substring(15)) - 1);
+			String preNumber = number.substring(0, 14) + String.format("%02d",Integer.parseInt(number.substring(14)) - 1);
 
 			stmtPreData = con.createStatement();
 			String sqlPreData = "SELECT * from data";
