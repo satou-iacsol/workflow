@@ -4,7 +4,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 response.setContentType("text/html;charset=UTF-8");
-final String referenceDirectory = (String)session.getAttribute("referenceDirectory");
+final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
 String id = (String) session.getAttribute("id");
 session.setAttribute("approvedComment", request.getParameter("comment"));
 session.setAttribute("approvedAction", request.getParameter("action"));
@@ -26,7 +26,31 @@ table {
 </style>
 </head>
 <body>
+	<script type="text/javascript">
+	<!--
+		function logout() {
+			if (confirm("ログアウトしますか？")) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	// -->
+	</script>
+	<%
+		try {
+		if (session.equals(null)) {
+			throw new Exception();
+		}
+	%>
 	<br>
+	<form name="login_logout" action="login.jsp" method="post"
+		onsubmit="return logout()">
+		<div align="right">
+			ログイン：<%=session.getAttribute("fullname")%>
+			<input type="submit" value="ログアウト">
+		</div>
+	</form>
 	<form action="Approve" method="post">
 		<table style="border: 0">
 			<tr>
@@ -124,12 +148,17 @@ table {
 			</tr>
 			<tr>
 				<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="submit" value=" <%=session.getAttribute("approvedAction")%> "
-					class="btn">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="submit"
+					value=" <%=session.getAttribute("approvedAction")%> " class="btn">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<button type="button" onclick="history.back()">&nbsp;戻る&nbsp;</button>
 				</td>
 			</tr>
 		</table>
 	</form>
+	<%
+		} catch (Exception e) {
+		response.sendRedirect("login.jsp");
+	}
+	%>
 </body>
 </html>

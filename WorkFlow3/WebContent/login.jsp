@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ page import="java.util.Enumeration"%>
 <%
-	session.setAttribute("referenceDirectory", "C:\\Users\\seiya_saitou\\git\\workflow\\WorkFlow3\\WebContent\\");
+	//csvのディレクトリを設定
+String referenceDirectory = "C:\\Users\\seiya_saitou\\git\\workflow\\WorkFlow3\\WebContent\\";
 %>
 <html>
 <head>
@@ -20,6 +22,9 @@ table {
 </style>
 </head>
 <body>
+	<header>
+		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg" alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+	</header>
 	<br>
 	<form action="Login" method="post">
 		<table>
@@ -35,6 +40,16 @@ table {
  %> <%=session.getAttribute("loginError")%> <%
  	session.setAttribute("loginError", "");
  }
+
+ //セッションにある全ての要素名を取得する
+ Enumeration<String> names = session.getAttributeNames();
+
+ //取得した要素名をループ処理で全て削除する
+ while (names.hasMoreElements()) {
+ 	String name = (String) names.nextElement();
+ 	session.removeAttribute(name);
+ }
+ session.setAttribute("referenceDirectory", referenceDirectory);
  %>
 				</font><br></td>
 			</tr>

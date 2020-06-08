@@ -1,9 +1,24 @@
-@CHARSET "UTF-8";
+@charset "UTF-8";
 
 @import url(default.css);
 
 body {
 	background-color: #fafafa;
+}
+
+header {
+	position: fixed;
+	left: 0;
+	width: 100%;
+}
+
+img{
+	float:left;
+}
+
+.logoutbutton {
+	margin-left: 20px;
+	margin-right: 20px;
 }
 
 h1 {
@@ -12,6 +27,7 @@ h1 {
 }
 
 .hoge {
+	margin-top:50px;
 	text-align: center;
 }
 
@@ -20,4 +36,11 @@ h1 {
 	margin: 10px auto;
 	border: 1px solid #d1d1d1;
 	padding: 30px;
+}
+
+.top{
+	margin:0;
+}
+.interval{
+	margin-bottom:5px;
 }

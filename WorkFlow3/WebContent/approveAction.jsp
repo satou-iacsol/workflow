@@ -32,7 +32,6 @@ table {
 		function formCheck() {
 			if (document.approveForm.action.value == "差戻") {
 				if (document.approveForm.comment.value == "") {
-					window.alert('差戻時はコメントが必須です');
 					document.getElementById('notice').style.display = "block";
 					return false;
 				} else {
@@ -44,9 +43,29 @@ table {
 				return true;
 			}
 		}
+		function logout() {
+			if (confirm("ログアウトしますか？")) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	// -->
 	</script>
+	<%
+		try {
+		if (session.equals(null)) {
+			throw new Exception();
+		}
+	%>
 	<br>
+	<form name="login_logout" action="login.jsp" method="post"
+		onsubmit="return logout()">
+		<div align="right">
+			ログイン：<%=session.getAttribute("fullname")%>
+			<input type="submit" value="ログアウト">
+		</div>
+	</form>
 	<form name="approveForm" action="approveCheck.jsp" method="post"
 		onsubmit="return formCheck()">
 		<table style="border: 0">
@@ -100,8 +119,10 @@ table {
 			</tr>
 			<tr>
 				<td colspan="2" align="center"><br>
-				<a id="notice" style="display: none; color: red;"> 差戻時はコメントが必須です</a>
-				</td>
+					<noscript>
+						<a><font color="red">差戻時はコメントが必須です</font></a>
+					</noscript> <a id="notice" style="display: none; color: red;">
+						差戻時はコメントが必須です</a></td>
 			</tr>
 
 			<!-- 承認者２ではない時表示 -->
@@ -143,19 +164,18 @@ table {
 			<!-- 承認者２の時表示 -->
 			<tr>
 				<td align="left">承認者１コメント:</td>
-				<td><%=session.getAttribute("preComment")%> <%
-
- %></td>
+				<td><%=session.getAttribute("preComment")%> <%%></td>
 			</tr>
 			<tr>
 				<td align="left">承認者２コメント:</td>
 				<td>
 					<%
 						if (session.getAttribute("approvedStatus").equals("")) {
-					%> <textarea name="comment" rows="1" cols="28" maxlength="50"></textarea>
-					<%
-						} else {
-					%> <%=session.getAttribute("approvedOverComment")%> <%
+					%> <textarea
+						name="comment" rows="1" cols="28" maxlength="50"></textarea> <%
+ 	} else {
+ %>
+					<%=session.getAttribute("approvedOverComment")%> <%
  	}
  %>
 				</td>
@@ -172,7 +192,8 @@ table {
 				<td colspan="2">
 					<!-- ステータスが空白の時ラジオボタンと確認ボタン表示 --> <%
  	if (session.getAttribute("approvedStatus").equals("")) {
- %> <input type="radio" name="action" id="承認" value="承認" checked><label
+ %>
+					<input type="radio" name="action" id="承認" value="承認" checked><label
 					for="承認">&nbsp;承認&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><input
 					type="radio" name="action" id="差戻" value="差戻"><label
 					for="差戻">&nbsp;差戻</label>
@@ -185,5 +206,10 @@ table {
 			</tr>
 		</table>
 	</form>
+	<%
+		} catch (Exception e) {
+		response.sendRedirect("login.jsp");
+	}
+	%>
 </body>
 </html>

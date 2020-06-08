@@ -113,7 +113,7 @@ public class SessionCreate extends HttpServlet {
 			}
 
 			// 申請データの連番 -1 の連番を作成
-			String preNumber = data[0].substring(0, 15) + String.valueOf(Integer.parseInt(data[0].substring(15)) - 1);
+			String preNumber = data[0].substring(0, 14) + String.format("%02d",Integer.parseInt(number.substring(14)) - 1);
 
 			// 申請データの連番 -1 の申請データを取得
 			brPreData = Files.newBufferedReader(Paths.get(referenceDirectory + "data.csv"),

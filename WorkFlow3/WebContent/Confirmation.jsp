@@ -15,6 +15,31 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 <link rel="stylesheet" href="shinsei.css">
 </head>
 <body>
+	<script type="text/javascript">
+	<!--
+		function logout() {
+			if (confirm("ログアウトしますか？")) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	// -->
+	</script>
+	<%
+		try {
+		if (session.equals(null)) {
+			throw new Exception();
+		}
+	%>
+	<br>
+	<form name="login_logout" action="login.jsp" method="post"
+		onsubmit="return logout()">
+		<div align="right">
+			ログイン：<%=session.getAttribute("fullname")%>
+			<input type="submit" value="ログアウト">
+		</div>
+	</form>
 	<form action="<%=request.getContextPath()%>/Output" method="post">
 		<div class="hoge">
 			<h1>有給休暇取得申請システム 申請確認画面</h1>
@@ -53,6 +78,10 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 			<input value="もどる" onclick="history.back();" type="button">
 		</div>
 	</form>
-
+	<%
+		} catch (Exception e) {
+		response.sendRedirect("login.jsp");
+	}
+	%>
 </body>
 </html>
