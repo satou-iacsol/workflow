@@ -13,6 +13,7 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 <head>
 <meta charset="UTF-8">
 <title>申請画面</title>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="shinsei.css">
 </head>
 <body>
@@ -91,9 +92,9 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 
 
 			<div class="interval">取得事由:
-			<textarea maxlength="50" name="comment" cols="50" rows="1"
-				required="required"></textarea></div>
-			<div class="interval">連絡先　: <input maxlength="11" type="tel" name="tellnumber"
+			<textarea maxlength="50" id="hoge_text" name="comment" cols="50" rows="1"required="required"></textarea>
+			</div>
+			<div class="interval">連絡先　: <input maxlength="11" id="hoge_tel" type="tel" name="tellnumber"
 				id="number" onKeyup="this.value=this.value.replace(/[^0-9]+/i,'')"
 				required="required" /></div>
 			<div class="interval">備考　　:
@@ -113,5 +114,61 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 		response.sendRedirect("login.jsp");
 	}
 	%>
+	 <script type="text/javascript">
+      $(document).ready(function(){
+          var dColor = '#999999';    //ヒント（初期値）の文字色
+          var fColor = '#000000';    //通常入力時の文字色
+          var dValue = '必須';    //ヒント（初期値）文字列
+
+          //初期状態設定
+          if($('#hoge_text').val() == "" || $('#hoge_text').val() == dValue){
+              $('#hoge_text').val(dValue);
+              $('#hoge_text').css('color',dColor);
+          }
+
+          //フォーカスされたときの処理
+          $('#hoge_text').focus(function(){
+              if($(this).val() == dValue){
+                  $(this).val('');
+                  $(this).css('color', fColor);
+              }
+          })
+          //フォーカスが外れたときの処理
+          .blur(function(){
+              if($(this).val() == dValue || $(this).val() == ''){
+                  $(this).val(dValue);
+                  $(this).css('color',dColor);
+              };
+          });
+      });
+ 	 </script>
+	 <script type="text/javascript">
+      $(document).ready(function(){
+          var dColor = '#999999';    //ヒント（初期値）の文字色
+          var fColor = '#000000';    //通常入力時の文字色
+          var dValue = '必須';    //ヒント（初期値）文字列
+
+          //初期状態設定
+          if($('#hoge_tel').val() == "" || $('#hoge_tel').val() == dValue){
+              $('#hoge_tel').val(dValue);
+              $('#hoge_tel').css('color',dColor);
+          }
+
+          //フォーカスされたときの処理
+          $('#hoge_tel').focus(function(){
+              if($(this).val() == dValue){
+                  $(this).val('');
+                  $(this).css('color', fColor);
+              }
+          })
+          //フォーカスが外れたときの処理
+          .blur(function(){
+              if($(this).val() == dValue || $(this).val() == ''){
+                  $(this).val(dValue);
+                  $(this).css('color',dColor);
+              };
+          });
+      });
+      </script>
 </body>
 </html>

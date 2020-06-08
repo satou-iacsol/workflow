@@ -8,13 +8,27 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 %>
 
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <title>確認画面</title>
 <link rel="stylesheet" href="shinsei.css">
 </head>
 <body>
+	<header>
+		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg" alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<form name="login_logout" action="login.jsp" method="post"
+		onsubmit="return logout()">
+		<div align="right">
+			<div>
+				<%=session.getAttribute("affiliationName") %>・
+				<%=session.getAttribute("fullname")%>
+				<input class="logoutbutton" type="submit" value="ログアウト">
+			</div>
+		</div>
+		</form>
+			<hr>
+	</header>
 	<script type="text/javascript">
 	<!--
 		function logout() {
@@ -33,13 +47,6 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 		}
 	%>
 	<br>
-	<form name="login_logout" action="login.jsp" method="post"
-		onsubmit="return logout()">
-		<div align="right">
-			ログイン：<%=session.getAttribute("fullname")%>
-			<input type="submit" value="ログアウト">
-		</div>
-	</form>
 	<form action="<%=request.getContextPath()%>/Output" method="post">
 		<div class="hoge">
 			<h1>有給休暇取得申請システム 申請確認画面</h1>
@@ -65,11 +72,11 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 			<%=(String) session.getAttribute("date_4")%>/<%=session.getAttribute("time_2")%>
 			<br> 取得事由:
 			<%=session.getAttribute("comment")%>
-			<br> 連絡先 :
+			<br> 連絡先　:
 			<%=session.getAttribute("tellnumber")%>
-			<br> 備考 :
+			<br> 備考　　:
 			<%=session.getAttribute("bikou")%>
-			<br> 承認者 :
+			<br> 承認者　:
 			<%=session.getAttribute("approver_1_2")%>
 			<br> 一次承認者スキップ:
 			<%=session.getAttribute("flag")%>
