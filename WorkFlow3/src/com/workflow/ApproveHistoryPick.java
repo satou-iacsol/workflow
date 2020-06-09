@@ -43,8 +43,8 @@ public class ApproveHistoryPick extends HttpServlet {
 		Connection con = null;
 		Statement stmtData = null;
 		Statement stmtData1 = null;
-		Statement stmtData2= null;
-		Statement stmtData3= null;
+		Statement stmtData2 = null;
+		Statement stmtData3 = null;
 		ResultSet resultData = null;
 		ResultSet resultData1 = null;
 		ResultSet resultData2 = null;
@@ -56,6 +56,8 @@ public class ApproveHistoryPick extends HttpServlet {
 		String password = "0978781";
 
 		try {
+
+
 			// PostgreSQLに接続
 			con = DriverManager.getConnection(url, user, password);
 
@@ -64,16 +66,26 @@ public class ApproveHistoryPick extends HttpServlet {
 			String sqlData = "SELECT * from data";
 			resultData = stmtData.executeQuery(sqlData);
 			ArrayList<ArrayList<String>> sortList = new ArrayList<>();
+
 			while (resultData.next()) {
+				String number01 = "";
+				String numberNow = "";
+				String type = "";
+				String fromDateTime = "";
+				String toDateTime = "";
+				String flow = "";
+				String result = "";
+
+
 				Statement stmtEmployee = null;
 				ResultSet resultEmployee = null;
 
-				if (resultData.getString("id").equals(id)) {
+				if (resultData.getString("id").equals(id) && resultData.getString("delete_flag").equals("0")
+						&& resultData.getString("number").substring(14).equals("01")) {
 					ArrayList<String> listSub = new ArrayList<>();
 
-					listSub.add(resultData.getString("number"));
-					listSub.add(resultData.getString("type"));
-					listSub.add(resultData.getString("date_1") + resultData.getString("date_3"));
+					number01 = resultData.getString("number");
+
 
 					stmtData1 = con.createStatement();
 					String sqlData1 = "SELECT * from data";
@@ -92,14 +104,76 @@ public class ApproveHistoryPick extends HttpServlet {
 					String sqlData2 = "SELECT * from data";
 					resultData2 = stmtData2.executeQuery(sqlData2);
 
-					String approverNumber;
-					String status;
+					String approverNumber = "";
+					String status = "";
 					while (resultData2.next()) {
 						if (resultData2.getString("number").equals(sort.get(sort.size() - 1))) {
+							numberNow = resultData2.getString("number");
+
+							switch (Integer.parseInt(resultData2.getString("type"))) {
+							case 1:
+								type = "1.有給休暇";
+								break;
+							case 2:
+								type = "2.代休";
+								break;
+							case 3:
+								type = "3.生理休暇";
+								break;
+							case 4:
+								type = "4.慶弔休暇";
+								break;
+							case 5:
+								type = "5.特別休暇";
+								break;
+							case 6:
+								type = "6.罹災休暇";
+								break;
+							case 7:
+								type = "7.半休";
+								break;
+							case 8:
+								type = "8.結婚休暇";
+								break;
+							case 9:
+								type = "9.出産休暇";
+								break;
+							case 10:
+								type = "10.忌引き休暇";
+								break;
+							case 11:
+								type = "11.隔離休暇";
+								break;
+							case 12:
+								type = "12.一周忌";
+								break;
+							case 13:
+								type = "13.受験休暇";
+								break;
+							case 14:
+								type = "14.産前産後休暇";
+								break;
+							}
+
+							fromDateTime = resultData2.getString("date_1") + resultData2.getString("date_3");
+							toDateTime = resultData2.getString("date_2") + resultData2.getString("date_4");
 							approverNumber = resultData2.getString("approverNumber");
 							status = resultData2.getString("status");
-						break;
+							break;
 						}
+					}
+
+					if (status.equals("承認")) {
+						stmtEmployee = con.createStatement();
+						String sqlEmployee = "SELECT * from employee_muster";
+						resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
+						while (resultEmployee.next()) {
+							if (resultEmployee.getString("id").equals(approverNumber)) {
+								flow = resultEmployee.getString("fullname");
+								break;
+							}
+						}
+						result = "承認完了";
 					}
 
 					stmtEmployee = con.createStatement();
@@ -111,10 +185,14 @@ public class ApproveHistoryPick extends HttpServlet {
 							break;
 						}
 					}
+					listSub.add(number01);
+					listSub.add(numberNow);
+					listSub.add(type);
+					listSub.add(fromDateTime);
+					listSub.add(toDateTime);
+					listSub.add(flow);
+					listSub.add(result);
 
-					for (int i = 8; i <= 15; i++) {
-						listSub.add(resultData.getString(i));
-					}
 					sortList.add(listSub);
 				}
 
@@ -168,6 +246,6 @@ public class ApproveHistoryPick extends HttpServlet {
 			}
 		}
 		session.setAttribute("list", list);
-		response.sendRedirect("approveChoose.jsp");
+		response.sendRedirect("approveHistoryChoose.jsp");
 	}
 }
