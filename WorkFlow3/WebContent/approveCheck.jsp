@@ -23,9 +23,35 @@ table {
 	align: center;
 	margin: 0 auto;
 }
+header {
+	position: fixed;
+	left: 0;
+	width: 100%;
+}
+img{
+	float:left;
+}
+.logoutbutton {
+	margin-left: 20px;
+	margin-right: 20px;
+}
 </style>
 </head>
 <body>
+	<header>
+		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg" alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<form name="login_logout" action="login.jsp" method="post"
+		onsubmit="return logout()">
+		<div align="right">
+			<div>
+				<%=session.getAttribute("affiliationName") %>・
+				<%=session.getAttribute("fullname")%>
+				<input class="logoutbutton" type="submit" value="ログアウト">
+			</div>
+		</div>
+	</form>
+		<hr>
+	</header>
 	<script type="text/javascript">
 	<!--
 		function logout() {
@@ -44,13 +70,7 @@ table {
 		}
 	%>
 	<br>
-	<form name="login_logout" action="login.jsp" method="post"
-		onsubmit="return logout()">
-		<div align="right">
-			ログイン：<%=session.getAttribute("fullname")%>
-			<input type="submit" value="ログアウト">
-		</div>
-	</form>
+	<br>
 	<form action="Approve" method="post">
 		<table style="border: 0">
 			<tr>

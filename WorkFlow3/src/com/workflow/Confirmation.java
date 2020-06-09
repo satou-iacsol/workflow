@@ -53,9 +53,7 @@ public class Confirmation extends HttpServlet {
 		String type = (String) request.getParameter("type");
 		String date_1 = (String) request.getParameter("date_1");
 		String date_2 = (String) request.getParameter("date_2");
-		String date_3 = (String) request.getParameter("date_3");
 		String time_1 = (String) request.getParameter("time_1");
-		String date_4 = (String) request.getParameter("date_4");
 		String time_2 = (String) request.getParameter("time_2");
 		String comment = (String) request.getParameter("comment");
 		String tellnumber = (String) request.getParameter("tellnumber");
@@ -87,9 +85,7 @@ public class Confirmation extends HttpServlet {
 		session.setAttribute("type", type);
 		session.setAttribute("date_1", date_1);
 		session.setAttribute("date_2", date_2);
-		session.setAttribute("date_3", date_3);
 		session.setAttribute("time_1", time_1);
-		session.setAttribute("date_4", date_4);
 		session.setAttribute("time_2", time_2);
 		session.setAttribute("comment", comment);
 		session.setAttribute("tellnumber", tellnumber);

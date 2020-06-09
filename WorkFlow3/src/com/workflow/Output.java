@@ -62,9 +62,7 @@ public class Output extends HttpServlet {
 		String type = (String) session.getAttribute("type");
 		String date_1 = (String) session.getAttribute("date_1");
 		String date_2 = (String) session.getAttribute("date_2");
-		String date_3 = (String) session.getAttribute("date_3");
 		String time_1 = (String) session.getAttribute("time_1");
-		String date_4 = (String) session.getAttribute("date_4");
 		String time_2 = (String) session.getAttribute("time_2");
 		String comment = (String) session.getAttribute("comment");
 		String tellnumber = (String) session.getAttribute("tellnumber");
@@ -82,8 +80,6 @@ public class Output extends HttpServlet {
 		//各変数に含まれる"/"と":"を削除
 		date_1 = date_1.replace("-", "");
 		date_2 = date_2.replace("-", "");
-		date_3 = date_3.replace("-", "");
-		date_4 = date_4.replace("-", "");
 		time_1 = time_1.replace(":", "");
 		time_2 = time_2.replace(":", "");
 
@@ -132,9 +128,9 @@ public class Output extends HttpServlet {
 
 			pw.print(date_1 + ",");
 			pw.print(date_2 + ",");
-			pw.print(date_3);
+			pw.print(date_1);
 			pw.print(time_1 + ",");
-			pw.print(date_4);
+			pw.print(date_2);
 			pw.print(time_2 + ",");
 			pw.print(comment + ",");
 			pw.print(tellnumber + ",");

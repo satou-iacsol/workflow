@@ -66,10 +66,10 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 			<%=session.getAttribute("date_1")%>
 			～
 			<%=session.getAttribute("date_2")%>
-			<br> 取得日時:
-			<%=session.getAttribute("date_3")%>/<%=session.getAttribute("time_1")%>
+			<br> 取得時間:
+			<%=session.getAttribute("time_1")%>
 			～
-			<%=(String) session.getAttribute("date_4")%>/<%=session.getAttribute("time_2")%>
+			<%=session.getAttribute("time_2")%>
 			<br> 取得事由:
 			<%=session.getAttribute("comment")%>
 			<br> 連絡先　:

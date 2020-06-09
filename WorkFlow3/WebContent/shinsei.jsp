@@ -83,12 +83,8 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 				name="date_1" required="required"></label> ～ <label
 				class="date-edit"><input type="date" name="date_2"
 				required="required"></label> </div>
-				<div class="interval">取得日時: <label
-				class="date-edit"><input type="date" name="date_3"
-				required="required"></label> <input type="time" name="time_1"
-				required="required"> ～ <label class="date-edit"><input
-				type="date" name="date_4" required="required"></label> <input
-				type="time" name="time_2" required="required"></div>
+				<div class="interval">取得時間: <input type="time" name="time_1"
+				required="required"> ～ <input type="time" name="time_2" required="required"></div>
 
 
 			<div class="interval">取得事由:

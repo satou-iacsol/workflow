@@ -11,6 +11,9 @@ String referenceDirectory = "C:\\Users\\seiya_saitou\\git\\workflow\\WorkFlow3\\
 <meta charset="UTF-8"></meta>
 <title>有給休暇取得申請システム</title>
 <style>
+body{
+	margin:8px 0 0 0;
+}
 table, td, th {
 	border: 0px;
 }
@@ -18,6 +21,12 @@ table, td, th {
 table {
 	align: center;
 	margin: 0 auto;
+}
+header{
+	left:0;
+}
+img{
+	margin-left:0;
 }
 </style>
 </head>
