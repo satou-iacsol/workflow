@@ -62,7 +62,6 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 			<div>
 				氏名:<%=session.getAttribute("fullname")%></div>
 			<br>
-
 			<div class="interval">有給種別: <select name="type">
 				<option value=有給休暇>有給休暇</option>
 				<option value=代休>代休</option>
@@ -79,12 +78,12 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 				<option value=受験休暇>受験休暇</option>
 				<option value=産前産後休暇>産前産後休暇</option>
 			</select></div>
-				<div class="interval">取得期間: <label class="date-edit"><input type="date"
-				name="date_1" required="required"></label> ～ <label
-				class="date-edit"><input type="date" name="date_2"
+				<div class="interval">取得期間: <label class="date-edit"><input type="date"  id="date_1"
+				name="date_1" value="" required="required"></label> ～ <label
+				class="date-edit"><input type="date" name="date_2"  id="date_2"
 				required="required"></label> </div>
-				<div class="interval">取得時間: <input type="time" name="time_1"
-				required="required"> ～ <input type="time" name="time_2" required="required"></div>
+				<div class="interval">取得時間: <input type="time" id="time_1" name="time_1" value="09:00"
+				required="required"> ～ <input type="time" id="time_2" name="time_2" value="18:00" required="required"></div>
 
 
 			<div class="interval">取得事由:
@@ -165,6 +164,28 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
               };
           });
       });
+      </script>
+
+      <script>
+      <!-- 取得期間の整合性チェック -->
+      	document.getElementById('Confirmation').addEventListener('submit', function() {
+      		var date1 = document.getElementById("date_1").value;
+	      	var date2 = document.getElementById("date_2").value;
+	      	var time1 = document.getElementById("time_1").value;
+	      	var time2 = document.getElementById("time_2").value;
+	      	var date_time1 = date1 + time1;
+	      	var date_time2 = date2 + time2;
+
+	      	if(date_time1 > date_time2){
+	      	    alert("取得期間が逆行しています。");
+
+	      	}
+      		console.log(date1);
+      		console.log(time1);
+      		console.log(date_time1);
+
+      	});
+
       </script>
 </body>
 </html>
