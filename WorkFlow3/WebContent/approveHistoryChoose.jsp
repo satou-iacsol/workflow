@@ -1,18 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.io.BufferedReader"
-	import="java.io.FileNotFoundException" import="java.io.IOException"
-	import="java.nio.charset.Charset" import="java.nio.file.Files"
-	import="java.nio.file.Paths" import="java.util.ArrayList"
+<%@ page import="java.util.ArrayList"
 	import="java.util.Collections"%>
 <%@ page session="true"%>
 <%
-	final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
-
 // 社員番号取得
 String id = (String) session.getAttribute("id");
+// 申請一覧リスト取得
 @SuppressWarnings("unchecked")
-ArrayList<ArrayList<String>> list = (ArrayList<ArrayList<String>>) session.getAttribute("list");
+ArrayList<ArrayList<String>> historysList = (ArrayList<ArrayList<String>>) session.getAttribute("historysList");
 %>
 <!DOCTYPE html>
 <html>
@@ -101,41 +97,44 @@ img {
 		<!-- テーブルにリストのデータを入れる -->
 
 		<%
-			for (int i = 0; i < list.size(); i++) {
-			String number = list.get(i).get(0);
+			for (int i = 0; i < historysList.size(); i++) {
+				String[] list = new String[7];
+				for (int j = 0; j < historysList.get(i).size(); j++){
+					list[j] = historysList.get(i).get(j);
+				}
 		%>
 		<tr>
 			<!-- 各列項目に入れるデータを取得 -->
 
-			<td align="left" valign="top">&nbsp;<%=list.get(i).get(0)%>&nbsp;
+			<td align="left" valign="top">&nbsp;<%=list[0]%>&nbsp;
 			</td>
-			<td align="left" valign="top">&nbsp;<%=list.get(i).get(2)%>&nbsp;
+			<td align="left" valign="top">&nbsp;<%=list[2]%>&nbsp;
 			</td>
 			<td align="left" valign="top">&nbsp;<%
-				String from = list.get(i).get(3).substring(0, 4) + "年" + list.get(i).get(3).substring(4, 6) + "月"
-					+ list.get(i).get(3).substring(6, 8) + "日 " + list.get(i).get(3).substring(8, 10) + "時"
-					+ list.get(i).get(3).substring(10, 12) + "分";
+				String from = list[3].substring(0, 4) + "年" + list[3].substring(4, 6) + "月"
+					+ list[3].substring(6, 8) + "日 " + list[3].substring(8, 10) + "時"
+					+ list[3].substring(10, 12) + "分";
 			%><%=from%>&nbsp;～<br>&nbsp;&nbsp;&nbsp;<%
-				String to = list.get(i).get(4).substring(0, 4) + "年" + list.get(i).get(4).substring(4, 6) + "月"
-					+ list.get(i).get(4).substring(6, 8) + "日 " + list.get(i).get(4).substring(8, 10) + "時"
-					+ list.get(i).get(4).substring(10, 12) + "分";
+				String to = list[4].substring(0, 4) + "年" + list[4].substring(4, 6) + "月"
+					+ list[4].substring(6, 8) + "日 " + list[4].substring(8, 10) + "時"
+					+ list[4].substring(10, 12) + "分";
 			%><%=to%>
 			</td>
-			<td align="center" valign="top">&nbsp;<%=list.get(i).get(5)%>&nbsp;<br>
+			<td align="center" valign="top">&nbsp;<%=list[5]%>&nbsp;<br>
 				<form action="ApproveHistoryCreate" method="post">
-					<input type="hidden" name="list" value=<%=list.get(i)%>> <input
+					<input type="hidden" name="number" value=<%=list[1]%>> <input
 						type="hidden" name="action" value="history"><input
-						type="submit" value="<%=list.get(i).get(6)%>">
+						type="submit" value="<%=list[6]%>">
 				</form></td>
 			<td align="right" valign="top">
 				<form action="ApproveHistoryCreate" method="post" id="delete">
-					<input type="hidden" name="list" value=<%=list.get(i)%>><input
+					<input type="hidden" name="number" value=<%=list[1]%>><input
 						type="hidden" name="action" value="delete">
 				</form> <%
- 	if (list.get(i).get(6).equals("承認完了")) {
+ 	if (list[6].equals("承認完了")) {
  } else {
  %><form action="ApproveHistoryCreate" method="post" id="fix">
-					<input type="hidden" name="list" value=<%=list.get(i)%>><input
+					<input type="hidden" name="number" value=<%=list[1]%>><input
 						type="hidden" name="action" value="fix">
 				</form> <input type="submit" value=" 修正 " form="fix">
 				&nbsp;&nbsp;&nbsp;<%

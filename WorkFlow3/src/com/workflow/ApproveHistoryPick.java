@@ -315,7 +315,7 @@ public class ApproveHistoryPick extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		session.setAttribute("list", list);
+		session.setAttribute("historysList", list);
 		response.sendRedirect("approveHistoryChoose.jsp");
 	}
 }
