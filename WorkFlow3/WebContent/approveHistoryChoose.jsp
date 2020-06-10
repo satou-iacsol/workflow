@@ -34,14 +34,17 @@ table {
 	margin: 0 auto;
 	border: solid 1px;
 }
+
 header {
 	position: fixed;
 	left: 0;
 	width: 100%;
 }
-img{
-	float:left;
+
+img {
+	float: left;
 }
+
 .logoutbutton {
 	margin-left: 20px;
 	margin-right: 20px;
@@ -50,16 +53,17 @@ img{
 </head>
 <body>
 	<header>
-		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg" alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg"
+			alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
-		onsubmit="return logout()">
-		<div align="right">
-			<div>
-				<%=session.getAttribute("affiliationName") %>・
-				<%=session.getAttribute("fullname")%>
-				<input class="logoutbutton" type="submit" value="ログアウト">
+			onsubmit="return logout()">
+			<div align="right">
+				<div>
+					<%=session.getAttribute("affiliationName")%>・
+					<%=session.getAttribute("fullname")%>
+					<input class="logoutbutton" type="submit" value="ログアウト">
+				</div>
 			</div>
-		</div>
 		</form>
 		<hr>
 	</header>
@@ -85,93 +89,74 @@ img{
 	<div align="center">有給休暇取得申請システム 申請一覧画面</div>
 	<br>
 	<br>
-		<table>
-			<tr height="30">
-				<td align="left" valign="bottom">申請番号</td>
-				<td align="left" valign="bottom">有給種別</td>
-				<td align="left" valign="bottom">取得日時</td>
-				<td align="left" valign="bottom">ステータス</td>
-				<td align="left" valign="bottom">修正･取消</td>
-			</tr>
+	<table>
+		<tr height="30">
+			<td align="left" valign="bottom">&nbsp;申請番号</td>
+			<td align="left" valign="bottom">&nbsp;有給種別</td>
+			<td align="left" valign="bottom">&nbsp;取得日時</td>
+			<td align="left" valign="bottom">&nbsp;ステータス</td>
+			<td align="left" valign="bottom">&nbsp;修正･取消</td>
+		</tr>
 
-			<!-- テーブルにリストのデータを入れる -->
+		<!-- テーブルにリストのデータを入れる -->
 
-			<%
-				for (int i = 0; i < list.size(); i++) {
-				String number = list.get(i).get(0);
-			%>
-			<tr>
-				<!-- 各列項目に入れるデータを取得 -->
+		<%
+			for (int i = 0; i < list.size(); i++) {
+			String number = list.get(i).get(0);
+		%>
+		<tr>
+			<!-- 各列項目に入れるデータを取得 -->
 
-				<td align="left">&nbsp;<%=list.get(i).get(6)%>&nbsp;
-				</td>
-				<td align="left">&nbsp;<%=list.get(i).get(5)%>&nbsp;
-				</td>
-				<td align="left">
-					<%
-						switch (Integer.parseInt(list.get(i).get(2))) {
-					case 1:
-					%> 1.有給休暇<%
-						break;
-								case 2:
-					%> 2.代休<%
-						break;
-								case 3:
-					%> 3.生理休暇<%
-						break;
-								case 4:
-					%> 4.慶弔休暇<%
-						break;
-								case 5:
-					%> 5.特別休暇<%
-						break;
-								case 6:
-					%> 6.罹災休暇<%
-						break;
-								case 7:
-					%> 7.半休<%
-						break;
-								case 8:
-					%> 8.結婚休暇<%
-						break;
-								case 9:
-					%> 9.出産休暇<%
-						break;
-								case 10:
-					%> 10.忌引き休暇<%
-						break;
-								case 11:
-					%> 11.隔離休暇<%
-						break;
-								case 12:
-					%> 12.一周忌<%
-						break;
-								case 13:
-					%> 13.受験休暇<%
-						break;
-								case 14:
-					%> 14.産前産後休暇<%
-						break;
-								}
-					%>&nbsp;
-				</td>
-				<td align="left">&nbsp;<%=list.get(i).get(14)%></td>
-			</tr>
-			<%
-				}
-			%>
-		</table>
-		<!-- ループ終了後に実行ボタン表示 -->
-		<div align="center">
-			<br> <span style="margin-right: 200px"><input
-				type="submit" value=" 実行 " class="btn"></span>
-			<button type="button" onclick="history.back()">&nbsp;戻る&nbsp;</button>
-		</div>
-	<form action="SessionCreate" method="post">
-	</form>
+			<td align="left" valign="top">&nbsp;<%=list.get(i).get(0)%>&nbsp;
+			</td>
+			<td align="left" valign="top">&nbsp;<%=list.get(i).get(2)%>&nbsp;
+			</td>
+			<td align="left" valign="top">&nbsp;<%
+				String from = list.get(i).get(3).substring(0, 4) + "年" + list.get(i).get(3).substring(4, 6) + "月"
+					+ list.get(i).get(3).substring(6, 8) + "日 " + list.get(i).get(3).substring(8, 10) + "時"
+					+ list.get(i).get(3).substring(10, 12) + "分";
+			%><%=from%>&nbsp;～<br>&nbsp;&nbsp;&nbsp;<%
+				String to = list.get(i).get(4).substring(0, 4) + "年" + list.get(i).get(4).substring(4, 6) + "月"
+					+ list.get(i).get(4).substring(6, 8) + "日 " + list.get(i).get(4).substring(8, 10) + "時"
+					+ list.get(i).get(4).substring(10, 12) + "分";
+			%><%=to%>
+			</td>
+			<td align="center" valign="top">&nbsp;<%=list.get(i).get(5)%>&nbsp;<br>
+				<form action="ApproveHistoryCreate" method="post">
+					<input type="hidden" name="list" value=<%=list.get(i)%>> <input
+						type="hidden" name="action" value="history"><input
+						type="submit" value="<%=list.get(i).get(6)%>">
+				</form></td>
+			<td align="right" valign="top">
+				<form action="ApproveHistoryCreate" method="post" id="delete">
+					<input type="hidden" name="list" value=<%=list.get(i)%>><input
+						type="hidden" name="action" value="delete">
+				</form> <%
+ 	if (list.get(i).get(6).equals("承認完了")) {
+ } else {
+ %><form action="ApproveHistoryCreate" method="post" id="fix">
+					<input type="hidden" name="list" value=<%=list.get(i)%>><input
+						type="hidden" name="action" value="fix">
+				</form> <input type="submit" value=" 修正 " form="fix">
+				&nbsp;&nbsp;&nbsp;<%
+					}
+				%> <input type="submit" value=" 取消 " form="delete">
+			</td>
+		</tr>
+		<%
+			}
+		%>
+	</table>
+	<!-- ループ終了後に実行ボタン表示 -->
+	<div align="center">
+		<br> <span style="margin-right: 200px"><input
+			type="submit" value=" 実行 " class="btn"></span>
+		<button type="button" onclick="history.back()">&nbsp;戻る&nbsp;</button>
+	</div>
+
 	<%
 		} catch (Exception e) {
-		response.sendRedirect("login.jsp");
+		response.sendRedirect("login_akashi.jsp");
 	}
 	%>
 </body>

@@ -49,6 +49,10 @@ public class ApproveHistoryPick extends HttpServlet {
 		ResultSet resultData1 = null;
 		ResultSet resultData2 = null;
 		ResultSet resultData3 = null;
+		Statement stmtEmployee = null;
+		ResultSet resultEmployee = null;
+		Statement stmtEmployee1 = null;
+		ResultSet resultEmployee1 = null;
 
 		// 接続文字列の設定
 		String url = "jdbc:postgresql://localhost:5432/postgres";
@@ -56,7 +60,6 @@ public class ApproveHistoryPick extends HttpServlet {
 		String password = "0978781";
 
 		try {
-
 
 			// PostgreSQLに接続
 			con = DriverManager.getConnection(url, user, password);
@@ -76,16 +79,11 @@ public class ApproveHistoryPick extends HttpServlet {
 				String flow = "";
 				String result = "";
 
-
-				Statement stmtEmployee = null;
-				ResultSet resultEmployee = null;
-
 				if (resultData.getString("id").equals(id) && resultData.getString("delete_flag").equals("0")
 						&& resultData.getString("number").substring(14).equals("01")) {
 					ArrayList<String> listSub = new ArrayList<>();
 
 					number01 = resultData.getString("number");
-
 
 					stmtData1 = con.createStatement();
 					String sqlData1 = "SELECT * from data";
@@ -93,9 +91,8 @@ public class ApproveHistoryPick extends HttpServlet {
 
 					ArrayList<String> sort = new ArrayList<>();
 					while (resultData1.next()) {
-						if (resultData1.getString("number").substring(14).equals(listSub.get(0).substring(14))) {
+						if (resultData1.getString("number").substring(0, 14).equals(number01.substring(0, 14))) {
 							sort.add(resultData1.getString("number"));
-							break;
 						}
 					}
 					Collections.sort(sort);
@@ -174,16 +171,67 @@ public class ApproveHistoryPick extends HttpServlet {
 							}
 						}
 						result = "承認完了";
-					}
-
-					stmtEmployee = con.createStatement();
-					String sqlEmployee = "SELECT * from employee_muster";
-					resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
-					while (resultEmployee.next()) {
-						if (resultEmployee.getString("id").equals(resultData.getString("id"))) {
-							listSub.add(resultEmployee.getString("fullname"));
-							break;
+					} else if (status.equals("差戻")) {
+						stmtEmployee = con.createStatement();
+						String sqlEmployee = "SELECT * from employee_muster";
+						resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
+						while (resultEmployee.next()) {
+							if (resultEmployee.getString("id").equals(approverNumber)) {
+								flow = resultEmployee.getString("fullname");
+								break;
+							}
 						}
+						result = "差戻";
+					} else {
+						String beforeApprover = "";
+						String afterApprover = "";
+
+						if (numberNow.substring(14).equals("01")) {
+							stmtEmployee = con.createStatement();
+							String sqlEmployee = "SELECT * from employee_muster";
+							resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
+							while (resultEmployee.next()) {
+								if (resultEmployee.getString("id").equals(id)) {
+									beforeApprover = resultEmployee.getString("fullname");
+									break;
+								}
+							}
+						} else {
+							String BeforeApproverNumber = "";
+
+							stmtData3 = con.createStatement();
+							String sqlData3 = "SELECT * from data";
+							resultData3 = stmtData3.executeQuery(sqlData3);
+
+							while (resultData3.next()) {
+								if (resultData3.getString("number").equals(numberNow.substring(0, 14)
+										+ String.format("%02d", Integer.parseInt(numberNow.substring(14)) - 1))) {
+									BeforeApproverNumber = resultData3.getString("approverNumber");
+									break;
+								}
+							}
+
+							stmtEmployee = con.createStatement();
+							String sqlEmployee = "SELECT * from employee_muster";
+							resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
+							while (resultEmployee.next()) {
+								if (resultEmployee.getString("id").equals(BeforeApproverNumber)) {
+									beforeApprover = resultEmployee.getString("fullname");
+									break;
+								}
+							}
+						}
+						stmtEmployee1 = con.createStatement();
+						String sqlEmployee1 = "SELECT * from employee_muster";
+						resultEmployee1 = stmtEmployee1.executeQuery(sqlEmployee1);
+						while (resultEmployee1.next()) {
+							if (resultEmployee1.getString("id").equals(approverNumber)) {
+								afterApprover = resultEmployee1.getString("fullname");
+								break;
+							}
+						}
+						flow = beforeApprover + "  →  " + afterApprover;
+						result = "承認待ち";
 					}
 					listSub.add(number01);
 					listSub.add(numberNow);
@@ -194,13 +242,7 @@ public class ApproveHistoryPick extends HttpServlet {
 					listSub.add(result);
 
 					sortList.add(listSub);
-				}
 
-				if (stmtEmployee != null) {
-					stmtEmployee.close();
-				}
-				if (resultEmployee != null) {
-					resultEmployee.close();
 				}
 			}
 
@@ -210,8 +252,6 @@ public class ApproveHistoryPick extends HttpServlet {
 			for (int i = 0; i < sortList.size(); i++) {
 				sort.add(sortList.get(i).get(3));
 			}
-
-			session.setAttribute("approvedItems", sort.size());
 
 			// 取得期間(FROM)順にソート
 			Collections.sort(sort);
@@ -237,6 +277,36 @@ public class ApproveHistoryPick extends HttpServlet {
 				}
 				if (stmtData != null) {
 					stmtData.close();
+				}
+				if (resultData1 != null) {
+					resultData1.close();
+				}
+				if (stmtData1 != null) {
+					stmtData1.close();
+				}
+				if (resultData2 != null) {
+					resultData2.close();
+				}
+				if (stmtData2 != null) {
+					stmtData2.close();
+				}
+				if (resultData3 != null) {
+					resultData3.close();
+				}
+				if (stmtData3 != null) {
+					stmtData3.close();
+				}
+				if (stmtEmployee != null) {
+					stmtEmployee.close();
+				}
+				if (resultEmployee != null) {
+					resultEmployee.close();
+				}
+				if (stmtEmployee1 != null) {
+					stmtEmployee1.close();
+				}
+				if (resultEmployee1 != null) {
+					resultEmployee1.close();
 				}
 				if (con != null) {
 					con.close();
