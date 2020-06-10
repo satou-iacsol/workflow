@@ -62,7 +62,7 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 			<div>
 				氏名:<%=session.getAttribute("fullname")%></div>
 			<br>
-			<div class="interval">有給種別: <select name="type">
+			<div class="interval"><div id="type">有給種別: </div><select name="type">
 				<option value=有給休暇>有給休暇</option>
 				<option value=代休>代休</option>
 				<option value=生理休暇>生理休暇</option>
@@ -92,7 +92,7 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 			<div class="interval"><div id="tell_col">連絡先　: </div><input maxlength="11" id="hoge_tel" type="tel" name="tellnumber"
 				id="number" onKeyup="this.value=this.value.replace(/[^0-9]+/i,'')"
 				required="required" /></div>
-			<div class="interval">備考　　:
+			<div class="interval"><div id="bikou">備考　　:</div>
 			<textarea maxlength="50" name="bikou" cols="50" rows="1"></textarea>
 			</div>
 			 一次承認者スキップ: <select name="flag">

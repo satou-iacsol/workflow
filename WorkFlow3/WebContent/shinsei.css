@@ -12,8 +12,8 @@ header {
 	width: 100%;
 }
 
-img{
-	float:left;
+img {
+	float: left;
 }
 
 .logoutbutton {
@@ -27,7 +27,7 @@ h1 {
 }
 
 .hoge {
-	margin-top:50px;
+	margin-top: 50px;
 	text-align: center;
 }
 
@@ -38,9 +38,15 @@ h1 {
 	padding: 30px;
 }
 
-.top{
-	margin:0;
+.top {
+	margin: 0;
 }
-.interval{
-	margin-bottom:5px;
+
+.interval {
+	margin-bottom: 5px;
+}
+
+#type, #bikou, #date_col, #time_col, #reason_col, #tell_col {
+	float: left;
+	margin-right: 10px;
 }
