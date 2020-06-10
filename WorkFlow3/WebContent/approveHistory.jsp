@@ -22,7 +22,7 @@ ArrayList<ArrayList<String>> flowList = (ArrayList<ArrayList<String>>) session.g
 	border-collapse: collapse;
 	border: 0px;
 	align: center;
-	margin: 0 auto;
+	margin: auto;
 }
 
 .table2 {
@@ -166,7 +166,7 @@ img {
 			for (ArrayList<String> list : flowList) {
 		%>
 		<tr>
-			<td class="table2">&nbsp;<%=list.get(0)%></td>
+			<td align="center" class="table2">&nbsp;<%=list.get(0)%></td>
 			<td class="table2">&nbsp;<%=list.get(1)%></td>
 			<td class="table2">&nbsp;<%=list.get(2)%></td>
 			<td class="table2">
@@ -193,6 +193,14 @@ img {
 			}
 		%>
 	</table>
+	<div align="center">
+		<br>
+		<span style="margin-right:50px"><% if(!historyList.get(6).equals("承認完了")) {%>
+	<button onclick="approveFixAction.jsp">&nbsp;修正&nbsp;</button></span>
+	<% } %>
+	<span style="margin-right:100px"><button onclick="approveDeleteAction.jsp">&nbsp;取消&nbsp;</button></span>
+	<button onclick="history.back();">&nbsp;戻る&nbsp;</button>
+	</div>
 	<%
 		} catch (Exception e) {
 		response.sendRedirect("login_akashi.jsp");

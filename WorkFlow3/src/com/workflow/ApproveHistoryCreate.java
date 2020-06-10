@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -158,6 +159,7 @@ public class ApproveHistoryCreate extends HttpServlet {
 	}
 
 	protected ArrayList<ArrayList<String>> flowListCreate(String number14) {
+		ArrayList<ArrayList<String>> sortList = new ArrayList<>();
 		ArrayList<ArrayList<String>> flowList = new ArrayList<>();
 
 		// データベース・テーブルに接続する準備
@@ -188,7 +190,7 @@ public class ApproveHistoryCreate extends HttpServlet {
 			while (resultData.next()) {
 				ArrayList<String> listSub = new ArrayList<>();
 				if (resultData.getString("number").substring(0, 14).equals(number14)) {
-					number = resultData.getString("number");
+					number = resultData.getString("number").substring(14);
 
 					Statement stmtEmployee = null;
 					ResultSet resultEmployee = null;
@@ -222,9 +224,27 @@ public class ApproveHistoryCreate extends HttpServlet {
 					listSub.add(approvedDate);
 					listSub.add(status);
 
-					flowList.add(listSub);
+					sortList.add(listSub);
 				}
 
+			}
+			ArrayList<String> sort = new ArrayList<>();
+
+			for (int i = 0; i < sortList.size(); i++) {
+				sort.add(sortList.get(i).get(0));
+			}
+
+			Collections.sort(sort);
+
+			// ソートしたデータをリストに入れる
+			for (int i = 0; i < sort.size(); i++) {
+				for (int j = 0; j < sortList.size(); j++) {
+					if ((sortList.get(j).get(0)).equals(sort.get(i))) {
+						flowList.add(sortList.get(j));
+						sortList.remove(j);
+						break;
+					}
+				}
 			}
 
 		} catch (SQLException e) {
