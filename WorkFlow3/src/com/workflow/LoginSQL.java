@@ -40,7 +40,7 @@ public class LoginSQL extends HttpServlet {
 		String authority = "";
 		String fullname = "";
 		String affiliationCode = "";
-		String mail = "";
+		String userName = "";
 		String affiliationName = "";
 		String approverNumber_1 = "";
 		String approverName_1 = "";
@@ -80,7 +80,7 @@ public class LoginSQL extends HttpServlet {
 					authority = resultEmployee.getString("authority");
 					fullname = resultEmployee.getString("fullname");
 					affiliationCode = resultEmployee.getString("affiliationCode");
-					mail = resultEmployee.getString("mail");
+					userName = resultEmployee.getString("userName");
 					break;
 				}
 			}
@@ -163,7 +163,7 @@ public class LoginSQL extends HttpServlet {
 				session.setAttribute("authority", authority);
 				session.setAttribute("fullname", fullname);
 				session.setAttribute("affiliationCode", affiliationCode);
-				session.setAttribute("mail", mail);
+				session.setAttribute("userName", userName);
 				session.setAttribute("affiliationName", affiliationName);
 				session.setAttribute("approverNumber_1", approverNumber_1);
 				session.setAttribute("approverName_1",  approverName_1);
