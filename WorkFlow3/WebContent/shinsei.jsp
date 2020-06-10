@@ -56,7 +56,7 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 	<br>
 	<div class="margin">
 		<form action="<%=request.getContextPath()%>/Confirmation"
-			method="post" id="Confirmation">
+			method="post" id="Confirmation" onsubmit="return check()">
 			<div class="top">
 				所属:<%=session.getAttribute("affiliationName")%></div>
 			<div>
@@ -78,18 +78,18 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 				<option value=受験休暇>受験休暇</option>
 				<option value=産前産後休暇>産前産後休暇</option>
 			</select></div>
-				<div class="interval">取得期間: <label class="date-edit"><input type="date"  id="date_1"
+				<div class="interval"><div id="date_col">取得期間: </div><label class="date-edit"><input type="date"  id="date_1"
 				name="date_1" value="" required="required"></label> ～ <label
 				class="date-edit"><input type="date" name="date_2"  id="date_2"
 				required="required"></label> </div>
-				<div class="interval">取得時間: <input type="time" id="time_1" name="time_1" value="09:00"
+				<div class="interval"><div id="time_col">取得時間: </div><input type="time" id="time_1" name="time_1" value="09:00"
 				required="required"> ～ <input type="time" id="time_2" name="time_2" value="18:00" required="required"></div>
 
 
-			<div class="interval">取得事由:
+			<div class="interval"><div id="reason_col">取得事由:</div>
 			<textarea maxlength="50" id="hoge_text" name="comment" cols="50" rows="1"required="required"></textarea>
 			</div>
-			<div class="interval">連絡先　: <input maxlength="11" id="hoge_tel" type="tel" name="tellnumber"
+			<div class="interval"><div id="tell_col">連絡先　: </div><input maxlength="11" id="hoge_tel" type="tel" name="tellnumber"
 				id="number" onKeyup="this.value=this.value.replace(/[^0-9]+/i,'')"
 				required="required" /></div>
 			<div class="interval">備考　　:
@@ -167,24 +167,45 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
       </script>
 
       <script>
-      <!-- 取得期間の整合性チェック -->
-      	document.getElementById('Confirmation').addEventListener('submit', function() {
-      		var date1 = document.getElementById("date_1").value;
-	      	var date2 = document.getElementById("date_2").value;
-	      	var time1 = document.getElementById("time_1").value;
-	      	var time2 = document.getElementById("time_2").value;
-	      	var date_time1 = date1 + time1;
-	      	var date_time2 = date2 + time2;
+      	//入力内容の整合性チェック（submitボタン押下時に実行）
+      	function check() {
+      		let date1 = document.getElementById("date_1").value;
+	      	let date2 = document.getElementById("date_2").value;
+	      	let time1 = document.getElementById("time_1").value;
+	      	let time2 = document.getElementById("time_2").value;
+	      	let date_time1 = date1 + time1;
+	      	let date_time2 = date2 + time2;
 
-	      	if(date_time1 > date_time2){
-	      	    alert("取得期間が逆行しています。");
+	      	let reason = document.getElementById("hoge_text").value;
+	      	let tell_number = document.getElementById("hoge_tel").value;
 
+	      	if(date_time1 > date_time2 || reason == "必須" || tell_number == "必須"){
+	      		//入力内容に不整合がある場合、その項目の文字色を変化
+	      		if(date_time1 > date_time2){
+	      			document.getElementById("date_col").style.color="red";
+	      			document.getElementById("time_col").style.color="red";
+	      		}else{
+	      			document.getElementById("date_col").style.color="black";
+	      			document.getElementById("time_col").style.color="black";
+	      		}
+				if(reason == "必須"){
+					document.getElementById("reason_col").style.color="red";
+				}else{
+					document.getElementById("reason_col").style.color="black";
+				}
+				if(tell_number == "必須"){
+					document.getElementById("tell_col").style.color="red";
+				}else{
+					document.getElementById("tell_col").style.color="black";
+				}
+	      	    alert("入力内容を確認してください。");
+	      	    return false;
+	      	}else{
+	      		return true;
 	      	}
-      		console.log(date1);
-      		console.log(time1);
-      		console.log(date_time1);
 
-      	});
+	     }
+
 
       </script>
 </body>
