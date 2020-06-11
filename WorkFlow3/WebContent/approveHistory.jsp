@@ -183,29 +183,43 @@ img {
 					if (list.get(4).equals("")) {
 				%>&nbsp;承認待ち<%
 					} else {
-				%>&nbsp;<%=list.get(4)%>
-				<%
-					}
-				%>
+				%>&nbsp;<%=list.get(4)%> <%
+ 	}
+ %>
 			</td>
 		</tr>
 		<%
 			}
 		%>
 	</table>
-	<div align="center">
-		<br>
-		<span style="margin-right:50px"><% if(!historyList.get(6).equals("承認完了")) {%>
-	<button onclick="approveFixAction.jsp">&nbsp;修正&nbsp;</button></span>
-	<% } %>
-	<span style="margin-right:100px"><button onclick="approveDeleteAction.jsp">&nbsp;取消&nbsp;</button></span>
-	<button onclick="history.back();">&nbsp;戻る&nbsp;</button>
-	</div>
-	<%
-		} catch (Exception e) {
-		response.sendRedirect("login_akashi.jsp");
-	}
-	%>
+	<br>
+	<table class="table1">
+		<tr>
+			<td><form action="ApproveFixAction.jsp" method="post">
+					<span style="margin-right: 50px"> <%
+ 	if (!historyList.get(6).equals("承認完了")) {
+ %> <input type="submit" value=" 修正 " class="btn">
+						<%
+							}
+						%>
+					</span>
+				</form></td>
+			<td>
+				<form action="approveDeleteAction.jsp" method="post">
+					<span style="margin-right: 100px"><input type="submit"
+						value=" 取消 " class="btn"></span>
+				</form>
+			</td>
+			<td>
+				<button onclick="history.back();">&nbsp;戻る&nbsp;</button>
+			</td>
 
+			<%
+				} catch (Exception e) {
+				response.sendRedirect("login_akashi.jsp");
+			}
+			%>
+		</tr>
+	</table>
 </body>
 </html>
