@@ -80,7 +80,7 @@ img {
 	%>
 	<br>
 	<br>
-	<form action="approveDeleteCheck.jsp" method="post">
+	<form action="ApproveDelete" method="post">
 		<table style="border: 0">
 			<tr>
 				<td colspan="5" align="center">有給休暇取得申請システム 申請取消確認画面</td>
