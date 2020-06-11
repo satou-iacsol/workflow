@@ -1,10 +1,10 @@
 package com.workflow;
 
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/Output")
 public class Output extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -46,7 +47,6 @@ public class Output extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		HttpSession session = request.getSession();
-		final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
 
 		String id = (String) session.getAttribute("id");
 		String authority = (String) session.getAttribute("authority");
@@ -67,17 +67,15 @@ public class Output extends HttpServlet {
 		String comment = (String) session.getAttribute("comment");
 		String tellnumber = (String) session.getAttribute("tellnumber");
 		String bikou = (String) session.getAttribute("bikou");
-//		String approver = (String) session.getAttribute("approver");
+		//		String approver = (String) session.getAttribute("approver");
 		String approver_1_2 = (String) session.getAttribute("approver_1_2");
 		String flag = (String) session.getAttribute("flag");
 
 		String type_1 = "01", type_2 = "02", type_3 = "03", type_4 = "04", type_5 = "05", type_6 = "06", type_7 = "07",
-				type_8 = "08", type_9 = "09", type_10 = "10", type_11 = "11", type_12 = "12", type_13 = "13", type_14 = "14";
+				type_8 = "08", type_9 = "09", type_10 = "10", type_11 = "11", type_12 = "12", type_13 = "13",
+				type_14 = "14";
 
-
-
-
-		//各変数に含まれる"/"と":"を削除
+		//各変数に含まれる"時"と"分"を削除
 		date_1 = date_1.replace("年", "");
 		date_2 = date_2.replace("年", "");
 		date_1 = date_1.replace("月", "");
@@ -95,73 +93,93 @@ public class Output extends HttpServlet {
 		Calendar c = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
 
+		// データベース・テーブルに接続する準備
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		// 接続文字列の設定
+		String url = "jdbc:postgresql://localhost:5432/postgres";
+		String user = "postgres";
+		String password = "0978781";
+
+		// SQL文
+		String sql = "INSERT INTO data(number, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, approvernumber, delete_flag) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
 		try {
-			FileWriter fw = new FileWriter(referenceDirectory + "data.csv", true); //※１
-			PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
+			// PostgreSQLに接続
+			con = DriverManager.getConnection(url, user, password);
+			con.setAutoCommit(false);
 
-			pw.print(sdf.format(c.getTime()) + id + date_1_1 + "01" + ",");
-			pw.print(id + ",");
-
-			if(type.equals("有給休暇")) {
-				pw.print(type_1 + ",");
-			}else if(type.equals("代休")) {
-				pw.print(type_2 + ",");
-			}else if(type.equals("生理休暇")) {
-				pw.print(type_3 + ",");
-			}else if(type.equals("慶弔休暇")) {
-				pw.print(type_4 + ",");
-			}else if(type.equals("特別休暇")) {
-				pw.print(type_5 + ",");
-			}else if(type.equals("罹災休暇")) {
-				pw.print(type_6 + ",");
-			}else if(type.equals("半休")) {
-				pw.print(type_7 + ",");
-			}else if(type.equals("結婚休暇")) {
-				pw.print(type_8 + ",");
-			}else if(type.equals("出産休暇")) {
-				pw.print(type_9 + ",");
-			}else if(type.equals("忌引き休暇")) {
-				pw.print(type_10 + ",");
-			}else if(type.equals("隔離休暇")) {
-				pw.print(type_11 + ",");
-			}else if(type.equals("一周忌")) {
-				pw.print(type_12 + ",");
-			}else if(type.equals("受験休暇")) {
-				pw.print(type_13 + ",");
-			}else if(type.equals("産前産後休暇")) {
-				pw.print(type_14 + ",");
+			//実行するSQL文とパラメータを指定する
+			ps = con.prepareStatement(sql);
+			ps.setString(1, sdf.format(c.getTime()) + id + date_1_1 + "01");
+			ps.setString(2, id);
+			if (type.equals("有給休暇")) {
+				ps.setString(3, type_1);
+			} else if (type.equals("代休")) {
+				ps.setString(3, type_2);
+			} else if (type.equals("生理休暇")) {
+				ps.setString(3, type_3);
+			} else if (type.equals("慶弔休暇")) {
+				ps.setString(3, type_4);
+			} else if (type.equals("特別休暇")) {
+				ps.setString(3, type_5);
+			} else if (type.equals("罹災休暇")) {
+				ps.setString(3, type_6);
+			} else if (type.equals("半休")) {
+				ps.setString(3, type_7);
+			} else if (type.equals("結婚休暇")) {
+				ps.setString(3, type_8);
+			} else if (type.equals("出産休暇")) {
+				ps.setString(3, type_9);
+			} else if (type.equals("忌引き休暇")) {
+				ps.setString(3, type_10);
+			} else if (type.equals("隔離休暇")) {
+				ps.setString(3, type_11);
+			} else if (type.equals("一周忌")) {
+				ps.setString(3, type_12);
+			} else if (type.equals("受験休暇")) {
+				ps.setString(3, type_13);
+			} else if (type.equals("産前産後休暇")) {
+				ps.setString(3, type_14);
 			}
-
-			pw.print(date_1 + ",");
-			pw.print(date_2 + ",");
-			pw.print(date_1);
-			pw.print(time_1 + ",");
-			pw.print(date_2);
-			pw.print(time_2 + ",");
-			pw.print(comment + ",");
-			pw.print(tellnumber + ",");
-			pw.print(bikou + ",");
-
-			pw.print(flag + ",");
-			if(approver_1_2.equals(approverName_1)) {
-				pw.print(approverNumber_1 + ",");
-			}else if(approver_1_2.equals(approverName_2)) {
-				pw.print(approverNumber_2 + ",");
+			ps.setString(4, date_1);
+			ps.setString(5, date_2);
+			ps.setString(6, time_1);
+			ps.setString(7, time_2);
+			ps.setString(8, comment);
+			ps.setString(9, tellnumber);
+			ps.setString(10, bikou);
+			ps.setString(11, flag);
+			if (approver_1_2.equals(approverName_1)) {
+				ps.setString(12, approverNumber_1);
+			} else if (approver_1_2.equals(approverName_2)) {
+				ps.setString(12, approverNumber_2);
 			}
-			pw.println(",,");
-			pw.close();
+			ps.setString(13, "0");
 
-		} catch (FileNotFoundException e) {
+			//INSERT文を実行
+			ps.executeUpdate();
+
+			//コミット
+			con.commit();
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (StringIndexOutOfBoundsException e) {
-			if (authority.equals("0")) {
-				response.sendRedirect("menu1.jsp");
-			} else {
-				response.sendRedirect("menu2.jsp");
+		} finally {
+			// クローズ処理
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
 		}
+
 		session.setAttribute("id", id);
 		session.setAttribute("authority", authority);
 		session.setAttribute("fullname", fullname);
