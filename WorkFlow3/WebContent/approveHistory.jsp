@@ -195,7 +195,7 @@ img {
 	<br>
 	<table class="table1">
 		<tr>
-			<td><form action="ApproveFixAction.jsp" method="post">
+			<td><form action="approveFixAction.jsp" method="post">
 					<span style="margin-right: 50px"> <%
  	if (!historyList.get(7).equals("承認完了")) {
  %> <input type="submit" value=" 修正 " class="btn">
