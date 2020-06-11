@@ -130,15 +130,15 @@ img {
 			</tr>
 			<tr>
 				<td align="left">取得事由:</td>
-				<td colspan="3"><%=historyList.get(7)%></td>
-			</tr>
-			<tr>
-				<td align="left">連絡先:</td>
 				<td colspan="3"><%=historyList.get(8)%></td>
 			</tr>
 			<tr>
-				<td align="left">備考:</td>
+				<td align="left">連絡先:</td>
 				<td colspan="3"><%=historyList.get(9)%></td>
+			</tr>
+			<tr>
+				<td align="left">備考:</td>
+				<td colspan="3"><%=historyList.get(10)%></td>
 			</tr>
 			<tr>
 				<td align="left" id="delete_col">取消コメント:</td>
@@ -149,11 +149,11 @@ img {
 			</tr>
 			<tr>
 				<td align="left">承認者１コメント:</td>
-				<td colspan="3"><%=historyList.get(12)%></td>
+				<td colspan="3"><%=historyList.get(13)%></td>
 			</tr>
 			<tr>
 				<td align="left">承認者２コメント:</td>
-				<td colspan="3"><%=historyList.get(13)%></td>
+				<td colspan="3"><%=historyList.get(14)%></td>
 			<tr>
 				<td><br></td>
 			</tr>

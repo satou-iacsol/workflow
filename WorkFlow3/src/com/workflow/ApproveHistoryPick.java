@@ -76,6 +76,7 @@ public class ApproveHistoryPick extends HttpServlet {
 				String type = "";
 				String fromDateTime = "";
 				String toDateTime = "";
+				String approverNumber = "";
 				String flow = "";
 				String result = "";
 
@@ -101,7 +102,6 @@ public class ApproveHistoryPick extends HttpServlet {
 					String sqlData2 = "SELECT * from data";
 					resultData2 = stmtData2.executeQuery(sqlData2);
 
-					String approverNumber = "";
 					String status = "";
 					while (resultData2.next()) {
 						if (resultData2.getString("number").equals(sort.get(sort.size() - 1))) {
@@ -238,6 +238,7 @@ public class ApproveHistoryPick extends HttpServlet {
 					listSub.add(type);
 					listSub.add(fromDateTime);
 					listSub.add(toDateTime);
+					listSub.add(approverNumber);
 					listSub.add(flow);
 					listSub.add(result);
 

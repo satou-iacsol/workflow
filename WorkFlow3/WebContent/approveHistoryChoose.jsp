@@ -91,7 +91,7 @@ img {
 
 		<%
 			for (int i = 0; i < historysList.size(); i++) {
-			String[] list = new String[7];
+			String[] list = new String[8];
 			for (int j = 0; j < historysList.get(i).size(); j++) {
 				list[j] = historysList.get(i).get(j);
 			}
@@ -113,15 +113,15 @@ img {
 					+ list[4].substring(10, 12) + "分";
 			%><%=to%>
 			</td>
-			<td align="center" valign="top" class="table">&nbsp;<%=list[5]%>&nbsp;<br>
+			<td align="center" valign="top" class="table">&nbsp;<%=list[6]%>&nbsp;<br>
 				<form action="ApproveHistoryCreate" method="post">
 					<input type="hidden" name="number" value=<%=list[1]%>> <input
 						type="hidden" name="action" value="history"><input
-						type="submit" value="<%=list[6]%>">
+						type="submit" value="<%=list[7]%>">
 				</form></td>
 			<td align="right" valign="top">
 				<%
-					if (list[6].equals("承認完了")) {
+					if (list[7].equals("承認完了")) {
 				} else {
 				%><form action="ApproveHistoryCreate" method="post">
 					<input type="hidden" name="number" value=<%=list[1]%>><input
@@ -152,7 +152,7 @@ img {
 
 	<%
 		} catch (Exception e) {
-		response.sendRedirect("login_akashi.jsp");
+		response.sendRedirect("login.jsp");
 	}
 	%>
 </body>

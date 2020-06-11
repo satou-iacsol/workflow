@@ -124,22 +124,22 @@ img {
 		</tr>
 		<tr>
 			<td align="left">取得事由:</td>
-			<td colspan="3"><%=historyList.get(7)%></td>
-		</tr>
-		<tr>
-			<td align="left">連絡先:</td>
 			<td colspan="3"><%=historyList.get(8)%></td>
 		</tr>
 		<tr>
-			<td align="left">備考:</td>
+			<td align="left">連絡先:</td>
 			<td colspan="3"><%=historyList.get(9)%></td>
+		</tr>
+		<tr>
+			<td align="left">備考:</td>
+			<td colspan="3"><%=historyList.get(10)%></td>
 		</tr>
 		<tr>
 			<%
 				if (!historyList.get(11).equals("")) {
 			%>
 			<td align="left">修正コメント:</td>
-			<td colspan="3"><%=historyList.get(11)%></td>
+			<td colspan="3"><%=historyList.get(12)%></td>
 			<%
 				}
 			%>
@@ -197,7 +197,7 @@ img {
 		<tr>
 			<td><form action="ApproveFixAction.jsp" method="post">
 					<span style="margin-right: 50px"> <%
- 	if (!historyList.get(6).equals("承認完了")) {
+ 	if (!historyList.get(7).equals("承認完了")) {
  %> <input type="submit" value=" 修正 " class="btn">
 						<%
 							}
