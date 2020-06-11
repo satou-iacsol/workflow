@@ -42,7 +42,7 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 	</script>
 	<%
 		try {
-		if (session.equals(null)) {
+		if (session.getAttribute("id").equals(null)) {
 			throw new Exception();
 		}
 	%>

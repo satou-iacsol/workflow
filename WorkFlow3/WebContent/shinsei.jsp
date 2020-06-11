@@ -44,7 +44,7 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 	</script>
 	<%
 		try {
-		if (session.equals(null)) {
+		if (session.getAttribute("id").equals(null)) {
 			throw new Exception();
 		}
 	%>
@@ -102,7 +102,7 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 
 		</form>
 		<button type="submit" form="Confirmation">確認</button>
-		<button onclick="history.back();">キャンセル</button>
+		<button onclick="history.back()">キャンセル</button>
 	</div>
 	<%
 		} catch (Exception e) {

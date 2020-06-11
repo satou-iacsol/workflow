@@ -10,6 +10,7 @@ String referenceDirectory = "C:\\Users\\seiya_saitou\\git\\workflow\\WorkFlow3\\
 <head>
 <meta charset="UTF-8"></meta>
 <title>有給休暇取得申請システム</title>
+<link rel="icon" href="./imge/favicon.ico">
 <style>
 body{
 	margin:8px 0 0 0;

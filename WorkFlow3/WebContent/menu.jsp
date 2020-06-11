@@ -44,7 +44,7 @@ String authority = (String) session.getAttribute("authority");
 	</script>
 	<%
 		try {
-		if (session.equals(null)) {
+		if (session.getAttribute("id").equals(null)) {
 			throw new Exception();
 		}
 	%>
@@ -59,7 +59,7 @@ String authority = (String) session.getAttribute("authority");
 			</div>
 
 		</form>
-		<form action="<%=request.getContextPath()%>/Shinsei" method="post">
+		<form action="<%=request.getContextPath()%>/ApproveHistoryPick" method="post">
 			<div class="hoge">
 				<button class="subbutton" type="submit">申請一覧</button>
 			</div>
@@ -67,7 +67,7 @@ String authority = (String) session.getAttribute("authority");
 		<%
 			if (session.getAttribute("authority").equals("1")) {
 		%>
-		<form action="<%=request.getContextPath()%>/ApprovePick" method="post">
+		<form action="<%=request.getContextPath()%>/ApprovePickSQL" method="post">
 			<div class="hoge">
 				<button class="subbutton" type="submit">承認画面</button>
 			</div>
