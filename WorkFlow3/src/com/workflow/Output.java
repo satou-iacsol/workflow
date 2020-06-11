@@ -78,10 +78,16 @@ public class Output extends HttpServlet {
 
 
 		//各変数に含まれる"/"と":"を削除
-		date_1 = date_1.replace("-", "");
-		date_2 = date_2.replace("-", "");
-		time_1 = time_1.replace(":", "");
-		time_2 = time_2.replace(":", "");
+		date_1 = date_1.replace("年", "");
+		date_2 = date_2.replace("年", "");
+		date_1 = date_1.replace("月", "");
+		date_2 = date_2.replace("月", "");
+		date_1 = date_1.replace("日", "");
+		date_2 = date_2.replace("日", "");
+		time_1 = time_1.replace("時", "");
+		time_2 = time_2.replace("時", "");
+		time_1 = time_1.replace("分", "");
+		time_2 = time_2.replace("分", "");
 
 		//date_1を年月日から月日へ変換
 		String date_1_1 = date_1.substring(date_1.length() - 4);

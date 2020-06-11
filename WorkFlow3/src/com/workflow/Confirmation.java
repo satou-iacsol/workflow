@@ -69,6 +69,28 @@ public class Confirmation extends HttpServlet {
 			approver_1_2 = approverName_2;
 		}
 
+		//表記変更（YYYY-MM-DD → YYYY年MM月DD日）
+		date_1 = date_1.replace("-", "");
+		date_2 = date_2.replace("-", "");
+
+		StringBuilder sb_date_1 = new StringBuilder(date_1);
+		sb_date_1.insert(4,"年");
+		sb_date_1.insert(7,"月");
+		sb_date_1.insert(10, "日");
+		date_1 = sb_date_1.toString();
+
+		StringBuilder sb_date_2 = new StringBuilder(date_2);
+		sb_date_2.insert(4,"年");
+		sb_date_2.insert(7,"月");
+		sb_date_2.insert(10, "日");
+		date_2 = sb_date_2.toString();
+
+		//表記変更（hh:mm → hh時mm分）
+		time_1 = time_1.replace(":", "時");
+		time_2 = time_2.replace(":", "時");
+		time_1 = time_1 + "分";
+		time_2 = time_2 + "分";
+
 		session.setAttribute("id", id);
 		session.setAttribute("authority",authority);
 		session.setAttribute("fullname", fullname);
