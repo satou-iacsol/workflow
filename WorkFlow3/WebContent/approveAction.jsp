@@ -8,7 +8,6 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 response.setContentType("text/html;charset=UTF-8");
-final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
 %>
 <!DOCTYPE html>
 <html>
@@ -196,7 +195,7 @@ img{
 					<%
 						if (session.getAttribute("approvedStatus").equals("")) {
 					%> <textarea
-						name="comment" rows="1" cols="28" maxlength="50"></textarea> <%
+						name="comment" rows="1" cols="30" maxlength="50"></textarea> <%
  	} else {
  %>
 					<%=session.getAttribute("approvedOverComment")%> <%

@@ -36,7 +36,9 @@ public class ApproveHistoryCreate extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		ArrayList<String> historyList = new ArrayList<>();
-		for (ArrayList<String> list : (ArrayList<ArrayList<String>>)session.getAttribute("historysList")) {
+		@SuppressWarnings("unchecked")
+		ArrayList<ArrayList<String>> historysList = (ArrayList<ArrayList<String>>)session.getAttribute("historysList");
+		for (ArrayList<String> list : historysList) {
 			if(list.get(1).equals(request.getParameter("number"))) {
 				historyList = list;
 				break;
