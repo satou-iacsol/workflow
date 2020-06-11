@@ -67,7 +67,7 @@ String authority = (String) session.getAttribute("authority");
 		<%
 			if (session.getAttribute("authority").equals("1")) {
 		%>
-		<form action="<%=request.getContextPath()%>/ApprovePickSQL" method="post">
+		<form action="<%=request.getContextPath()%>/ApprovePick" method="post">
 			<div class="hoge">
 				<button class="subbutton" type="submit">承認画面</button>
 			</div>
