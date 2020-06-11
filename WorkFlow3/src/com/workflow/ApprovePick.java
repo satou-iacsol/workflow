@@ -1,11 +1,11 @@
 package com.workflow;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -34,64 +34,90 @@ public class ApprovePick extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 
 		HttpSession session = request.getSession();
-		final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
 
 		String id = (String) session.getAttribute("id");
 
 		ArrayList<ArrayList<String>> list = new ArrayList<>();
-		BufferedReader brData = null;
-		BufferedReader brData1 = null;
-		BufferedReader brData2 = null;
-		BufferedReader brEmployee = null;
-		BufferedReader brBelongs = null;
-		String[] employee = new String[6];
-		String[] belongs = new String[4];
+
+		// データベース・テーブルに接続する準備
+		Connection con = null;
+		Statement stmtData = null;
+		ResultSet resultData = null;
+		Statement stmtData1 = null;
+		ResultSet resultData1 = null;
+		Statement stmtData2 = null;
+		ResultSet resultData2 = null;
+
+		// 接続文字列の設定
+		String url = "jdbc:postgresql://localhost:5432/postgres";
+		String user = "postgres";
+		String password = "0978781";
 
 		try {
-			// ソート前データの取得
-			brData = Files.newBufferedReader(
-					Paths.get(referenceDirectory + "data.csv"),
-					Charset.forName("UTF-8"));
-			String lineData = "";
+			// PostgreSQLに接続
+			con = DriverManager.getConnection(url, user, password);
+
+			// SELECT文の作成・実行
+			stmtData = con.createStatement();
+			String sqlData = "SELECT * from data";
+			resultData = stmtData.executeQuery(sqlData);
 			ArrayList<ArrayList<String>> sortList = new ArrayList<>();
+			while (resultData.next()) {
+				Statement stmtEmployee = null;
+				ResultSet resultEmployee = null;
+				Statement stmtBelongs = null;
+				ResultSet resultBelongs = null;
 
-			while ((lineData = brData.readLine()) != null) {
-				String[] data = lineData.split(",", -1);
-				ArrayList<String> listSub = new ArrayList<>();
-				for (int i = 0; i < data.length; i++) {
-					listSub.add(data[i]);
-				}
-				brEmployee = Files.newBufferedReader(Paths.get(referenceDirectory + "employee_muster.csv"),
-						Charset.forName("UTF-8"));
-				String lineEmployee = "";
+				if (resultData.getString("approverNumber").equals(id)
+						&& resultData.getString("status").equals("")) {
+					ArrayList<String> listSub = new ArrayList<>();
 
-				while ((lineEmployee = brEmployee.readLine()) != null) {
-					employee = lineEmployee.split(",", -1);
-					if (employee[0].equals(data[1])) {
-						listSub.set(5,employee[3]);
-						break;
+					for (int i = 1; i <= 5; i++) {
+						listSub.add(resultData.getString(i));
 					}
-				}
-				brBelongs = Files.newBufferedReader(Paths.get(referenceDirectory + "belongs.csv"),
-						Charset.forName("UTF-8"));
-				String lineBelongs = "";
-
-				while ((lineBelongs = brBelongs.readLine()) != null) {
-					belongs = lineBelongs.split(",", -1);
-					if (belongs[0].equals(employee[4])) {
-						listSub.set(6,belongs[1]);
-						break;
+					stmtEmployee = con.createStatement();
+					String sqlEmployee = "SELECT * from employee_muster";
+					resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
+					while (resultEmployee.next()) {
+						if (resultEmployee.getString("id").equals(resultData.getString("id"))) {
+							listSub.add(resultEmployee.getString("fullname"));
+							break;
+						}
 					}
-				}
-				// 申請データの承認者が一致したデータ(承認差戻なし)をリストに入れる
-				if (data[11].equals(id) && data[14].equals("")) {
+					stmtBelongs = con.createStatement();
+					String sqlBelongs = "SELECT * from belongs";
+					resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
+					while (resultBelongs.next()) {
+						if (resultBelongs.getString("affiliationCode")
+								.equals(resultEmployee.getString("affiliationCode"))) {
+							listSub.add(resultBelongs.getString("affiliationName"));
+							break;
+						}
+					}
+					for (int i = 8; i <= 15; i++) {
+						listSub.add(resultData.getString(i));
+					}
 					sortList.add(listSub);
 				}
+
+				if (stmtEmployee != null) {
+					stmtEmployee.close();
+				}
+				if (resultEmployee != null) {
+					resultEmployee.close();
+				}
+				if (stmtBelongs != null) {
+					stmtBelongs.close();
+				}
+				if (resultBelongs != null) {
+					resultBelongs.close();
+				}
+
 			}
 
-			// 取得期間(FROM)を取得
 			ArrayList<String> sort = new ArrayList<>();
 
+			// 取得期間(FROM)を取得
 			for (int i = 0; i < sortList.size(); i++) {
 				sort.add(sortList.get(i).get(3));
 			}
@@ -112,90 +138,146 @@ public class ApprovePick extends HttpServlet {
 				}
 			}
 
-			// 申請データの承認者が一致したデータ(差戻)をリストに入れる
-			brData1 = Files.newBufferedReader(Paths.get(referenceDirectory + "data.csv"),
-					Charset.forName("UTF-8"));
-			String lineData1 = "";
+			stmtData1 = con.createStatement();
+			String sqlData1 = "SELECT * from data";
+			resultData1 = stmtData1.executeQuery(sqlData1);
 
-			while ((lineData1 = brData1.readLine()) != null) {
-				String[] data = lineData1.split(",", -1);
-				ArrayList<String> listSub = new ArrayList<>();
-				for (int i = 0; i < data.length; i++) {
-					listSub.add(data[i]);
-				}
-				brEmployee = Files.newBufferedReader(Paths.get(referenceDirectory + "employee_muster.csv"),
-						Charset.forName("UTF-8"));
-				String lineEmployee = "";
+			while (resultData1.next()) {
+				Statement stmtEmployee = null;
+				ResultSet resultEmployee = null;
+				Statement stmtBelongs = null;
+				ResultSet resultBelongs = null;
 
-				while ((lineEmployee = brEmployee.readLine()) != null) {
-					employee = lineEmployee.split(",", -1);
-					if (employee[0].equals(data[1])) {
-						listSub.set(5,employee[3]);
-						break;
+				if (resultData1.getString("approverNumber").equals(id)
+						&& resultData1.getString("status").equals("差戻")) {
+					ArrayList<String> listSub = new ArrayList<>();
+
+					for (int i = 1; i <= 5; i++) {
+						listSub.add(resultData1.getString(i));
 					}
-				}
-				brBelongs = Files.newBufferedReader(Paths.get(referenceDirectory + "belongs.csv"),
-						Charset.forName("UTF-8"));
-				String lineBelongs = "";
-
-				while ((lineBelongs = brBelongs.readLine()) != null) {
-					belongs = lineBelongs.split(",", -1);
-					if (belongs[0].equals(employee[4])) {
-						listSub.set(6,belongs[1]);
-						break;
+					stmtEmployee = con.createStatement();
+					String sqlEmployee = "SELECT * from employee_muster";
+					resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
+					while (resultEmployee.next()) {
+						if (resultEmployee.getString("id").equals(resultData1.getString("id"))) {
+							listSub.add(resultEmployee.getString("fullname"));
+							break;
+						}
 					}
-				}
-				if (data[11].equals(id) && data[14].equals("差戻")) {
+					stmtBelongs = con.createStatement();
+					String sqlBelongs = "SELECT * from belongs";
+					resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
+					while (resultBelongs.next()) {
+						if (resultBelongs.getString("affiliationCode")
+								.equals(resultEmployee.getString("affiliationCode"))) {
+							listSub.add(resultBelongs.getString("affiliationName"));
+							break;
+						}
+					}
+					for (int i = 8; i <= 15; i++) {
+						listSub.add(resultData1.getString(i));
+					}
 					list.add(listSub);
+				}
+
+				if (stmtEmployee != null) {
+					stmtEmployee.close();
+				}
+				if (resultEmployee != null) {
+					resultEmployee.close();
+				}
+				if (stmtBelongs != null) {
+					stmtBelongs.close();
+				}
+				if (resultBelongs != null) {
+					resultBelongs.close();
 				}
 			}
 
-			// 申請データの承認者が一致したデータ(承認)をリストに入れる
-			brData2 = Files.newBufferedReader(Paths.get(referenceDirectory + "data.csv"),
-					Charset.forName("UTF-8"));
-			String lineData2 = "";
+			stmtData2 = con.createStatement();
+			String sqlData2 = "SELECT * from data";
+			resultData2 = stmtData2.executeQuery(sqlData2);
 
-			while ((lineData2 = brData2.readLine()) != null) {
-				String[] data = lineData2.split(",", -1);
-				ArrayList<String> listSub = new ArrayList<>();
-				for (int i = 0; i < data.length; i++) {
-					listSub.add(data[i]);
-				}
-				brEmployee = Files.newBufferedReader(Paths.get(referenceDirectory + "employee_muster.csv"),
-						Charset.forName("UTF-8"));
-				String lineEmployee = "";
+			while (resultData2.next()) {
+				Statement stmtEmployee = null;
+				ResultSet resultEmployee = null;
+				Statement stmtBelongs = null;
+				ResultSet resultBelongs = null;
 
-				while ((lineEmployee = brEmployee.readLine()) != null) {
-					employee = lineEmployee.split(",", -1);
-					if (employee[0].equals(data[1])) {
-						listSub.set(5,employee[3]);
-						break;
+				if (resultData2.getString("approverNumber").equals(id)
+						&& resultData2.getString("status").equals("承認")) {
+					ArrayList<String> listSub = new ArrayList<>();
+
+					for (int i = 1; i <= 5; i++) {
+						listSub.add(resultData2.getString(i));
 					}
-				}
-				brBelongs = Files.newBufferedReader(Paths.get(referenceDirectory + "belongs.csv"),
-						Charset.forName("UTF-8"));
-				String lineBelongs = "";
-
-				while ((lineBelongs = brBelongs.readLine()) != null) {
-					belongs = lineBelongs.split(",", -1);
-					if (belongs[0].equals(employee[4])) {
-						listSub.set(6,belongs[1]);
-						break;
+					stmtEmployee = con.createStatement();
+					String sqlEmployee = "SELECT * from employee_muster";
+					resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
+					while (resultEmployee.next()) {
+						if (resultEmployee.getString("id").equals(resultData2.getString("id"))) {
+							listSub.add(resultEmployee.getString("fullname"));
+							break;
+						}
 					}
-				}
-				if (data[11].equals(id) && data[14].equals("承認")) {
+					stmtBelongs = con.createStatement();
+					String sqlBelongs = "SELECT * from belongs";
+					resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
+					while (resultBelongs.next()) {
+						if (resultBelongs.getString("affiliationCode")
+								.equals(resultEmployee.getString("affiliationCode"))) {
+							listSub.add(resultBelongs.getString("affiliationName"));
+							break;
+						}
+					}
+					for (int i = 8; i <= 15; i++) {
+						listSub.add(resultData2.getString(i));
+					}
 					list.add(listSub);
+				}
+
+				if (stmtEmployee != null) {
+					stmtEmployee.close();
+				}
+				if (resultEmployee != null) {
+					resultEmployee.close();
+				}
+				if (stmtBelongs != null) {
+					stmtBelongs.close();
+				}
+				if (resultBelongs != null) {
+					resultBelongs.close();
 				}
 			}
 
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			// クローズ処理
 			try {
-				brData.close();
-			} catch (IOException e) {
+				if (resultData != null) {
+					resultData.close();
+				}
+				if (stmtData != null) {
+					stmtData.close();
+				}
+				if (resultData1 != null) {
+					resultData1.close();
+				}
+				if (stmtData1 != null) {
+					stmtData1.close();
+				}
+				if (resultData2 != null) {
+					resultData2.close();
+				}
+				if (stmtData2 != null) {
+					stmtData2.close();
+				}
+
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}

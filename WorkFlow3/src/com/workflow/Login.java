@@ -1,11 +1,11 @@
 package com.workflow;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,110 +32,145 @@ public class Login extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 
 		HttpSession session = request.getSession();
-		final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
 
 		String id = request.getParameter("id");
 		String pass = request.getParameter("pass");
 
-		BufferedReader br = null;
-		String[] employee = new String[6];
-		BufferedReader brBelongs = null;
-		String[] belongs = new String[2];
-		BufferedReader brApprover1 = null;
-		String[] approver1 = new String[6];
-		BufferedReader brApprover2 = null;
-		String[] approver2 = new String[6];
+		String code = "";
+		String authority = "";
+		String fullname = "";
+		String affiliationCode = "";
+		String userName = "";
+		String affiliationName = "";
+		String approverNumber_1 = "";
+		String approverName_1 = "";
+		String approverNumber_2 = "";
+		String approverName_2 = "";
+
+		// データベース・テーブルに接続する準備
+		Connection con = null;
+		Statement stmtEmployee = null;
+		ResultSet resultEmployee = null;
+		Statement stmtBelongs = null;
+		ResultSet resultBelongs = null;
+		Statement stmtApprover_1 = null;
+		ResultSet resultApprover_1 = null;
+		Statement stmtApprover_2 = null;
+		ResultSet resultApprover_2 = null;
+
+		// 接続文字列の設定
+		String url = "jdbc:postgresql://localhost:5432/postgres";
+		String user = "postgres";
+		String password = "0978781";
+
 
 		try {
-			// ログイン者社員マスタの取得
-			br = Files.newBufferedReader(
-					Paths.get(referenceDirectory + "employee_muster.csv"),
-					Charset.forName("UTF-8"));
-			String line = "";
+			// PostgreSQLに接続
+			con = DriverManager.getConnection(url, user, password);
 
-			while ((line = br.readLine()) != null) {
-				employee = line.split(",", -1);
-				// ログインの判定
-				if (employee[0].equals(id) && employee[1].equals(pass)) {
-					break;
-				}
-				employee = new String[5];
-			}
+			// SELECT文の作成・実行
+			stmtEmployee = con.createStatement();
+			String sqlEmployee = "SELECT * from employee_muster";
+			resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
 
-			// 所属マスタの取得
 
-			brBelongs = Files.newBufferedReader(
-					Paths.get(referenceDirectory + "belongs.csv"),
-					Charset.forName("UTF-8"));
-			String lineBelongs = "";
-
-			while ((lineBelongs = brBelongs.readLine()) != null) {
-				belongs = lineBelongs.split(",", -1);
-				if (belongs[0].equals(employee[4])) {
+			while (resultEmployee.next()) {
+				if (resultEmployee.getString("id").equals(id) && resultEmployee.getString("pass").equals(pass)) {
+					code = resultEmployee.getString("affiliationcode");
+					authority = resultEmployee.getString("authority");
+					fullname = resultEmployee.getString("fullname");
+					affiliationCode = resultEmployee.getString("affiliationCode");
+					userName = resultEmployee.getString("userName");
 					break;
 				}
 			}
 
-			// 承認者１社員マスタの取得
-			brApprover1 = Files.newBufferedReader(
-					Paths.get(referenceDirectory + "employee_muster.csv"),
-					Charset.forName("UTF-8"));
-			String lineApprover1 = "";
+			stmtBelongs = con.createStatement();
+			String sqlBelongs = "SELECT * from belongs";
+			resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
 
-			while ((lineApprover1 = brApprover1.readLine()) != null) {
-				approver1 = lineApprover1.split(",", -1);
-				// ログインの判定
-				if (approver1[0].equals(belongs[2])) {
+			while (resultBelongs.next()) {
+				if (resultBelongs.getString("affiliationcode").equals(code)) {
+					affiliationName = resultBelongs.getString("affiliationName");
+					approverNumber_1 = resultBelongs.getString("approverNumber_1");
+					approverNumber_2 = resultBelongs.getString("approverNumber_2");
 					break;
 				}
-				approver1 = new String[5];
-
 			}
 
-			// 承認者２社員マスタの取得
-			brApprover2 = Files.newBufferedReader(
-					Paths.get(referenceDirectory + "employee_muster.csv"),
-					Charset.forName("UTF-8"));
-			String lineApprover2 = "";
+			stmtApprover_1 = con.createStatement();
+			String sqlApprover_1 = "SELECT * from employee_muster";
+			resultApprover_1 = stmtApprover_1.executeQuery(sqlApprover_1);
 
-			while ((lineApprover2 = brApprover2.readLine()) != null) {
-				approver2 = lineApprover2.split(",", -1);
-				// ログインの判定
-				if (approver2[0].equals(belongs[3])) {
+			while (resultApprover_1.next()) {
+				if (resultApprover_1.getString("id").equals(approverNumber_1)) {
+					approverName_1 = resultApprover_1.getString("fullname");
 					break;
 				}
-				approver2 = new String[5];
 			}
 
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+			stmtApprover_2 = con.createStatement();
+			String sqlApprover_2 = "SELECT * from employee_muster";
+			resultApprover_2 = stmtApprover_2.executeQuery(sqlApprover_2);
+
+			while (resultApprover_2.next()) {
+				if (resultApprover_2.getString("id").equals(approverNumber_2)) {
+					approverName_2 = resultApprover_2.getString("fullname");
+					break;
+				}
+			}
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			// クローズ処理
 			try {
-				br.close();
-				brBelongs.close();
-				brApprover1.close();
-				brApprover2.close();
-			} catch (IOException e) {
+				if (resultEmployee != null) {
+					resultEmployee.close();
+				}
+				if (stmtEmployee != null) {
+					stmtEmployee.close();
+				}
+				if (resultBelongs != null) {
+					resultBelongs.close();
+				}
+				if (stmtBelongs != null) {
+					stmtBelongs.close();
+				}
+				if (resultApprover_1 != null) {
+					resultApprover_1.close();
+				}
+				if (stmtApprover_1 != null) {
+					stmtApprover_1.close();
+				}
+				if (resultApprover_2 != null) {
+					resultApprover_2.close();
+				}
+				if (stmtApprover_2 != null) {
+					stmtApprover_2.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}
-		if (employee[0] == null) {
-			session.setAttribute("loginError", "ユーザーID／パスワードが間違っています。");
-			response.sendRedirect("login.jsp");
-		} else {
-			session.setAttribute("id", id);
-			session.setAttribute("authority", employee[2]);
-			session.setAttribute("fullname", employee[3]);
-			session.setAttribute("affiliationCode", employee[4]);
-			session.setAttribute("mail", employee[5]);
-			session.setAttribute("affiliationName", belongs[1]);
-			session.setAttribute("approverNumber_1", belongs[2]);
-			session.setAttribute("approverName_1", approver1[3]);
-			session.setAttribute("approverNumber_2", belongs[3]);
-			session.setAttribute("approverName_2", approver2[3]);
-			response.sendRedirect("menu.jsp");
+			if (code.equals("")) {
+				session.setAttribute("loginError", "ユーザーID／パスワードが間違っています。");
+				response.sendRedirect("login.jsp");
+			} else {
+				session.setAttribute("id", id);
+				session.setAttribute("authority", authority);
+				session.setAttribute("fullname", fullname);
+				session.setAttribute("affiliationCode", affiliationCode);
+				session.setAttribute("userName", userName);
+				session.setAttribute("affiliationName", affiliationName);
+				session.setAttribute("approverNumber_1", approverNumber_1);
+				session.setAttribute("approverName_1",  approverName_1);
+				session.setAttribute("approverNumber_2", approverNumber_2);
+				session.setAttribute("approverName_2", approverName_2);
+				response.sendRedirect("menu.jsp");
+			}
 		}
 	}
 }
