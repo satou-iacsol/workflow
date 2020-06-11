@@ -260,28 +260,23 @@ public class SessionCreate extends HttpServlet {
 
 		// 日付関連のデータの形式の編集
 		StringBuilder fromDate = new StringBuilder();
-		fromDate.append(date_1.substring(0, 4) + "/");
-		fromDate.append(date_1.substring(4, 6) + "/");
-		fromDate.append(date_1.substring(6, 8));
+		fromDate.append(date_1.substring(0, 4) + "年");
+		fromDate.append(date_1.substring(4, 6) + "月");
+		fromDate.append(date_1.substring(6, 8) + "日");
 
 		StringBuilder toDate = new StringBuilder();
-		toDate.append(date_2.substring(0, 4) + "/");
-		toDate.append(date_2.substring(4, 6) + "/");
-		toDate.append(date_2.substring(6, 8));
+		toDate.append(date_2.substring(0, 4) + "年");
+		toDate.append(date_2.substring(4, 6) + "月");
+		toDate.append(date_2.substring(6, 8) + "日");
 
 		StringBuilder fromTime = new StringBuilder();
-		fromTime.append(date_3.substring(0, 4) + "/");
-		fromTime.append(date_3.substring(4, 6) + "/");
-		fromTime.append(date_3.substring(6, 8) + " ");
-		fromTime.append(date_3.substring(8, 10) + ":");
-		fromTime.append(date_3.substring(10, 12));
+		fromTime.append(date_3.substring(0, 2) + "時");
+		fromTime.append(date_3.substring(2, 4) + "分");
 
 		StringBuilder toTime = new StringBuilder();
-		toTime.append(date_4.substring(0, 4) + "/");
-		toTime.append(date_4.substring(4, 6) + "/");
-		toTime.append(date_4.substring(6, 8) + " ");
-		toTime.append(date_4.substring(8, 10) + ":");
-		toTime.append(date_4.substring(10, 12));
+		toTime.append(date_4.substring(0, 2) + "時");
+		toTime.append(date_4.substring(2, 4) + "分");
+
 
 		session.setAttribute("approvedNumber", request.getParameter("radio"));
 		session.setAttribute("approvedId", approvedId);

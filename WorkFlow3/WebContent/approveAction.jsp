@@ -90,55 +90,59 @@ img{
 		onsubmit="return formCheck()">
 		<table style="border: 0">
 			<tr>
-				<td colspan="2" align="center">有給休暇取得申請システム 承認明細画面</td>
+				<td colspan="5" align="center">有給休暇取得申請システム 承認明細画面</td>
 			</tr>
 			<tr>
 				<td><br></td>
 			</tr>
 			<tr>
 				<td align="left">申請番号:</td>
-				<td><%=session.getAttribute("approvedNumber")%></td>
+				<td colspan="3"><%=session.getAttribute("approvedNumber")%></td>
 			</tr>
 			<tr>
 				<td align="left">所属:</td>
-				<td><%=session.getAttribute("approvedBelongs")%></td>
+				<td colspan="3"><%=session.getAttribute("approvedBelongs")%></td>
 			</tr>
 			<tr>
 				<td align="left">氏名:</td>
-				<td><%=session.getAttribute("approvedName")%></td>
+				<td colspan="3"><%=session.getAttribute("approvedName")%></td>
 			</tr>
 			<tr>
 				<td><br></td>
 			</tr>
 			<tr>
 				<td align="left">有給種別:</td>
-				<td><%=session.getAttribute("approvedType")%></td>
+				<td colspan="3"><%=session.getAttribute("approvedType")%></td>
 			</tr>
 			<tr>
 				<td align="left">取得期間:</td>
-				<td><%=session.getAttribute("approvedDate")%></td>
+				<td><%=session.getAttribute("approvedFromDate")%></td>
+				<td>&nbsp;～&nbsp;</td>
+				<td><%=session.getAttribute("approvedToDate")%></td>
 			</tr>
 			<tr>
-				<td align="left">取得日時:</td>
-				<td><%=session.getAttribute("approvedTime")%></td>
+				<td align="left">取得時間:</td>
+				<td><%=session.getAttribute("approvedFromTime")%></td>
+				<td>&nbsp;～&nbsp;</td>
+				<td><%=session.getAttribute("approvedToTime")%></td>
 			</tr>
 			<tr>
 				<td><br></td>
 			</tr>
 			<tr>
 				<td align="left">取得事由:</td>
-				<td><%=session.getAttribute("approvedReason")%></td>
+				<td colspan="3"><%=session.getAttribute("approvedReason")%></td>
 			</tr>
 			<tr>
 				<td align="left">連絡先:</td>
-				<td><%=session.getAttribute("approvedAddress")%></td>
+				<td colspan="3"><%=session.getAttribute("approvedAddress")%></td>
 			</tr>
 			<tr>
 				<td align="left">備考:</td>
-				<td><%=session.getAttribute("approvedRemarks")%></td>
+				<td colspan="3"><%=session.getAttribute("approvedRemarks")%></td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"><br>
+				<td colspan="5" align="center"><br>
 					<noscript>
 						<a><font color="red">差戻時はコメントが必須です</font></a>
 					</noscript> <a id="notice" style="display: none; color: red;">
@@ -152,11 +156,11 @@ img{
 
 			<tr>
 				<td align="left">承認者:</td>
-				<td><%=session.getAttribute("approve2Name")%></td>
+				<td colspan="3"><%=session.getAttribute("approve2Name")%></td>
 			</tr>
 			<tr>
 				<td align="left">承認者１コメント:</td>
-				<td>
+				<td colspan="3">
 					<%
 						if (session.getAttribute("approvedStatus").equals("")) {
 					%><textarea name="comment" rows="1" cols="28" maxlength="50"></textarea>
@@ -174,7 +178,7 @@ img{
 			%>
 			<tr>
 				<td align="left">承認者２コメント:</td>
-				<td><%=session.getAttribute("preComment")%></td>
+				<td colspan="3"><%=session.getAttribute("preComment")%></td>
 			</tr>
 			<%
 				}
@@ -184,11 +188,11 @@ img{
 			<!-- 承認者２の時表示 -->
 			<tr>
 				<td align="left">承認者１コメント:</td>
-				<td><%=session.getAttribute("preComment")%> <%%></td>
+				<td colspan="3"><%=session.getAttribute("preComment")%> <%%></td>
 			</tr>
 			<tr>
 				<td align="left">承認者２コメント:</td>
-				<td>
+				<td colspan="3">
 					<%
 						if (session.getAttribute("approvedStatus").equals("")) {
 					%> <textarea
@@ -209,7 +213,7 @@ img{
 				<td><br></td>
 			</tr>
 			<tr>
-				<td colspan="2">
+				<td colspan="5">
 					<!-- ステータスが空白の時ラジオボタンと確認ボタン表示 --> <%
  	if (session.getAttribute("approvedStatus").equals("")) {
  %>
