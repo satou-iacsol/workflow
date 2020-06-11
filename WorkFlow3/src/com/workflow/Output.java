@@ -103,7 +103,7 @@ public class Output extends HttpServlet {
 		String password = "0978781";
 
 		// SQL文
-		String sql = "INSERT INTO data(number, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, approvernumber, delete_flag) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO data values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 		try {
 			// PostgreSQLに接続
@@ -149,14 +149,22 @@ public class Output extends HttpServlet {
 			ps.setString(7, time_2);
 			ps.setString(8, comment);
 			ps.setString(9, tellnumber);
-			ps.setString(10, bikou);
+			if(bikou != null) {
+				ps.setString(10, bikou);
+			}else {
+				ps.setString(10, "");
+			}
 			ps.setString(11, flag);
 			if (approver_1_2.equals(approverName_1)) {
 				ps.setString(12, approverNumber_1);
 			} else if (approver_1_2.equals(approverName_2)) {
 				ps.setString(12, approverNumber_2);
 			}
-			ps.setString(13, "0");
+			ps.setString(13, "");
+			ps.setString(14, "");
+			ps.setString(15, "");
+			ps.setString(16, "");
+			ps.setString(17, "0");
 
 			//INSERT文を実行
 			ps.executeUpdate();
