@@ -190,7 +190,7 @@ public class ApproveHistoryCreate extends HttpServlet {
 			while (resultData.next()) {
 				ArrayList<String> listSub = new ArrayList<>();
 				if (resultData.getString("number").substring(0, 14).equals(number14)) {
-					number = resultData.getString("number").substring(14);
+					number = resultData.getString("number");
 
 					Statement stmtEmployee = null;
 					ResultSet resultEmployee = null;
