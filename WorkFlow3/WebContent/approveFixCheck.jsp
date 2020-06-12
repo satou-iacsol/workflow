@@ -3,56 +3,56 @@
 <%@ page import="java.util.ArrayList" import="java.util.Collections"%>
 <%@ page session="true"%>
 <%
-try {
-if (session.equals(null)) {
-	throw new Exception();
-}
+	try {
+	if (session.equals(null)) {
+		throw new Exception();
+	}
 	request.setCharacterEncoding("UTF-8");
-response.setContentType("text/html;charset=UTF-8");
-// 社員番号取得
-String id = (String) session.getAttribute("id");
-// 申請詳細リスト取得
-@SuppressWarnings("unchecked")
-ArrayList<String> historyList = (ArrayList<String>) session.getAttribute("historyList");
+	response.setContentType("text/html;charset=UTF-8");
+	// 社員番号取得
+	String id = (String) session.getAttribute("id");
+	// 申請詳細リスト取得
+	@SuppressWarnings("unchecked")
+	ArrayList<String> historyList = (ArrayList<String>) session.getAttribute("historyList");
 
-session.setAttribute("fix_type", request.getParameter("fix_type"));
-session.setAttribute("fix_date_1", request.getParameter("fix_date_1").substring(0, 4)
-		+ request.getParameter("fix_date_1").substring(5, 7) + request.getParameter("fix_date_1").substring(8, 10));
-session.setAttribute("fix_date_2", request.getParameter("fix_date_2").substring(0, 4)
-		+ request.getParameter("fix_date_2").substring(5, 7) + request.getParameter("fix_date_2").substring(8, 10));
-session.setAttribute("fix_date_3",
-		request.getParameter("fix_time_1").substring(0, 2) + request.getParameter("fix_time_1").substring(3, 5));
-session.setAttribute("fix_date_4",
-		request.getParameter("fix_time_2").substring(0, 2) + request.getParameter("fix_time_2").substring(3, 5));
-session.setAttribute("fix_comment", request.getParameter("fix_comment"));
-session.setAttribute("fix_tellnumber", request.getParameter("fix_tellnumber"));
-session.setAttribute("fix_bikou", request.getParameter("fix_bikou"));
-session.setAttribute("fix_delete_comment", request.getParameter("fix_delete_comment"));
-session.setAttribute("fix_flag", request.getParameter("fix_flag"));
+	session.setAttribute("fix_type", request.getParameter("fix_type"));
+	session.setAttribute("fix_date_1", request.getParameter("fix_date_1").substring(0, 4)
+	+ request.getParameter("fix_date_1").substring(5, 7) + request.getParameter("fix_date_1").substring(8, 10));
+	session.setAttribute("fix_date_2", request.getParameter("fix_date_2").substring(0, 4)
+	+ request.getParameter("fix_date_2").substring(5, 7) + request.getParameter("fix_date_2").substring(8, 10));
+	session.setAttribute("fix_date_3",
+	request.getParameter("fix_time_1").substring(0, 2) + request.getParameter("fix_time_1").substring(3, 5));
+	session.setAttribute("fix_date_4",
+	request.getParameter("fix_time_2").substring(0, 2) + request.getParameter("fix_time_2").substring(3, 5));
+	session.setAttribute("fix_comment", request.getParameter("fix_comment"));
+	session.setAttribute("fix_tellnumber", request.getParameter("fix_tellnumber"));
+	session.setAttribute("fix_bikou", request.getParameter("fix_bikou"));
+	session.setAttribute("fix_delete_comment", request.getParameter("fix_delete_comment"));
+	session.setAttribute("fix_flag", request.getParameter("fix_flag"));
 
-if (historyList.get(11).equals(session.getAttribute("fix_flag"))){
-	session.setAttribute("approver_switch", "0");
-} else {
-	session.setAttribute("approver_switch", "1");
-}
+	if (historyList.get(11).equals(session.getAttribute("fix_flag"))) {
+		session.setAttribute("approver_switch", "0");
+	} else {
+		session.setAttribute("approver_switch", "1");
+	}
 
-StringBuilder fromDate = new StringBuilder();
-fromDate.append(((String) session.getAttribute("fix_date_1")).substring(0, 4) + "年");
-fromDate.append(((String) session.getAttribute("fix_date_1")).substring(4, 6) + "月");
-fromDate.append(((String) session.getAttribute("fix_date_1")).substring(6, 8) + "日");
+	StringBuilder fromDate = new StringBuilder();
+	fromDate.append(((String) session.getAttribute("fix_date_1")).substring(0, 4) + "年");
+	fromDate.append(((String) session.getAttribute("fix_date_1")).substring(4, 6) + "月");
+	fromDate.append(((String) session.getAttribute("fix_date_1")).substring(6, 8) + "日");
 
-StringBuilder toDate = new StringBuilder();
-toDate.append(((String) session.getAttribute("fix_date_2")).substring(0, 4) + "年");
-toDate.append(((String) session.getAttribute("fix_date_2")).substring(4, 6) + "月");
-toDate.append(((String) session.getAttribute("fix_date_2")).substring(6, 8) + "日");
+	StringBuilder toDate = new StringBuilder();
+	toDate.append(((String) session.getAttribute("fix_date_2")).substring(0, 4) + "年");
+	toDate.append(((String) session.getAttribute("fix_date_2")).substring(4, 6) + "月");
+	toDate.append(((String) session.getAttribute("fix_date_2")).substring(6, 8) + "日");
 
-StringBuilder fromTime = new StringBuilder();
-fromTime.append(((String) session.getAttribute("fix_date_3")).substring(0, 2) + "時");
-fromTime.append(((String) session.getAttribute("fix_date_3")).substring(2, 4) + "分");
+	StringBuilder fromTime = new StringBuilder();
+	fromTime.append(((String) session.getAttribute("fix_date_3")).substring(0, 2) + "時");
+	fromTime.append(((String) session.getAttribute("fix_date_3")).substring(2, 4) + "分");
 
-StringBuilder toTime = new StringBuilder();
-toTime.append(((String) session.getAttribute("fix_date_4")).substring(0, 2) + "時");
-toTime.append(((String) session.getAttribute("fix_date_4")).substring(2, 4) + "分");
+	StringBuilder toTime = new StringBuilder();
+	toTime.append(((String) session.getAttribute("fix_date_4")).substring(0, 2) + "時");
+	toTime.append(((String) session.getAttribute("fix_date_4")).substring(2, 4) + "分");
 %>
 <!DOCTYPE html>
 <html>
@@ -175,8 +175,10 @@ img {
 				<td align="left">
 					<%
 						if (session.getAttribute("fix_flag").equals("0")) {
+						session.setAttribute("fix_approverNumber", session.getAttribute("approverNumber_1"));
 					%> <%=session.getAttribute("approverName_1")%> <%
  	} else {
+ 	session.setAttribute("fix_approverNumber", session.getAttribute("approverNumber_2"));
  %><%=session.getAttribute("approverName_2")%> <%
  	}
  %>
