@@ -33,15 +33,7 @@ String authority = (String) session.getAttribute("authority");
 		<hr>
 	</header>
 
-	<script type="text/javascript">
-		function logout() {
-			if (confirm("ログアウトしますか？")) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	</script>
+
 	<%
 		try {
 		if (session.getAttribute("id").equals(null)) {
@@ -81,5 +73,6 @@ String authority = (String) session.getAttribute("authority");
 		response.sendRedirect("login.jsp");
 	}
 	%>
+	<script type="text/javascript" src="logout.js"></script>
 </body>
 </html>

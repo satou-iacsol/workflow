@@ -31,17 +31,6 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 	</form>
 		<hr>
 	</header>
-	<script type="text/javascript">
-	<!--
-		function logout() {
-			if (confirm("ログアウトしますか？")) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	// -->
-	</script>
 	<%
 		try {
 		if (session.getAttribute("id").equals(null)) {
@@ -208,5 +197,6 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 
 
       </script>
+   		<script type="text/javascript" src="logout.js"></script>
 </body>
 </html>
