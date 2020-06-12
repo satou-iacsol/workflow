@@ -181,6 +181,9 @@ public class ApproveFix extends HttpServlet {
 				if (pstmtData != null) {
 					pstmtData.close();
 				}
+				if (pstmtNextData != null) {
+					pstmtNextData.close();
+				}
 				if (con != null) {
 					con.close();
 				}
