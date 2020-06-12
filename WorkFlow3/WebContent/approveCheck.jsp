@@ -22,14 +22,17 @@ table {
 	align: center;
 	margin: 0 auto;
 }
+
 header {
 	position: fixed;
 	left: 0;
 	width: 100%;
 }
-img{
-	float:left;
+
+img {
+	float: left;
 }
+
 .logoutbutton {
 	margin-left: 20px;
 	margin-right: 20px;
@@ -38,17 +41,18 @@ img{
 </head>
 <body>
 	<header>
-		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg" alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg"
+			alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
-		onsubmit="return logout()">
-		<div align="right">
-			<div>
-				<%=session.getAttribute("affiliationName") %>・
-				<%=session.getAttribute("fullname")%>
-				<input class="logoutbutton" type="submit" value="ログアウト">
+			onsubmit="return logout()">
+			<div align="right">
+				<div>
+					<%=session.getAttribute("affiliationName")%>・
+					<%=session.getAttribute("fullname")%>
+					<input class="logoutbutton" type="submit" value="ログアウト">
+				</div>
 			</div>
-		</div>
-	</form>
+		</form>
 		<hr>
 	</header>
 	<script type="text/javascript">
@@ -73,7 +77,7 @@ img{
 	<form action="Approve" method="post">
 		<table style="border: 0">
 			<tr>
-				<td colspan="5" align="center">有給休暇取得申請システム 承認明細確認画面</td>
+				<td colspan="4" align="center">有給休暇取得申請システム 承認明細確認画面</td>
 			</tr>
 			<tr>
 				<td><br></td>
@@ -137,15 +141,13 @@ img{
 				<td colspan="3"><%=session.getAttribute("approve2Name")%></td>
 			</tr>
 			<tr>
-				<td align="left">承認者１コメント:</td>
-				<td colspan="3"><%=session.getAttribute("approvedComment")%></td>
+				<td align="left" colspan="4">承認者１コメント:<%=session.getAttribute("approvedComment")%></td>
 			</tr>
 			<%
 				if (!((String) session.getAttribute("approvedNumber")).substring(14).equals("01")) {
 			%>
 			<tr>
-				<td align="left">承認者２コメント:</td>
-				<td colspan="3"><%=session.getAttribute("preComment")%></td>
+				<td align="left" colspan="4">承認者２コメント:<%=session.getAttribute("preComment")%></td>
 			</tr>
 
 			<%
@@ -154,12 +156,10 @@ img{
 			%>
 
 			<tr>
-				<td align="left">承認者１コメント:</td>
-				<td colspan="3"><%=session.getAttribute("preComment")%></td>
+				<td align="left" colspan="4">承認者１コメント:<%=session.getAttribute("preComment")%></td>
 			</tr>
 			<tr>
-				<td align="left">承認者２コメント:</td>
-				<td colspan="3"><%=session.getAttribute("approvedComment")%></td>
+				<td align="left" colspan="4">承認者２コメント:<%=session.getAttribute("approvedComment")%></td>
 			</tr>
 
 			<%
@@ -170,7 +170,7 @@ img{
 				<td><br></td>
 			</tr>
 			<tr>
-				<td colspan="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<td colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="submit"
 					value=" <%=session.getAttribute("approvedAction")%> " class="btn">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<button type="button" onclick="history.back()">&nbsp;戻る&nbsp;</button>
