@@ -6,6 +6,10 @@
 	import="java.nio.file.Paths"%>
 <%@ page session="true"%>
 <%
+try {
+if (session.equals(null)) {
+	throw new Exception();
+}
 	request.setCharacterEncoding("UTF-8");
 response.setContentType("text/html;charset=UTF-8");
 %>
@@ -81,12 +85,6 @@ img {
 		}
 	// -->
 	</script>
-	<%
-		try {
-		if (session.equals(null)) {
-			throw new Exception();
-		}
-	%>
 	<br>
 	<br>
 	<form name="approveForm" action="approveCheck.jsp" method="post"

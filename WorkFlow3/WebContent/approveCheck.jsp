@@ -2,7 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ page session="true"%>
 <%
-	request.setCharacterEncoding("UTF-8");
+try {
+if (session.equals(null)) {
+	throw new Exception();
+}
+request.setCharacterEncoding("UTF-8");
 response.setContentType("text/html;charset=UTF-8");
 String id = (String) session.getAttribute("id");
 session.setAttribute("approvedComment", request.getParameter("comment"));
@@ -66,12 +70,6 @@ img {
 		}
 	// -->
 	</script>
-	<%
-		try {
-		if (session.equals(null)) {
-			throw new Exception();
-		}
-	%>
 	<br>
 	<br>
 	<form action="Approve" method="post">

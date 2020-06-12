@@ -3,6 +3,10 @@
 <%@ page import="java.util.ArrayList" import="java.util.Collections"%>
 <%@ page session="true"%>
 <%
+try {
+if (session.equals(null)) {
+	throw new Exception();
+}
 	// 社員番号取得
 String id = (String) session.getAttribute("id");
 // 申請一覧リスト取得
@@ -67,12 +71,6 @@ img {
 		}
 	// -->
 	</script>
-	<%
-		try {
-		if (session.equals(null)) {
-			throw new Exception();
-		}
-	%>
 	<br>
 	<br>
 	<div align="center">有給休暇取得申請システム 申請一覧画面</div>

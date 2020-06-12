@@ -3,6 +3,10 @@
 <%@ page import="java.util.ArrayList" import="java.util.Collections"%>
 <%@ page session="true"%>
 <%
+try {
+if (session.equals(null)) {
+	throw new Exception();
+}
 	request.setCharacterEncoding("UTF-8");
 response.setContentType("text/html;charset=UTF-8");
 // 社員番号取得
@@ -72,12 +76,6 @@ img {
 		}
 	// -->
 	</script>
-	<%
-		try {
-		if (session.equals(null)) {
-			throw new Exception();
-		}
-	%>
 	<br>
 	<br>
 	<form action="approveDeleteCheck.jsp" method="post"

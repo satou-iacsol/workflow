@@ -3,6 +3,10 @@
 <%@ page import="java.util.ArrayList" import="java.util.Collections"%>
 <%@ page session="true"%>
 <%
+try {
+if (session.equals(null)) {
+	throw new Exception();
+}
 	// 社員番号取得
 String id = (String) session.getAttribute("id");
 // 申請詳細リスト取得
@@ -73,12 +77,6 @@ img {
 		}
 	// -->
 	</script>
-	<%
-		try {
-		if (session.equals(null)) {
-			throw new Exception();
-		}
-	%>
 	<br>
 	<br>
 	<table class="table1">
