@@ -26,6 +26,12 @@ session.setAttribute("fix_bikou", request.getParameter("fix_bikou"));
 session.setAttribute("fix_delete_comment", request.getParameter("fix_delete_comment"));
 session.setAttribute("fix_flag", request.getParameter("fix_flag"));
 
+if (historyList.get(11).equals(session.getAttribute("fix_flag"))){
+	session.setAttribute("approver_switch", "0");
+} else {
+	session.setAttribute("approver_switch", "1");
+}
+
 StringBuilder fromDate = new StringBuilder();
 fromDate.append(((String) session.getAttribute("fix_date_1")).substring(0, 4) + "年");
 fromDate.append(((String) session.getAttribute("fix_date_1")).substring(4, 6) + "月");
