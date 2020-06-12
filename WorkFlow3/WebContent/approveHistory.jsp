@@ -1,20 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList" import="java.util.Collections"%>
+<%@ page import="java.util.ArrayList" import="java.util.Collections"
+	import="com.workflow.Keyword"%>
 <%@ page session="true"%>
 <%
-try {
-if (session.equals(null)) {
-	throw new Exception();
-}
+	try {
+	if (session.equals(null)) {
+		throw new Exception();
+	}
 	// 社員番号取得
-String id = (String) session.getAttribute("id");
-// 申請詳細リスト取得
-@SuppressWarnings("unchecked")
-ArrayList<String> historyList = (ArrayList<String>) session.getAttribute("historyList");
-// フローリスト取得
-@SuppressWarnings("unchecked")
-ArrayList<ArrayList<String>> flowList = (ArrayList<ArrayList<String>>) session.getAttribute("flowList");
+	String id = (String) session.getAttribute("id");
+	// 申請詳細リスト取得
+	@SuppressWarnings("unchecked")
+	ArrayList<String> historyList = (ArrayList<String>) session.getAttribute("historyList");
+	// フローリスト取得
+	@SuppressWarnings("unchecked")
+	ArrayList<ArrayList<String>> flowList = (ArrayList<ArrayList<String>>) session.getAttribute("flowList");
 %>
 <!DOCTYPE html>
 <html>
@@ -92,7 +93,7 @@ img {
 		</tr>
 		<tr>
 			<td align="left">有給種別:</td>
-			<td colspan="3"><%=historyList.get(2)%></td>
+			<td colspan="3"><%=Keyword.type((String) historyList.get(2))%></td>
 		</tr>
 		<tr>
 			<td align="left">取得期間:</td>
@@ -196,10 +197,9 @@ img {
 			<td><form action="approveFixAction.jsp" method="post">
 					<span style="margin-right: 50px"> <%
  	if (!historyList.get(7).equals("承認完了")) {
- %> <input type="submit" value=" 修正 " class="btn">
-						<%
-							}
-						%>
+ %> <input type="submit" value=" 修正 " class="btn"> <%
+ 	}
+ %>
 					</span>
 				</form></td>
 			<td>

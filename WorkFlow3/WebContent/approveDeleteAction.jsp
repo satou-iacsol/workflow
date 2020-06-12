@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList" import="java.util.Collections"%>
+<%@ page import="java.util.ArrayList" import="java.util.Collections"
+import="com.workflow.Keyword"%>
 <%@ page session="true"%>
 <%
 try {
@@ -96,7 +97,7 @@ img {
 			</tr>
 			<tr>
 				<td align="left">有給種別:</td>
-				<td colspan="3"><%=historyList.get(2)%></td>
+				<td colspan="3"><%=Keyword.type((String)historyList.get(2))%></td>
 			</tr>
 			<tr>
 				<td align="left">取得期間:</td>

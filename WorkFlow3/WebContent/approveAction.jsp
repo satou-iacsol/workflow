@@ -3,7 +3,7 @@
 <%@ page import="java.io.BufferedReader"
 	import="java.io.FileNotFoundException" import="java.io.IOException"
 	import="java.nio.charset.Charset" import="java.nio.file.Files"
-	import="java.nio.file.Paths"%>
+	import="java.nio.file.Paths" import="com.workflow.Keyword"%>
 <%@ page session="true"%>
 <%
 try {
@@ -113,7 +113,7 @@ img {
 			</tr>
 			<tr>
 				<td align="left">有給種別:</td>
-				<td colspan="3"><%=session.getAttribute("approvedType")%></td>
+				<td colspan="3"><%=Keyword.type((String)session.getAttribute("approvedType"))%></td>
 			</tr>
 			<tr>
 				<td align="left">取得期間:</td>

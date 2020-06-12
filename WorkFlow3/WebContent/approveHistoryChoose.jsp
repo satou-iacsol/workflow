@@ -1,17 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList" import="java.util.Collections"%>
+<%@ page import="java.util.ArrayList" import="java.util.Collections"
+	import="com.workflow.Keyword"%>
 <%@ page session="true"%>
 <%
-try {
-if (session.equals(null)) {
-	throw new Exception();
-}
+	try {
+	if (session.equals(null)) {
+		throw new Exception();
+	}
 	// 社員番号取得
-String id = (String) session.getAttribute("id");
-// 申請一覧リスト取得
-@SuppressWarnings("unchecked")
-ArrayList<ArrayList<String>> historysList = (ArrayList<ArrayList<String>>) session.getAttribute("historysList");
+	String id = (String) session.getAttribute("id");
+	// 申請一覧リスト取得
+	@SuppressWarnings("unchecked")
+	ArrayList<ArrayList<String>> historysList = (ArrayList<ArrayList<String>>) session.getAttribute("historysList");
 %>
 <!DOCTYPE html>
 <html>
@@ -19,14 +20,12 @@ ArrayList<ArrayList<String>> historysList = (ArrayList<ArrayList<String>>) sessi
 <meta charset="UTF-8"></meta>
 <title>有給休暇取得申請システム</title>
 <style>
-
 .table {
 	border-collapse: collapse;
 	border: 1px black solid;
 	align: center;
 	margin: auto;
 }
-
 
 header {
 	position: fixed;
@@ -99,7 +98,7 @@ img {
 
 			<td align="left" valign="top" class="table">&nbsp;<%=list[0]%>&nbsp;
 			</td>
-			<td align="left" valign="top" class="table">&nbsp;<%=list[2]%>&nbsp;
+			<td align="left" valign="top" class="table">&nbsp;<%=Keyword.type(list[2])%>&nbsp;
 			</td>
 			<td align="left" valign="top" class="table">&nbsp;<%
 				String from = list[3].substring(0, 4) + "年" + list[3].substring(4, 6) + "月"
@@ -132,8 +131,9 @@ img {
 			<td align="right" valign="top">
 				<form action="ApproveHistoryCreate" method="post">
 					<input type="hidden" name="number" value=<%=list[1]%>><input
-						type="hidden" name="action" value="delete"><span style="margin-left: 10px"><input
-						type="submit" value=" 取消 " class="btn"></span>
+						type="hidden" name="action" value="delete"><span
+						style="margin-left: 10px"><input type="submit" value=" 取消 "
+						class="btn"></span>
 				</form>
 			</td>
 		</tr>

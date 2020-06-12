@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList" import="java.util.Collections"%>
+<%@ page import="java.util.ArrayList" import="java.util.Collections"
+import="com.workflow.Keyword"%>
 <%@ page session="true"%>
 <%
 	try {
@@ -134,7 +135,7 @@ img {
 			</tr>
 			<tr>
 				<td align="left">有給種別:</td>
-				<td colspan="3"><%=session.getAttribute("fix_type")%></td>
+				<td colspan="3"><%=Keyword.type((String)session.getAttribute("fix_type"))%></td>
 			</tr>
 			<tr>
 				<td align="left">取得期間:</td>

@@ -36,7 +36,7 @@ public class SessionCreate extends HttpServlet {
 		String number = request.getParameter("radio");
 
 		String approvedId = "";
-		String type = "";
+		String approvedType = "";
 		String flag = "";
 		String approvedName = "";
 		String approvedBelongsCode = "";
@@ -88,7 +88,7 @@ public class SessionCreate extends HttpServlet {
 			while (resultData.next()) {
 				if (resultData.getString("number").equals(number)) {
 					approvedId = resultData.getString("id");
-					type = resultData.getString("type");
+					approvedType = resultData.getString("type");
 					flag = resultData.getString("flag");
 					date_1 = resultData.getString("date_1");
 					date_2 = resultData.getString("date_2");
@@ -212,52 +212,6 @@ public class SessionCreate extends HttpServlet {
 			}
 		}
 
-		switch (Integer.parseInt(type)) {
-		case 1:
-			session.setAttribute("approvedType", "1.有給休暇");
-			break;
-		case 2:
-			session.setAttribute("approvedType", "2.代休");
-			break;
-		case 3:
-			session.setAttribute("approvedType", "3.生理休暇");
-			break;
-		case 4:
-			session.setAttribute("approvedType", "4.慶弔休暇");
-			break;
-		case 5:
-			session.setAttribute("approvedType", "5.特別休暇");
-			break;
-		case 6:
-			session.setAttribute("approvedType", "6.罹災休暇");
-			break;
-		case 7:
-			session.setAttribute("approvedType", "7.半休");
-			break;
-		case 8:
-			session.setAttribute("approvedType", "8.結婚休暇");
-			break;
-		case 9:
-			session.setAttribute("approvedType", "9.出産休暇");
-			break;
-		case 10:
-			session.setAttribute("approvedType", "10.忌引き休暇");
-			break;
-		case 11:
-			session.setAttribute("approvedType", "11.隔離休暇");
-			break;
-		case 12:
-			session.setAttribute("approvedType", "12.一周忌");
-			break;
-		case 13:
-			session.setAttribute("approvedType", "13.受験休暇");
-			break;
-		case 14:
-			session.setAttribute("approvedType", "14.産前産後休暇");
-			break;
-
-		}
-
 		// 日付関連のデータの形式の編集
 		StringBuilder fromDate = new StringBuilder();
 		fromDate.append(date_1.substring(0, 4) + "年");
@@ -280,6 +234,7 @@ public class SessionCreate extends HttpServlet {
 
 		session.setAttribute("approvedNumber", request.getParameter("radio"));
 		session.setAttribute("approvedId", approvedId);
+		session.setAttribute("approvedType", approvedType);
 		session.setAttribute("approvedName", approvedName);
 		session.setAttribute("approvedBelongsCode", approvedBelongsCode);
 		session.setAttribute("approvedBelongs", approvedBelongs);

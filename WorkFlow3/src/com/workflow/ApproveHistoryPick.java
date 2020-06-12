@@ -106,52 +106,7 @@ public class ApproveHistoryPick extends HttpServlet {
 					while (resultData2.next()) {
 						if (resultData2.getString("number").equals(sort.get(sort.size() - 1))) {
 							numberNow = resultData2.getString("number");
-
-							switch (Integer.parseInt(resultData2.getString("type"))) {
-							case 1:
-								type = "1.有給休暇";
-								break;
-							case 2:
-								type = "2.代休";
-								break;
-							case 3:
-								type = "3.生理休暇";
-								break;
-							case 4:
-								type = "4.慶弔休暇";
-								break;
-							case 5:
-								type = "5.特別休暇";
-								break;
-							case 6:
-								type = "6.罹災休暇";
-								break;
-							case 7:
-								type = "7.半休";
-								break;
-							case 8:
-								type = "8.結婚休暇";
-								break;
-							case 9:
-								type = "9.出産休暇";
-								break;
-							case 10:
-								type = "10.忌引き休暇";
-								break;
-							case 11:
-								type = "11.隔離休暇";
-								break;
-							case 12:
-								type = "12.一周忌";
-								break;
-							case 13:
-								type = "13.受験休暇";
-								break;
-							case 14:
-								type = "14.産前産後休暇";
-								break;
-							}
-
+							type = resultData2.getString("type");
 							fromDateTime = resultData2.getString("date_1") + resultData2.getString("date_3");
 							toDateTime = resultData2.getString("date_2") + resultData2.getString("date_4");
 							approverNumber = resultData2.getString("approverNumber");

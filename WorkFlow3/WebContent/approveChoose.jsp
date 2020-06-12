@@ -4,17 +4,17 @@
 	import="java.io.FileNotFoundException" import="java.io.IOException"
 	import="java.nio.charset.Charset" import="java.nio.file.Files"
 	import="java.nio.file.Paths" import="java.util.ArrayList"
-	import="java.util.Collections"%>
+	import="java.util.Collections" import="com.workflow.Keyword"%>
 <%@ page session="true"%>
 <%
-try {
-if (session.equals(null)) {
-	throw new Exception();
-}
-// 社員番号取得
-String id = (String) session.getAttribute("id");
-@SuppressWarnings("unchecked")
-ArrayList<ArrayList<String>> list = (ArrayList<ArrayList<String>>) session.getAttribute("list");
+	try {
+	if (session.equals(null)) {
+		throw new Exception();
+	}
+	// 社員番号取得
+	String id = (String) session.getAttribute("id");
+	@SuppressWarnings("unchecked")
+	ArrayList<ArrayList<String>> list = (ArrayList<ArrayList<String>>) session.getAttribute("list");
 %>
 <!DOCTYPE html>
 <html>
@@ -36,14 +36,17 @@ table {
 	margin: 0 auto;
 	border: solid 1px;
 }
+
 header {
 	position: fixed;
 	left: 0;
 	width: 100%;
 }
-img{
-	float:left;
+
+img {
+	float: left;
 }
+
 .logoutbutton {
 	margin-left: 20px;
 	margin-right: 20px;
@@ -52,16 +55,17 @@ img{
 </head>
 <body>
 	<header>
-		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg" alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg"
+			alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
-		onsubmit="return logout()">
-		<div align="right">
-			<div>
-				<%=session.getAttribute("affiliationName") %>・
-				<%=session.getAttribute("fullname")%>
-				<input class="logoutbutton" type="submit" value="ログアウト">
+			onsubmit="return logout()">
+			<div align="right">
+				<div>
+					<%=session.getAttribute("affiliationName")%>・
+					<%=session.getAttribute("fullname")%>
+					<input class="logoutbutton" type="submit" value="ログアウト">
+				</div>
 			</div>
-		</div>
 		</form>
 		<hr>
 	</header>
@@ -122,53 +126,7 @@ img{
 				</td>
 				<td align="left">&nbsp;<%=list.get(i).get(5)%>&nbsp;
 				</td>
-				<td align="left">
-					<%
-						switch (Integer.parseInt(list.get(i).get(2))) {
-					case 1:
-					%> 1.有給休暇<%
-						break;
-								case 2:
-					%> 2.代休<%
-						break;
-								case 3:
-					%> 3.生理休暇<%
-						break;
-								case 4:
-					%> 4.慶弔休暇<%
-						break;
-								case 5:
-					%> 5.特別休暇<%
-						break;
-								case 6:
-					%> 6.罹災休暇<%
-						break;
-								case 7:
-					%> 7.半休<%
-						break;
-								case 8:
-					%> 8.結婚休暇<%
-						break;
-								case 9:
-					%> 9.出産休暇<%
-						break;
-								case 10:
-					%> 10.忌引き休暇<%
-						break;
-								case 11:
-					%> 11.隔離休暇<%
-						break;
-								case 12:
-					%> 12.一周忌<%
-						break;
-								case 13:
-					%> 13.受験休暇<%
-						break;
-								case 14:
-					%> 14.産前産後休暇<%
-						break;
-								}
-					%>&nbsp;
+				<td align="left"><%=Keyword.type((String) list.get(i).get(2))%>&nbsp;
 				</td>
 				<td align="left">&nbsp;<%=list.get(i).get(14)%></td>
 			</tr>

@@ -1,21 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList" import="java.util.Collections"%>
+<%@ page import="java.util.ArrayList" import="java.util.Collections"
+	import="com.workflow.Keyword"%>
 <%@ page session="true"%>
 <%
-try {
-if (session.equals(null)) {
-	throw new Exception();
-}
+	try {
+	if (session.equals(null)) {
+		throw new Exception();
+	}
 	request.setCharacterEncoding("UTF-8");
-response.setContentType("text/html;charset=UTF-8");
-// 社員番号取得
-String id = (String) session.getAttribute("id");
-// 申請詳細リスト取得
-@SuppressWarnings("unchecked")
-ArrayList<String> historyList = (ArrayList<String>) session.getAttribute("historyList");
-// 取消コメントをセッションに渡す
-session.setAttribute("fix_delete_comment", request.getParameter("fix_delete_comment"));
+	response.setContentType("text/html;charset=UTF-8");
+	// 社員番号取得
+	String id = (String) session.getAttribute("id");
+	// 申請詳細リスト取得
+	@SuppressWarnings("unchecked")
+	ArrayList<String> historyList = (ArrayList<String>) session.getAttribute("historyList");
+	// 取消コメントをセッションに渡す
+	session.setAttribute("fix_delete_comment", request.getParameter("fix_delete_comment"));
 %>
 <!DOCTYPE html>
 <html>
@@ -97,7 +98,7 @@ img {
 			</tr>
 			<tr>
 				<td align="left">有給種別:</td>
-				<td colspan="3"><%=historyList.get(2)%></td>
+				<td colspan="3"><%=Keyword.type((String) historyList.get(2))%></td>
 			</tr>
 			<tr>
 				<td align="left">取得期間:</td>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="com.workflow.Keyword"%>
 <%@ page session="true"%>
 <%
 try {
@@ -97,7 +98,7 @@ img {
 			</tr>
 			<tr>
 				<td align="left">有給種別:</td>
-				<td colspan="3"><%=session.getAttribute("approvedType")%></td>
+				<td colspan="3"><%=Keyword.type((String)session.getAttribute("approvedType"))%></td>
 			</tr>
 			<tr>
 				<td align="left">取得期間:</td>

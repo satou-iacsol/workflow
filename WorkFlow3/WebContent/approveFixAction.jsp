@@ -1,37 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList" import="java.util.Collections"%>
+<%@ page import="java.util.ArrayList" import="java.util.Collections"
+	import="com.workflow.Keyword"%>
 <%@ page session="true"%>
 <%
-try {
-if (session.equals(null)) {
-	throw new Exception();
-}
+	try {
+	if (session.equals(null)) {
+		throw new Exception();
+	}
 	request.setCharacterEncoding("UTF-8");
-response.setContentType("text/html;charset=UTF-8");
-// 社員番号取得
-String id = (String) session.getAttribute("id");
-// 申請詳細リスト取得
-@SuppressWarnings("unchecked")
-ArrayList<String> historyList = (ArrayList<String>) session.getAttribute("historyList");
+	response.setContentType("text/html;charset=UTF-8");
+	// 社員番号取得
+	String id = (String) session.getAttribute("id");
+	// 申請詳細リスト取得
+	@SuppressWarnings("unchecked")
+	ArrayList<String> historyList = (ArrayList<String>) session.getAttribute("historyList");
 
-StringBuilder fromDate = new StringBuilder();
-fromDate.append(historyList.get(3).substring(0, 4) + "-");
-fromDate.append(historyList.get(3).substring(4, 6) + "-");
-fromDate.append(historyList.get(3).substring(6, 8));
+	StringBuilder fromDate = new StringBuilder();
+	fromDate.append(historyList.get(3).substring(0, 4) + "-");
+	fromDate.append(historyList.get(3).substring(4, 6) + "-");
+	fromDate.append(historyList.get(3).substring(6, 8));
 
-StringBuilder toDate = new StringBuilder();
-toDate.append(historyList.get(4).substring(0, 4) + "-");
-toDate.append(historyList.get(4).substring(4, 6) + "-");
-toDate.append(historyList.get(4).substring(6, 8));
+	StringBuilder toDate = new StringBuilder();
+	toDate.append(historyList.get(4).substring(0, 4) + "-");
+	toDate.append(historyList.get(4).substring(4, 6) + "-");
+	toDate.append(historyList.get(4).substring(6, 8));
 
-StringBuilder fromTime = new StringBuilder();
-fromTime.append(historyList.get(3).substring(8, 10) + ":");
-fromTime.append(historyList.get(3).substring(10, 12));
+	StringBuilder fromTime = new StringBuilder();
+	fromTime.append(historyList.get(3).substring(8, 10) + ":");
+	fromTime.append(historyList.get(3).substring(10, 12));
 
-StringBuilder toTime = new StringBuilder();
-toTime.append(historyList.get(4).substring(8, 10) + ":");
-toTime.append(historyList.get(4).substring(10, 12));
+	StringBuilder toTime = new StringBuilder();
+	toTime.append(historyList.get(4).substring(8, 10) + ":");
+	toTime.append(historyList.get(4).substring(10, 12));
 %>
 <!DOCTYPE html>
 <html>
@@ -116,34 +117,34 @@ img {
 			<tr>
 				<td align="left">有給種別:</td>
 				<td colspan="3"><select name="fix_type">
-						<option value="01" <%if (historyList.get(2).equals("1.有給休暇")) {%>
-							selected <%}%>>有給休暇</option>
-						<option value="02" <%if (historyList.get(2).equals("2.代休")) {%>
-							selected <%}%>>代休</option>
-						<option value="03" <%if (historyList.get(2).equals("3.生理休暇")) {%>
-							selected <%}%>>生理休暇</option>
-						<option value="04" <%if (historyList.get(2).equals("4.慶弔休暇")) {%>
-							selected <%}%>>慶弔休暇</option>
-						<option value="05" <%if (historyList.get(2).equals("5.特別休暇")) {%>
-							selected <%}%>>特別休暇</option>
-						<option value="06" <%if (historyList.get(2).equals("6.罹災休暇")) {%>
-							selected <%}%>>罹災休暇</option>
-						<option value="07" <%if (historyList.get(2).equals("7.半休")) {%>
-							selected <%}%>>半休</option>
-						<option value="08" <%if (historyList.get(2).equals("8.結婚休暇")) {%>
-							selected <%}%>>結婚休暇</option>
-						<option value="09" <%if (historyList.get(2).equals("9.出産休暇")) {%>
-							selected <%}%>>出産休暇</option>
-						<option value="10"
-							<%if (historyList.get(2).equals("10.忌引き休暇")) {%> selected <%}%>>忌引き休暇</option>
-						<option value="11" <%if (historyList.get(2).equals("11.隔離休暇")) {%>
-							selected <%}%>>隔離休暇</option>
-						<option value="12" <%if (historyList.get(2).equals("12.一周忌")) {%>
-							selected <%}%>>一周忌</option>
-						<option value="13" <%if (historyList.get(2).equals("13.受験休暇")) {%>
-							selected <%}%>>受験休暇</option>
-						<option value="14"
-							<%if (historyList.get(2).equals("14.産前産後休暇")) {%> selected <%}%>>産前産後休暇</option>
+						<option value="01" <%if (historyList.get(2).equals("01")) {%>
+							selected <%}%>><%=Keyword.type("01")%></option>
+						<option value="02" <%if (historyList.get(2).equals("02")) {%>
+							selected <%}%>><%=Keyword.type("02")%></option>
+						<option value="03" <%if (historyList.get(2).equals("03")) {%>
+							selected <%}%>><%=Keyword.type("03")%></option>
+						<option value="04" <%if (historyList.get(2).equals("04")) {%>
+							selected <%}%>><%=Keyword.type("04")%></option>
+						<option value="05" <%if (historyList.get(2).equals("05")) {%>
+							selected <%}%>><%=Keyword.type("05")%></option>
+						<option value="06" <%if (historyList.get(2).equals("06")) {%>
+							selected <%}%>><%=Keyword.type("06")%></option>
+						<option value="07" <%if (historyList.get(2).equals("07")) {%>
+							selected <%}%>><%=Keyword.type("07")%></option>
+						<option value="08" <%if (historyList.get(2).equals("08")) {%>
+							selected <%}%>><%=Keyword.type("08")%></option>
+						<option value="09" <%if (historyList.get(2).equals("09")) {%>
+							selected <%}%>><%=Keyword.type("091")%></option>
+						<option value="10" <%if (historyList.get(2).equals("10")) {%>
+							selected <%}%>><%=Keyword.type("10")%></option>
+						<option value="11" <%if (historyList.get(2).equals("11")) {%>
+							selected <%}%>><%=Keyword.type("11")%></option>
+						<option value="12" <%if (historyList.get(2).equals("12")) {%>
+							selected <%}%>><%=Keyword.type("12")%></option>
+						<option value="13" <%if (historyList.get(2).equals("13")) {%>
+							selected <%}%>><%=Keyword.type("13")%></option>
+						<option value="14" <%if (historyList.get(2).equals("14")) {%>
+							selected <%}%>><%=Keyword.type("14")%></option>
 				</select></td>
 			</tr>
 			<tr>
