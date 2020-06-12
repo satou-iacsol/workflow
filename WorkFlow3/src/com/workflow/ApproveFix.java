@@ -123,7 +123,7 @@ public class ApproveFix extends HttpServlet {
 				String approve1notification = "0";
 				String approve2notification = "0";
 
-				if (request.getAttribute("approver_switch").equals("0")) {
+				if (session.getAttribute("approver_switch").equals("0")) {
 					if (historyList.get(5).equals(session.getAttribute("approverNumber_1"))
 							&& historyList.get(11).equals("0")) {
 						approve1notification = "1";
