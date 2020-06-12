@@ -118,6 +118,7 @@ public class ApproveDelete extends HttpServlet {
 					}
 				}
 
+				session.setAttribute("approvedResult", "取消");
 				session.setAttribute("approve1notification", approve1notification);
 				session.setAttribute("approve2notification", approve2notification);
 				request.getServletContext().getRequestDispatcher("/SendMail").forward(request, response);
