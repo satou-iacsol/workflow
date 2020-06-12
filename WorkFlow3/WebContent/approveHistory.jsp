@@ -214,7 +214,7 @@ img {
 
 			<%
 				} catch (Exception e) {
-				response.sendRedirect("login_akashi.jsp");
+				response.sendRedirect("login.jsp");
 			}
 			%>
 		</tr>
