@@ -102,7 +102,7 @@ img {
 		onsubmit="return check()">
 		<table style="border: 0">
 			<tr>
-				<td colspan="5" align="center">有給休暇取得申請システム 申請修正画面</td>
+				<td colspan="4" align="center">有給休暇取得申請システム 申請修正画面</td>
 			</tr>
 			<tr>
 				<td><br></td>
@@ -116,51 +116,53 @@ img {
 			</tr>
 			<tr>
 				<td align="left">有給種別:</td>
-				<td colspan="3"><select name="type">
-						<option value=有給休暇 <%if (historyList.get(2).equals("1.有給休暇")) {%>
+				<td colspan="3"><select name="fix_type">
+						<option value="01" <%if (historyList.get(2).equals("1.有給休暇")) {%>
 							selected <%}%>>有給休暇</option>
-						<option value=代休 <%if (historyList.get(2).equals("2.代休")) {%>
+						<option value="02" <%if (historyList.get(2).equals("2.代休")) {%>
 							selected <%}%>>代休</option>
-						<option value=生理休暇 <%if (historyList.get(2).equals("3.生理休暇")) {%>
+						<option value="03" <%if (historyList.get(2).equals("3.生理休暇")) {%>
 							selected <%}%>>生理休暇</option>
-						<option value=慶弔休暇 <%if (historyList.get(2).equals("4.慶弔休暇")) {%>
+						<option value="04" <%if (historyList.get(2).equals("4.慶弔休暇")) {%>
 							selected <%}%>>慶弔休暇</option>
-						<option value=特別休暇 <%if (historyList.get(2).equals("5.特別休暇")) {%>
+						<option value="05" <%if (historyList.get(2).equals("5.特別休暇")) {%>
 							selected <%}%>>特別休暇</option>
-						<option value=罹災休暇 <%if (historyList.get(2).equals("6.罹災休暇")) {%>
+						<option value="06" <%if (historyList.get(2).equals("6.罹災休暇")) {%>
 							selected <%}%>>罹災休暇</option>
-						<option value=半休 <%if (historyList.get(2).equals("7.半休")) {%>
+						<option value="07" <%if (historyList.get(2).equals("7.半休")) {%>
 							selected <%}%>>半休</option>
-						<option value=結婚休暇 <%if (historyList.get(2).equals("8.結婚休暇")) {%>
+						<option value="08" <%if (historyList.get(2).equals("8.結婚休暇")) {%>
 							selected <%}%>>結婚休暇</option>
-						<option value=出産休暇 <%if (historyList.get(2).equals("9.出産休暇")) {%>
+						<option value="09" <%if (historyList.get(2).equals("9.出産休暇")) {%>
 							selected <%}%>>出産休暇</option>
-						<option value=忌引き休暇
+						<option value="10"
 							<%if (historyList.get(2).equals("10.忌引き休暇")) {%> selected <%}%>>忌引き休暇</option>
-						<option value=隔離休暇 <%if (historyList.get(2).equals("11.隔離休暇")) {%>
+						<option value="11" <%if (historyList.get(2).equals("11.隔離休暇")) {%>
 							selected <%}%>>隔離休暇</option>
-						<option value=一周忌 <%if (historyList.get(2).equals("12.一周忌")) {%>
+						<option value="12" <%if (historyList.get(2).equals("12.一周忌")) {%>
 							selected <%}%>>一周忌</option>
-						<option value=受験休暇 <%if (historyList.get(2).equals("13.受験休暇")) {%>
+						<option value="13" <%if (historyList.get(2).equals("13.受験休暇")) {%>
 							selected <%}%>>受験休暇</option>
-						<option value=産前産後休暇
+						<option value="14"
 							<%if (historyList.get(2).equals("14.産前産後休暇")) {%> selected <%}%>>産前産後休暇</option>
 				</select></td>
 			</tr>
 			<tr>
 				<td align="left" id="date_col">取得期間:</td>
 				<td><label class="date-edit"><input type="date"
-						id="date_1" name="date_1" value=<%=fromDate%> required="required"></label></td>
+						id="date_1" name="fix_date_1" value=<%=fromDate%>
+						required="required"></label></td>
 				<td>&nbsp;～&nbsp;</td>
 				<td><label class="date-edit"><input type="date"
-						id="date_2" name="date_2" value=<%=toDate%> required="required"></label></td>
+						id="date_2" name="fix_date_2" value=<%=toDate%>
+						required="required"></label></td>
 			</tr>
 			<tr>
 				<td align="left" id="time_col">取得時間:</td>
-				<td><input type="time" id="time_1" name="time_1"
+				<td><input type="time" id="time_1" name="fix_time_1"
 					value=<%=fromTime%> required="required"></td>
 				<td>&nbsp;～&nbsp;</td>
-				<td><input type="time" id="time_2" name="time_2"
+				<td><input type="time" id="time_2" name="fix_time_2"
 					value=<%=toTime%> required="required"></td>
 			</tr>
 			<tr>
@@ -168,20 +170,20 @@ img {
 			</tr>
 			<tr>
 				<td align="left" id="reason_col">取得事由:</td>
-				<td colspan="3"><textarea id="fix_comment" name="comment"
+				<td colspan="3"><textarea id="fix_comment" name="fix_comment"
 						rows="1" cols="38" maxlength="30" required="required"><%=historyList.get(8)%></textarea></td>
 			</tr>
 			<tr>
 				<td align="left" id="tell_col">連絡先:</td>
 				<td colspan="3"><input maxlength="11" id="fix_tel" type="tel"
-					name="tellnumber" id="number" value=<%=historyList.get(9)%>
+					name="fix_tellnumber" id="number" value=<%=historyList.get(9)%>
 					onKeyup="this.value=this.value.replace(/[^0-9]+/i,'')"
 					required="required" /></td>
 			</tr>
 			<tr>
 				<td align="left" id="bikou">備考:</td>
-				<td colspan="3"><textarea name="bikou" rows="1" cols="38"
-						maxlength="30" required="required"><%=historyList.get(10)%></textarea></td>
+				<td colspan="3"><textarea name="fix_bikou" rows="1" cols="38"
+						maxlength="30"><%=historyList.get(10)%></textarea></td>
 			</tr>
 			<tr>
 				<td align="left" id="fix_col">修正コメント:</td>
@@ -193,7 +195,7 @@ img {
 				<td><br></td>
 			</tr>
 			<tr>
-				<td colspan="2">一次承認者スキップ<select name="flag">
+				<td colspan="5">一次承認者スキップ:<select name="fix_flag">
 
 						<option value="0" <%if (historyList.get(11).equals("0")) {%>
 							selected <%}%>>0(無)</option>
@@ -201,23 +203,20 @@ img {
 						<option value="1" <%if (historyList.get(11).equals("1")) {%>
 							selected <%}%>>1(有)</option>
 				</select></td>
-				<td></td>
 			</tr>
 			<tr>
 				<td><br></td>
 			</tr>
 			<tr>
-				<td align="left">承認者１コメント:</td>
-				<td colspan="3"><%=historyList.get(13)%></td>
+				<td align="left" colspan="4">承認者１コメント:<%=historyList.get(13)%></td>
 			</tr>
 			<tr>
-				<td align="left">承認者２コメント:</td>
-				<td colspan="3"><%=historyList.get(14)%></td>
+				<td align="left" colspan="4">承認者２コメント:<%=historyList.get(14)%></td>
 			<tr>
 				<td><br></td>
 			</tr>
 			<tr>
-				<td colspan="5" align="right"><span style="margin-right: 25px"><input
+				<td colspan="4" align="right"><span style="margin-right: 25px"><input
 						type="submit" value=" 確認 " class="btn"></span> <span
 					style="margin-right: 40px"><button type="button"
 							onclick="history.back()">&nbsp;戻る&nbsp;</button> </span></td>
@@ -229,110 +228,145 @@ img {
 		response.sendRedirect("login.jsp");
 	}
 	%>
-	 <script type="text/javascript">
-      $(document).ready(function(){
-          var dColor = '#999999';    //ヒント（初期値）の文字色
-          var fColor = '#000000';    //通常入力時の文字色
-          var dValue = '必須';    //ヒント（初期値）文字列
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					var dColor = '#999999'; //ヒント（初期値）の文字色
+					var fColor = '#000000'; //通常入力時の文字色
+					var dValue = '必須'; //ヒント（初期値）文字列
 
-          //初期状態設定
-          if($('#fix_comment').val() == "" || $('#fix_comment').val() == dValue){
-              $('#fix_comment').val(dValue);
-              $('#fix_comment').css('color',dColor);
-          }
+					//初期状態設定
+					if ($('#fix_comment').val() == ""
+							|| $('#fix_comment').val() == dValue) {
+						$('#fix_comment').val(dValue);
+						$('#fix_comment').css('color', dColor);
+					}
 
-          //フォーカスされたときの処理
-          $('#fix_comment').focus(function(){
-              if($(this).val() == dValue){
-                  $(this).val('');
-                  $(this).css('color', fColor);
-              }
-          })
-          //フォーカスが外れたときの処理
-          .blur(function(){
-              if($(this).val() == dValue || $(this).val() == ''){
-                  $(this).val(dValue);
-                  $(this).css('color',dColor);
-              };
-          });
-      });
- 	 </script>
-	 <script type="text/javascript">
-      $(document).ready(function(){
-          var dColor = '#999999';    //ヒント（初期値）の文字色
-          var fColor = '#000000';    //通常入力時の文字色
-          var dValue = '必須';    //ヒント（初期値）文字列
+					//フォーカスされたときの処理
+					$('#fix_comment').focus(function() {
+						if ($(this).val() == dValue) {
+							$(this).val('');
+							$(this).css('color', fColor);
+						}
+					})
+					//フォーカスが外れたときの処理
+					.blur(function() {
+						if ($(this).val() == dValue || $(this).val() == '') {
+							$(this).val(dValue);
+							$(this).css('color', dColor);
+						}
+						;
+					});
+				});
+	</script>
 
-          //初期状態設定
-          if($('#fix_tel').val() == "" || $('#fix_tel').val() == dValue){
-              $('#fix_tel').val(dValue);
-              $('#fix_tel').css('color',dColor);
-          }
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					var dColor = '#999999'; //ヒント（初期値）の文字色
+					var fColor = '#000000'; //通常入力時の文字色
+					var dValue = '必須'; //ヒント（初期値）文字列
 
-          //フォーカスされたときの処理
-          $('#fix_tel').focus(function(){
-              if($(this).val() == dValue){
-                  $(this).val('');
-                  $(this).css('color', fColor);
-              }
-          })
-          //フォーカスが外れたときの処理
-          .blur(function(){
-              if($(this).val() == dValue || $(this).val() == ''){
-                  $(this).val(dValue);
-                  $(this).css('color',dColor);
-              };
-          });
-      });
-      </script>
+					//初期状態設定
+					if ($('#fix_delete_comment').val() == ""
+							|| $('#fix_delete_comment').val() == dValue) {
+						$('#fix_delete_comment').val(dValue);
+						$('#fix_delete_comment').css('color', dColor);
+					}
 
-      <script>
-      	//入力内容の整合性チェック（submitボタン押下時に実行）
-      	function check() {
-      		let date1 = document.getElementById("date_1").value;
-	      	let date2 = document.getElementById("date_2").value;
-	      	let time1 = document.getElementById("time_1").value;
-	      	let time2 = document.getElementById("time_2").value;
-	      	let date_time1 = date1 + time1;
-	      	let date_time2 = date2 + time2;
+					//フォーカスされたときの処理
+					$('#fix_delete_comment').focus(function() {
+						if ($(this).val() == dValue) {
+							$(this).val('');
+							$(this).css('color', fColor);
+						}
+					})
+					//フォーカスが外れたときの処理
+					.blur(function() {
+						if ($(this).val() == dValue || $(this).val() == '') {
+							$(this).val(dValue);
+							$(this).css('color', dColor);
+						}
+						;
+					});
+				});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var dColor = '#999999'; //ヒント（初期値）の文字色
+			var fColor = '#000000'; //通常入力時の文字色
+			var dValue = '必須'; //ヒント（初期値）文字列
 
-	      	let reason = document.getElementById("fix_comment").value;
-	      	let tell_number = document.getElementById("fix_tel").value;
-	      	let fix = document.getElementById("fix_delete_comment").value;
+			//初期状態設定
+			if ($('#fix_tel').val() == "" || $('#fix_tel').val() == dValue) {
+				$('#fix_tel').val(dValue);
+				$('#fix_tel').css('color', dColor);
+			}
 
-	      	if(date_time1 > date_time2 || reason == "必須" || tell_number == "必須"){
-	      		//入力内容に不整合がある場合、その項目の文字色を変化
-	      		if(date_time1 > date_time2){
-	      			document.getElementById("date_col").style.color="red";
-	      			document.getElementById("time_col").style.color="red";
-	      		}else{
-	      			document.getElementById("date_col").style.color="black";
-	      			document.getElementById("time_col").style.color="black";
-	      		}
-				if(reason == "必須"){
-					document.getElementById("reason_col").style.color="red";
-				}else{
-					document.getElementById("reason_col").style.color="black";
+			//フォーカスされたときの処理
+			$('#fix_tel').focus(function() {
+				if ($(this).val() == dValue) {
+					$(this).val('');
+					$(this).css('color', fColor);
 				}
-				if(tell_number == "必須"){
-					document.getElementById("tell_col").style.color="red";
-				}else{
-					document.getElementById("tell_col").style.color="black";
+			})
+			//フォーカスが外れたときの処理
+			.blur(function() {
+				if ($(this).val() == dValue || $(this).val() == '') {
+					$(this).val(dValue);
+					$(this).css('color', dColor);
 				}
-				if(fix == "必須"){
-					document.getElementById("fix_col").style.color="red";
-				}else{
-					document.getElementById("fix_col").style.color="black";
+				;
+			});
+		});
+	</script>
+
+	<script>
+		//入力内容の整合性チェック（submitボタン押下時に実行）
+		function check() {
+			let date1 = document.getElementById("date_1").value;
+			let date2 = document.getElementById("date_2").value;
+			let time1 = document.getElementById("time_1").value;
+			let time2 = document.getElementById("time_2").value;
+			let date_time1 = date1 + time1;
+			let date_time2 = date2 + time2;
+
+			let reason = document.getElementById("fix_comment").value;
+			let tell_number = document.getElementById("fix_tel").value;
+			let fix = document.getElementById("fix_delete_comment").value;
+
+			if (date_time1 > date_time2 || reason == "必須"
+					|| tell_number == "必須" || fix == "必須") {
+				//入力内容に不整合がある場合、その項目の文字色を変化
+				if (date_time1 > date_time2) {
+					document.getElementById("date_col").style.color = "red";
+					document.getElementById("time_col").style.color = "red";
+				} else {
+					document.getElementById("date_col").style.color = "black";
+					document.getElementById("time_col").style.color = "black";
 				}
-	      	    alert("入力内容を確認してください。");
-	      	    return false;
-	      	}else{
-	      		return true;
-	      	}
+				if (reason == "必須") {
+					document.getElementById("reason_col").style.color = "red";
+				} else {
+					document.getElementById("reason_col").style.color = "black";
+				}
+				if (tell_number == "必須") {
+					document.getElementById("tell_col").style.color = "red";
+				} else {
+					document.getElementById("tell_col").style.color = "black";
+				}
+				if (fix == "必須") {
+					document.getElementById("fix_col").style.color = "red";
+				} else {
+					document.getElementById("fix_col").style.color = "black";
+				}
+				alert("入力内容を確認してください。");
+				return false;
+			} else {
+				return true;
+			}
 
-	     }
-
-
-      </script>
+		}
+	</script>
 </body>
 </html>
