@@ -59,9 +59,9 @@ public class Login extends HttpServlet {
 		ResultSet resultApprover_2 = null;
 
 		// 接続文字列の設定
-		String url = "jdbc:postgresql://localhost:5432/postgres";
-		String user = "postgres";
-		String password = "0978781";
+		String url = Keyword.url();
+		String user = Keyword.user();
+		String password = Keyword.password();
 
 
 		try {
