@@ -3,9 +3,13 @@
 <%@ page import="java.io.BufferedReader"
 	import="java.io.FileNotFoundException" import="java.io.IOException"
 	import="java.nio.charset.Charset" import="java.nio.file.Files"
-	import="java.nio.file.Paths"%>
+	import="java.nio.file.Paths" import="com.workflow.Keyword"%>
 <%@ page session="true"%>
 <%
+try {
+if (session.equals(null)) {
+	throw new Exception();
+}
 	request.setCharacterEncoding("UTF-8");
 response.setContentType("text/html;charset=UTF-8");
 %>
@@ -23,14 +27,17 @@ table {
 	align: center;
 	margin: 0 auto;
 }
+
 header {
 	position: fixed;
 	left: 0;
 	width: 100%;
 }
-img{
-	float:left;
+
+img {
+	float: left;
 }
+
 .logoutbutton {
 	margin-left: 20px;
 	margin-right: 20px;
@@ -39,17 +46,18 @@ img{
 </head>
 <body>
 	<header>
-		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg" alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg"
+			alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
-		onsubmit="return logout()">
-		<div align="right">
-			<div>
-				<%=session.getAttribute("affiliationName") %>・
-				<%=session.getAttribute("fullname")%>
-				<input class="logoutbutton" type="submit" value="ログアウト">
+			onsubmit="return logout()">
+			<div align="right">
+				<div>
+					<%=session.getAttribute("affiliationName")%>・
+					<%=session.getAttribute("fullname")%>
+					<input class="logoutbutton" type="submit" value="ログアウト">
+				</div>
 			</div>
-		</div>
-	</form>
+		</form>
 		<hr>
 	</header>
 	<script type="text/javascript">
@@ -77,19 +85,13 @@ img{
 		}
 	// -->
 	</script>
-	<%
-		try {
-		if (session.equals(null)) {
-			throw new Exception();
-		}
-	%>
 	<br>
 	<br>
 	<form name="approveForm" action="approveCheck.jsp" method="post"
 		onsubmit="return formCheck()">
 		<table style="border: 0">
 			<tr>
-				<td colspan="5" align="center">有給休暇取得申請システム 承認明細画面</td>
+				<td colspan="4" align="center">有給休暇取得申請システム 承認明細画面</td>
 			</tr>
 			<tr>
 				<td><br></td>
@@ -111,7 +113,7 @@ img{
 			</tr>
 			<tr>
 				<td align="left">有給種別:</td>
-				<td colspan="3"><%=session.getAttribute("approvedType")%></td>
+				<td colspan="3"><%=Keyword.type((String)session.getAttribute("approvedType"))%></td>
 			</tr>
 			<tr>
 				<td align="left">取得期間:</td>
@@ -158,11 +160,9 @@ img{
 				<td colspan="3"><%=session.getAttribute("approve2Name")%></td>
 			</tr>
 			<tr>
-				<td align="left">承認者１コメント:</td>
-				<td colspan="3">
-					<%
-						if (session.getAttribute("approvedStatus").equals("")) {
-					%><textarea name="comment" rows="1" cols="28" maxlength="50"></textarea>
+				<td align="left" colspan="4">承認者１コメント: <%
+					if (session.getAttribute("approvedStatus").equals("")) {
+				%><textarea name="comment" rows="1" cols="28" maxlength="50"></textarea>
 					<%
 						} else {
 					%> <%=session.getAttribute("approvedOverComment")%> <%
@@ -176,8 +176,7 @@ img{
 				if (!((String) session.getAttribute("approvedNumber")).substring(14).equals("01")) {
 			%>
 			<tr>
-				<td align="left">承認者２コメント:</td>
-				<td colspan="3"><%=session.getAttribute("preComment")%></td>
+				<td align="left" colspan="4">承認者２コメント:<%=session.getAttribute("preComment")%></td>
 			</tr>
 			<%
 				}
@@ -186,19 +185,16 @@ img{
 
 			<!-- 承認者２の時表示 -->
 			<tr>
-				<td align="left">承認者１コメント:</td>
-				<td colspan="3"><%=session.getAttribute("preComment")%> <%%></td>
+				<td align="left" colspan="4">承認者１コメント:<%=session.getAttribute("preComment")%>
+					<%%></td>
 			</tr>
 			<tr>
-				<td align="left">承認者２コメント:</td>
-				<td colspan="3">
+				<td align="left" colspan="4">承認者２コメント: <%
+					if (session.getAttribute("approvedStatus").equals("")) {
+				%> <textarea name="comment" rows="1" cols="30" maxlength="50"></textarea>
 					<%
-						if (session.getAttribute("approvedStatus").equals("")) {
-					%> <textarea
-						name="comment" rows="1" cols="30" maxlength="50"></textarea> <%
- 	} else {
- %>
-					<%=session.getAttribute("approvedOverComment")%> <%
+						} else {
+					%> <%=session.getAttribute("approvedOverComment")%> <%
  	}
  %>
 				</td>
@@ -212,11 +208,10 @@ img{
 				<td><br></td>
 			</tr>
 			<tr>
-				<td colspan="5">
+				<td colspan="4">
 					<!-- ステータスが空白の時ラジオボタンと確認ボタン表示 --> <%
  	if (session.getAttribute("approvedStatus").equals("")) {
- %>
-					<input type="radio" name="action" id="承認" value="承認" checked><label
+ %> <input type="radio" name="action" id="承認" value="承認" checked><label
 					for="承認">&nbsp;承認&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><input
 					type="radio" name="action" id="差戻" value="差戻"><label
 					for="差戻">&nbsp;差戻</label>

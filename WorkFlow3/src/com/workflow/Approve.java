@@ -42,9 +42,9 @@ public class Approve extends HttpServlet {
 		PreparedStatement pstmtData = null;
 		PreparedStatement pstmtNextData = null;
 		// 接続文字列の設定
-		String url = "jdbc:postgresql://localhost:5432/postgres";
-		String user = "postgres";
-		String password = "0978781";
+		String url = Keyword.url();
+		String user = Keyword.user();
+		String password = Keyword.password();
 
 		// 申請データの更新
 		try {
@@ -79,7 +79,7 @@ public class Approve extends HttpServlet {
 				} else {
 					String nextNumber = number.substring(0, 14) + String.format("%02d",Integer.parseInt(number.substring(14)) + 1);
 					pstmtNextData = con.prepareStatement(
-							"INSERT INTO data (number, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, approvernumber, approvercomment, approveddate, status)SELECT ?, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, ?, '', '', '' FROM data WHERE number = ?");
+							"INSERT INTO data (number, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, approvernumber, approvercomment, approveddate, status, fix_delete_comment, delete_flag)SELECT ?, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, ?, '', '', '', '', delete_flag FROM data WHERE number = ?");
 					pstmtNextData.setString(1, nextNumber);
 					pstmtNextData.setString(2, (String) session.getAttribute("approve2Id"));
 					pstmtNextData.setString(3, number);
@@ -105,7 +105,7 @@ public class Approve extends HttpServlet {
 				} else {
 					String nextNumber = number.substring(0, 14) + String.format("%02d",Integer.parseInt(number.substring(14)) + 1);
 					pstmtNextData = con.prepareStatement(
-							"INSERT INTO data (number, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, approvernumber, approvercomment, approveddate, status)SELECT ?, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, ?, '', '', '' FROM data WHERE number = ?");
+							"INSERT INTO data (number, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, approvernumber, approvercomment, approveddate, status, fix_delete_comment, delete_flag)SELECT ?, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, ?, '', '', '', '', delete_flag FROM data WHERE number = ?");
 					pstmtNextData.setString(1, nextNumber);
 					pstmtNextData.setString(2, (String) session.getAttribute("approve2Id"));
 					pstmtNextData.setString(3, number);
