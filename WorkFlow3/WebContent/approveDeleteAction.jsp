@@ -16,7 +16,9 @@ ArrayList<String> historyList = (ArrayList<String>) session.getAttribute("histor
 <head>
 <meta charset="UTF-8"></meta>
 <title>有給休暇取得申請システム</title>
-<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"
+	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+	crossorigin="anonymous"></script>
 <style>
 table, td, th {
 	border: 0px;
@@ -78,10 +80,11 @@ img {
 	%>
 	<br>
 	<br>
-	<form action="approveDeleteCheck.jsp" method="post" onsubmit="return check()">
+	<form action="approveDeleteCheck.jsp" method="post"
+		onsubmit="return check()">
 		<table style="border: 0">
 			<tr>
-				<td colspan="5" align="center">有給休暇取得申請システム 申請取消画面</td>
+				<td colspan="4" align="center">有給休暇取得申請システム 申請取消画面</td>
 			</tr>
 			<tr>
 				<td><br></td>
@@ -140,26 +143,25 @@ img {
 			</tr>
 			<tr>
 				<td align="left" id="delete_col">取消コメント:</td>
-				<td colspan="3"><textarea id="fix_delete_comment" name="fix_delete_comment" rows="1"
-						cols="38" maxlength="30" required="required"></textarea></td>
+				<td colspan="3"><textarea id="fix_delete_comment"
+						name="fix_delete_comment" rows="1" cols="38" maxlength="30"
+						required="required"></textarea></td>
 			</tr>
 			<tr>
 				<td><br></td>
 			</tr>
 			<tr>
-				<td align="left">承認者１コメント:</td>
-				<td colspan="3"><%=historyList.get(13)%></td>
+				<td align="left" colspan="4">承認者１コメント:<%=historyList.get(13)%></td>
 			</tr>
 			<tr>
-				<td align="left">承認者２コメント:</td>
-				<td colspan="3"><%=historyList.get(14)%></td>
+				<td align="left" colspan="4">承認者２コメント:<%=historyList.get(14)%></td>
 			<tr>
 				<td><br></td>
 			</tr>
 			<tr>
-				<td colspan="5" align="right"><span style="margin-right: 25px"><input type="submit" value=" 確認 "
-					class="btn"></span>
-					<span style="margin-right: 40px"><button type="button"
+				<td colspan="4" align="right"><span style="margin-right: 25px"><input
+						type="submit" value=" 確認 " class="btn"></span> <span
+					style="margin-right: 40px"><button type="button"
 							onclick="history.back()">&nbsp;戻る&nbsp;</button> </span></td>
 			</tr>
 		</table>
@@ -169,56 +171,57 @@ img {
 		response.sendRedirect("login.jsp");
 	}
 	%>
-	 <script type="text/javascript">
-      $(document).ready(function(){
-          var dColor = '#999999';    //ヒント（初期値）の文字色
-          var fColor = '#000000';    //通常入力時の文字色
-          var dValue = '必須';    //ヒント（初期値）文字列
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					var dColor = '#999999'; //ヒント（初期値）の文字色
+					var fColor = '#000000'; //通常入力時の文字色
+					var dValue = '必須'; //ヒント（初期値）文字列
 
-          //初期状態設定
-          if($('#fix_delete_comment').val() == "" || $('#fix_delete_comment').val() == dValue){
-              $('#fix_delete_comment').val(dValue);
-              $('#fix_delete_comment').css('color',dColor);
-          }
+					//初期状態設定
+					if ($('#fix_delete_comment').val() == ""
+							|| $('#fix_delete_comment').val() == dValue) {
+						$('#fix_delete_comment').val(dValue);
+						$('#fix_delete_comment').css('color', dColor);
+					}
 
-          //フォーカスされたときの処理
-          $('#fix_delete_comment').focus(function(){
-              if($(this).val() == dValue){
-                  $(this).val('');
-                  $(this).css('color', fColor);
-              }
-          })
-          //フォーカスが外れたときの処理
-          .blur(function(){
-              if($(this).val() == dValue || $(this).val() == ''){
-                  $(this).val(dValue);
-                  $(this).css('color',dColor);
-              };
-          });
-      });
- 	 </script>
- 	  <script>
-      	//入力内容の整合性チェック（submitボタン押下時に実行）
-      	function check() {
-	      	let comment = document.getElementById("fix_delete_comment").value;
+					//フォーカスされたときの処理
+					$('#fix_delete_comment').focus(function() {
+						if ($(this).val() == dValue) {
+							$(this).val('');
+							$(this).css('color', fColor);
+						}
+					})
+					//フォーカスが外れたときの処理
+					.blur(function() {
+						if ($(this).val() == dValue || $(this).val() == '') {
+							$(this).val(dValue);
+							$(this).css('color', dColor);
+						}
+						;
+					});
+				});
+	</script>
+	<script>
+		//入力内容の整合性チェック（submitボタン押下時に実行）
+		function check() {
+			let comment = document.getElementById("fix_delete_comment").value;
 
-	      	if(comment == "必須"){
-	      		//入力内容に不整合がある場合、その項目の文字色を変化
+			if (comment == "必須") {
+				//入力内容に不整合がある場合、その項目の文字色を変化
 
-				if(comment == "必須"){
-					document.getElementById("delete_col").style.color="red";
-				}else{
-					document.getElementById("delete_col").style.color="black";
+				if (comment == "必須") {
+					document.getElementById("delete_col").style.color = "red";
+				} else {
+					document.getElementById("delete_col").style.color = "black";
 				}
-	      	    alert("入力内容を確認してください。");
-	      	    return false;
-	      	}else{
-	      		return true;
-	      	}
+				alert("入力内容を確認してください。");
+				return false;
+			} else {
+				return true;
+			}
 
-	     }
-
-
-      </script>
+		}
+	</script>
 </body>
 </html>
