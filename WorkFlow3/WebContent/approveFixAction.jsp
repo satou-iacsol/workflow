@@ -134,7 +134,7 @@ img {
 						<option value="08" <%if (historyList.get(2).equals("08")) {%>
 							selected <%}%>><%=Keyword.type("08")%></option>
 						<option value="09" <%if (historyList.get(2).equals("09")) {%>
-							selected <%}%>><%=Keyword.type("091")%></option>
+							selected <%}%>><%=Keyword.type("09")%></option>
 						<option value="10" <%if (historyList.get(2).equals("10")) {%>
 							selected <%}%>><%=Keyword.type("10")%></option>
 						<option value="11" <%if (historyList.get(2).equals("11")) {%>
