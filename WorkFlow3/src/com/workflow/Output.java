@@ -98,9 +98,9 @@ public class Output extends HttpServlet {
 		PreparedStatement ps = null;
 
 		// 接続文字列の設定
-		String url = "jdbc:postgresql://localhost:5432/postgres";
-		String user = "postgres";
-		String password = "0978781";
+		String url = Keyword.url();
+		String user = Keyword.user();
+		String password = Keyword.password();
 
 		// SQL文
 		String sql = "INSERT INTO data values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
