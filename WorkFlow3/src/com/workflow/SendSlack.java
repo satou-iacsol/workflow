@@ -117,7 +117,8 @@ public class SendSlack extends HttpServlet {
 
 				out.println(session.getAttribute("approverName_1"));
 
-			} else if (approve2notification.equals("1")) {
+			}
+			if (approve2notification.equals("1")) {
 
 				out.println(session.getAttribute("approverName_2"));
 
