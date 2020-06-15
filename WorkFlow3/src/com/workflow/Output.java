@@ -93,6 +93,8 @@ public class Output extends HttpServlet {
 		Calendar c = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
 
+		String approvednumber = sdf.format(c.getTime()) + id + date_1_1 + "01";
+
 		// データベース・テーブルに接続する準備
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -198,6 +200,9 @@ public class Output extends HttpServlet {
 		session.setAttribute("approverName_1", approverName_1);
 		session.setAttribute("approverNumber_2", approverNumber_2);
 		session.setAttribute("approverName_2", approverName_2);
-		response.sendRedirect("menu.jsp");
+		session.setAttribute("sendaction", "申請");
+		session.setAttribute("approvednumber", approvednumber);
+
+		response.sendRedirect("SendSlack.java");
 	}
 }
