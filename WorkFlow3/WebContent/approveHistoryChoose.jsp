@@ -27,37 +27,53 @@
 	margin: auto;
 }
 
+body {
+	background-color: #fafafa;
+	margin: 0;
+}
+
 header {
 	position: fixed;
 	left: 0;
 	width: 100%;
+	height: 42px;
+	background: #36D1DC; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to top, #5B86E5, #36D1DC);
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to top, #5B86E5, #36D1DC);
+		/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 img {
 	float: left;
+	width: 100px;
+	position: absolute;
+	top: 50%;
+	left: 0;
+	transform: translateY(-50%);
 }
-
-.logoutbutton {
-	margin-left: 20px;
-	margin-right: 20px;
+.header_right{
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 20px;
+	font-size: 16px;
 }
 </style>
 </head>
 <body>
 	<header>
-		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg"
-			alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg" alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
-			onsubmit="return logout()">
-			<div align="right">
-				<div>
-					<%=session.getAttribute("affiliationName")%>・
-					<%=session.getAttribute("fullname")%>
-					<input class="logoutbutton" type="submit" value="ログアウト">
-				</div>
+		onsubmit="return logout()">
+		<div align="right">
+			<div class="header_right">
+				<%=session.getAttribute("affiliationName") %>・
+				<%=session.getAttribute("fullname")%>
+				<input class="logoutbutton" type="submit" value="ログアウト">
 			</div>
-		</form>
-		<hr>
+		</div>
+	</form>
 	</header>
 	<script type="text/javascript">
 	<!--

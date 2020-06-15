@@ -17,19 +17,18 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 <link rel="stylesheet" href="shinsei.css">
 </head>
 <body>
-		<header>
+	<header>
 		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg" alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
 		onsubmit="return logout()">
 		<div align="right">
-			<div>
+			<div class="header_right">
 				<%=session.getAttribute("affiliationName") %>・
 				<%=session.getAttribute("fullname")%>
 				<input class="logoutbutton" type="submit" value="ログアウト">
 			</div>
 		</div>
 	</form>
-		<hr>
 	</header>
 	<%
 		try {

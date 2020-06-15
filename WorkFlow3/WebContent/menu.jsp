@@ -23,14 +23,13 @@ String authority = (String) session.getAttribute("authority");
 		<form name="login_logout" action="login.jsp" method="post"
 		onsubmit="return logout()">
 		<div align="right">
-			<div>
+			<div class="header_right">
 				<%=session.getAttribute("affiliationName") %>・
 				<%=session.getAttribute("fullname")%>
 				<input class="logoutbutton" type="submit" value="ログアウト">
 			</div>
 		</div>
 	</form>
-		<hr>
 	</header>
 
 	<%
@@ -41,8 +40,8 @@ String authority = (String) session.getAttribute("authority");
 	%>
 	<br>
 
+	<div class="h1"><h1>有給休暇取得申請システム メニュー画面</h1></div>
 	<div class="content">
-		<h1>有給休暇取得申請システム メニュー画面</h1>
 		<br>
 			<div class="hoge">
 				<input type="button" class="subbtn" onclick="location.href='./shinsei.jsp'" value="申請画面">
