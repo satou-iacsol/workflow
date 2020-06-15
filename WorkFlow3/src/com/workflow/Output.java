@@ -203,6 +203,6 @@ public class Output extends HttpServlet {
 		session.setAttribute("sendAction", "申請");
 		session.setAttribute("approvedNumber", approvednumber);
 
-		response.sendRedirect("SendSlack.java");
+		response.sendRedirect("SendSlack");
 	}
 }
