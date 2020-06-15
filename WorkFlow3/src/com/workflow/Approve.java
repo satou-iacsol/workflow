@@ -35,7 +35,6 @@ public class Approve extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		String number = (String) session.getAttribute("approvedNumber");
-		String[] preData = new String[15];
 
 		// データベース・テーブルに接続する準備
 		Connection con = null;
@@ -51,6 +50,15 @@ public class Approve extends HttpServlet {
 			// PostgreSQLに接続
 			con = DriverManager.getConnection(url, user, password);
 			con.setAutoCommit(false);
+
+
+
+
+
+
+
+
+
 			// SELECT文の作成・実行
 			pstmtData = con.prepareStatement(
 					"UPDATE data set approverComment = ?,approvedDate = ?,status = ? WHERE number = ?");
@@ -98,7 +106,7 @@ public class Approve extends HttpServlet {
 			} else if (((String) session.getAttribute("approvedAction")).equals("差戻")) {
 				if (((String) session.getAttribute("id")).equals((String) session.getAttribute("approve1Id"))) {
 					sendAction = "差戻２";
-				} else if (preData[10].equals("1")) {
+				} else if (session.getAttribute("approvedSkip").equals("1")) {
 					sendAction = "差戻２";
 				} else {
 					nextNumber = number.substring(0, 14)
@@ -106,7 +114,7 @@ public class Approve extends HttpServlet {
 					pstmtNextData = con.prepareStatement(
 							"INSERT INTO data (number, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, approvernumber, approvercomment, approveddate, status, fix_delete_comment, delete_flag)SELECT ?, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, ?, '', '', '', '', delete_flag FROM data WHERE number = ?");
 					pstmtNextData.setString(1, nextNumber);
-					pstmtNextData.setString(2, (String) session.getAttribute("approve2Id"));
+					pstmtNextData.setString(2, (String) session.getAttribute("approve1Id"));
 					pstmtNextData.setString(3, number);
 
 					try {
@@ -119,7 +127,7 @@ public class Approve extends HttpServlet {
 					sendAction = (String) session.getAttribute("approvedAction");
 				}
 			}
-			session.setAttribute("approvedNumber", nextNumber);
+			session.setAttribute("nextNumber", nextNumber);
 			session.setAttribute("sendAction", sendAction);
 			request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
 
@@ -139,6 +147,7 @@ public class Approve extends HttpServlet {
 					con.close();
 				}
 			} catch (SQLException e) {
+
 				e.printStackTrace();
 			}
 		}

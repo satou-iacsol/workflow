@@ -63,7 +63,6 @@ public class Login extends HttpServlet {
 		String user = Keyword.user();
 		String password = Keyword.password();
 
-
 		try {
 			// PostgreSQLに接続
 			con = DriverManager.getConnection(url, user, password);
@@ -72,7 +71,6 @@ public class Login extends HttpServlet {
 			stmtEmployee = con.createStatement();
 			String sqlEmployee = "SELECT * from employee_muster";
 			resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
-
 
 			while (resultEmployee.next()) {
 				if (resultEmployee.getString("id").equals(id) && resultEmployee.getString("pass").equals(pass)) {
@@ -155,22 +153,23 @@ public class Login extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			if (code.equals("")) {
-				session.setAttribute("loginError", "ユーザーID／パスワードが間違っています。");
-				response.sendRedirect("login.jsp");
-			} else {
-				session.setAttribute("id", id);
-				session.setAttribute("authority", authority);
-				session.setAttribute("fullname", fullname);
-				session.setAttribute("affiliationCode", affiliationCode);
-				session.setAttribute("userName", userName);
-				session.setAttribute("affiliationName", affiliationName);
-				session.setAttribute("approverNumber_1", approverNumber_1);
-				session.setAttribute("approverName_1",  approverName_1);
-				session.setAttribute("approverNumber_2", approverNumber_2);
-				session.setAttribute("approverName_2", approverName_2);
-				response.sendRedirect("menu.jsp");
-			}
+		}
+
+		if (code.equals("")) {
+			session.setAttribute("loginError", "ユーザーID／パスワードが間違っています。");
+			response.sendRedirect("login.jsp");
+		} else {
+			session.setAttribute("id", id);
+			session.setAttribute("authority", authority);
+			session.setAttribute("fullname", fullname);
+			session.setAttribute("affiliationCode", affiliationCode);
+			session.setAttribute("userName", userName);
+			session.setAttribute("affiliationName", affiliationName);
+			session.setAttribute("approverNumber_1", approverNumber_1);
+			session.setAttribute("approverName_1", approverName_1);
+			session.setAttribute("approverNumber_2", approverNumber_2);
+			session.setAttribute("approverName_2", approverName_2);
+			response.sendRedirect("menu.jsp");
 		}
 	}
 }
