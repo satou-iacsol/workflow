@@ -61,7 +61,7 @@ public class Confirmation extends HttpServlet {
 		String approver = (String) request.getParameter("approver");
 		String flag = (String) request.getParameter("flag");
 
-		//承認者スキップが入っている場合の承認者表示について
+		//承認者スキップが入っている場合の承認者表示について	
 		String approver_1_2 = "";
 		if(flag.equals("0")) {
 			approver_1_2 = approverName_1;
@@ -117,5 +117,4 @@ public class Confirmation extends HttpServlet {
 		session.setAttribute("flag", flag);
 		response.sendRedirect("Confirmation.jsp");
 	}
-
 }

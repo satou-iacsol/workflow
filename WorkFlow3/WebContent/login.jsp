@@ -27,7 +27,7 @@ header{
 	left:0;
 }
 img{
-	margin-left:0;
+	margin-left:0px;
 }
 </style>
 </head>

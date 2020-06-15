@@ -200,5 +200,4 @@ public class Output extends HttpServlet {
 		session.setAttribute("approverName_2", approverName_2);
 		response.sendRedirect("menu.jsp");
 	}
-
 }

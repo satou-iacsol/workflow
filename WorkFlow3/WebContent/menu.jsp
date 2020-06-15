@@ -33,7 +33,6 @@ String authority = (String) session.getAttribute("authority");
 		<hr>
 	</header>
 
-
 	<%
 		try {
 		if (session.getAttribute("id").equals(null)) {
@@ -45,15 +44,13 @@ String authority = (String) session.getAttribute("authority");
 	<div class="content">
 		<h1>有給休暇取得申請システム メニュー画面</h1>
 		<br>
-		<form action="<%=request.getContextPath()%>/Shinsei" method="post">
 			<div class="hoge">
-				<button class="subbutton" type="submit">申請画面</button>
+				<input type="button" class="subbtn" onclick="location.href='./shinsei.jsp'" value="申請画面">
 			</div>
 
-		</form>
 		<form action="<%=request.getContextPath()%>/ApproveHistoryPick" method="post">
 			<div class="hoge">
-				<button class="subbutton" type="submit">申請一覧</button>
+				<button class="subbtn" type="submit">申請一覧</button>
 			</div>
 		</form>
 		<%
@@ -61,7 +58,7 @@ String authority = (String) session.getAttribute("authority");
 		%>
 		<form action="<%=request.getContextPath()%>/ApprovePick" method="post">
 			<div class="hoge">
-				<button class="subbutton" type="submit">承認画面</button>
+				<button class="subbtn" type="submit">承認画面</button>
 			</div>
 		</form>
 		<%

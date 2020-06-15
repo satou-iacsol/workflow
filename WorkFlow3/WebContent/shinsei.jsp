@@ -74,7 +74,6 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 				<div class="interval"><div id="time_col">取得時間: </div><input type="time" id="time_1" name="time_1" value="09:00"
 				required="required"> ～ <input type="time" id="time_2" name="time_2" value="18:00" required="required"></div>
 
-
 			<div class="interval"><div id="reason_col">取得事由:</div>
 			<textarea maxlength="50" id="hoge_text" name="comment" cols="50" rows="1"required="required"></textarea>
 			</div>
@@ -194,7 +193,6 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 	      	}
 
 	     }
-
 
       </script>
    		<script type="text/javascript" src="logout.js"></script>

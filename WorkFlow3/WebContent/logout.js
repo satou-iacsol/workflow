@@ -6,4 +6,3 @@ function logout() {
 		return false;
 	}
 }
-
