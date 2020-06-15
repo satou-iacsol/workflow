@@ -55,17 +55,18 @@ img {
 </head>
 <body>
 	<header>
-		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg" alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg"
+			alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
-		onsubmit="return logout()">
-		<div align="right">
-			<div class="header_right">
-				<%=session.getAttribute("affiliationName") %>・
-				<%=session.getAttribute("fullname")%>
-				<input class="logoutbutton" type="submit" value="ログアウト">
+			onsubmit="return logout()">
+			<div align="right">
+				<div class="header_right">
+					<%=session.getAttribute("affiliationName")%>・
+					<%=session.getAttribute("fullname")%>
+					<input class="logoutbutton" type="submit" value="ログアウト">
+				</div>
 			</div>
-		</div>
-	</form>
+		</form>
 	</header>
 	<script type="text/javascript">
 	<!--
@@ -82,6 +83,17 @@ img {
 	<br>
 	<div align="center">有給休暇取得申請システム 承認画面</div>
 	<br>
+	<%
+		if (!(session.getAttribute("statusError").equals(null))) {
+	%>
+	<div align="center">
+		<font color="red">申請が申請者によって<%=session.getAttribute("statusError")%>されました。
+		</font>
+	</div>
+	<br>
+	<%
+		}
+	%>
 	<div align="center">
 		<font color="red">未処理の申請<%=session.getAttribute("approvedItems")%>件
 		</font>
