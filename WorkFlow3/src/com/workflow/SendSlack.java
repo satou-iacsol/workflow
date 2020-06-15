@@ -125,7 +125,7 @@ public class SendSlack extends HttpServlet {
 	}
 
 	private void sendSlack(String userName, String message) throws IOException {
-		String botToken = "xoxb-888499428870-1207231347280-qa6d9aeE1quOszCImWd4Ieau";
+		String botToken = "xoxb-888499428870-1207231347280-LLzBboryluJuJ6Zqm2VcPAhh";
 
 		SlackletService slackService = new SlackletService(botToken);
 		slackService.start();
