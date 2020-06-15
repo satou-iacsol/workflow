@@ -200,8 +200,8 @@ public class Output extends HttpServlet {
 		session.setAttribute("approverName_1", approverName_1);
 		session.setAttribute("approverNumber_2", approverNumber_2);
 		session.setAttribute("approverName_2", approverName_2);
-		session.setAttribute("sendaction", "申請");
-		session.setAttribute("approvednumber", approvednumber);
+		session.setAttribute("sendAction", "申請");
+		session.setAttribute("approvedNumber", approvednumber);
 
 		response.sendRedirect("SendSlack.java");
 	}
