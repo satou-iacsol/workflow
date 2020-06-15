@@ -68,13 +68,13 @@ public class ApproveDelete extends HttpServlet {
 					// 上14桁が一致するデータを取得
 					String number = resultData.getString("number");
 
-					if (status.equals("承認待ち")) {
+					if (number.equals(historyList.get(1)) && status.equals("承認待ち")) {
 						// SELECT文の作成・実行
 						pstmtData = con.prepareStatement(
 								"UPDATE data set status = ?,fix_delete_comment = ?,delete_flag = ? WHERE number = ?");
 
 						// 取消コメントの更新
-						pstmtData.setString(1, (String) session.getAttribute("取消"));
+						pstmtData.setString(1, "取消");
 						// 取消コメントの更新
 						pstmtData.setString(2, (String) session.getAttribute("fix_delete_comment"));
 						// 削除フラグをたてる
@@ -118,10 +118,10 @@ public class ApproveDelete extends HttpServlet {
 					}
 				}
 
-				session.setAttribute("approvedResult", "取消");
+				session.setAttribute("sendAction", "取消");
 				session.setAttribute("approve1notification", approve1notification);
 				session.setAttribute("approve2notification", approve2notification);
-				request.getServletContext().getRequestDispatcher("/SendMail").forward(request, response);
+				request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
 			}
 		} catch (
 

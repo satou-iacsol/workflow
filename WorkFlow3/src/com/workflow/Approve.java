@@ -72,12 +72,14 @@ public class Approve extends HttpServlet {
 				con.rollback();
 			}
 
+			String nextNumber = "";
+			String sendAction = "";
 			if (((String) session.getAttribute("approvedAction")).equals("承認")) {
 				if (((String) session.getAttribute("id")).equals((String) session.getAttribute("approve2Id"))) {
-					session.setAttribute("approvedResult", "承認２");
-					request.getServletContext().getRequestDispatcher("/SendMail").forward(request, response);
+					sendAction = "承認２";
 				} else {
-					String nextNumber = number.substring(0, 14) + String.format("%02d",Integer.parseInt(number.substring(14)) + 1);
+					nextNumber = number.substring(0, 14)
+							+ String.format("%02d", Integer.parseInt(number.substring(14)) + 1);
 					pstmtNextData = con.prepareStatement(
 							"INSERT INTO data (number, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, approvernumber, approvercomment, approveddate, status, fix_delete_comment, delete_flag)SELECT ?, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, ?, '', '', '', '', delete_flag FROM data WHERE number = ?");
 					pstmtNextData.setString(1, nextNumber);
@@ -91,19 +93,16 @@ public class Approve extends HttpServlet {
 						con.rollback();
 					}
 
-					session.setAttribute("approvedNumber", nextNumber);
-					session.setAttribute("approvedResult", (String) session.getAttribute("approvedAction"));
-					request.getServletContext().getRequestDispatcher("/SendMail").forward(request, response);
+					sendAction = (String) session.getAttribute("approvedAction");
 				}
 			} else if (((String) session.getAttribute("approvedAction")).equals("差戻")) {
 				if (((String) session.getAttribute("id")).equals((String) session.getAttribute("approve1Id"))) {
-					session.setAttribute("approvedResult", "差戻２");
-					request.getServletContext().getRequestDispatcher("/SendMail").forward(request, response);
+					sendAction = "差戻２";
 				} else if (preData[10].equals("1")) {
-					session.setAttribute("approvedResult", "差戻２");
-					request.getServletContext().getRequestDispatcher("/SendMail").forward(request, response);
+					sendAction = "差戻２";
 				} else {
-					String nextNumber = number.substring(0, 14) + String.format("%02d",Integer.parseInt(number.substring(14)) + 1);
+					nextNumber = number.substring(0, 14)
+							+ String.format("%02d", Integer.parseInt(number.substring(14)) + 1);
 					pstmtNextData = con.prepareStatement(
 							"INSERT INTO data (number, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, approvernumber, approvercomment, approveddate, status, fix_delete_comment, delete_flag)SELECT ?, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, ?, '', '', '', '', delete_flag FROM data WHERE number = ?");
 					pstmtNextData.setString(1, nextNumber);
@@ -117,11 +116,12 @@ public class Approve extends HttpServlet {
 						con.rollback();
 					}
 
-					session.setAttribute("approvedNumber", nextNumber);
-					session.setAttribute("approvedResult", (String) session.getAttribute("approvedAction"));
-					request.getServletContext().getRequestDispatcher("/SendMail").forward(request, response);
+					sendAction = (String) session.getAttribute("approvedAction");
 				}
 			}
+			session.setAttribute("approvedNumber", nextNumber);
+			session.setAttribute("sendAction", sendAction);
+			request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
 
 		} catch (Exception e) {
 			e.printStackTrace();

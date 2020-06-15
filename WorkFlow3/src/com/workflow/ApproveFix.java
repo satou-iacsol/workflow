@@ -78,7 +78,7 @@ public class ApproveFix extends HttpServlet {
 									"UPDATE data set status = ? WHERE number = ?");
 
 							// 取消コメントの更新
-							pstmtData.setString(1, (String) session.getAttribute("修正"));
+							pstmtData.setString(1, "修正");
 							// 更新する申請番号
 							pstmtData.setString(2, historyList.get(1));
 
@@ -123,10 +123,12 @@ public class ApproveFix extends HttpServlet {
 				String approve1notification = "0";
 				String approve2notification = "0";
 
-				if (request.getAttribute("approver_switch").equals("0")) {
-					if (historyList.get(5).equals(session.getAttribute("approverNumber_1")) && historyList.get(11).equals("0")) {
+				if (session.getAttribute("approver_switch").equals("0")) {
+					if (historyList.get(5).equals(session.getAttribute("approverNumber_1"))
+							&& historyList.get(11).equals("0")) {
 						approve1notification = "1";
-					} else if (historyList.get(5).equals(session.getAttribute("approverNumber_2")) && historyList.get(11).equals("1")) {
+					} else if (historyList.get(5).equals(session.getAttribute("approverNumber_2"))
+							&& historyList.get(11).equals("1")) {
 						approve2notification = "1";
 					}
 				} else {
@@ -134,10 +136,10 @@ public class ApproveFix extends HttpServlet {
 					approve2notification = "1";
 				}
 
-				session.setAttribute("approvedResult", "修正");
+				session.setAttribute("sendAction", "修正");
 				session.setAttribute("approve1notification", approve1notification);
 				session.setAttribute("approve2notification", approve2notification);
-				request.getServletContext().getRequestDispatcher("/SendMail").forward(request, response);
+				request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
 			} else {
 
 				pstmtNextData = con.prepareStatement(
@@ -178,6 +180,9 @@ public class ApproveFix extends HttpServlet {
 				}
 				if (pstmtData != null) {
 					pstmtData.close();
+				}
+				if (pstmtNextData != null) {
+					pstmtNextData.close();
 				}
 				if (con != null) {
 					con.close();
