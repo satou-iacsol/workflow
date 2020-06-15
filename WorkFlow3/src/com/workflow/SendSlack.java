@@ -42,12 +42,26 @@ public class SendSlack extends HttpServlet {
 
 		String sendAction = (String) session.getAttribute("sendAction");
 
-		if (((String) session.getAttribute("sendAction")).equals("承認２")
+		if(((String) session.getAttribute("sendAction")).equals("申請")) {
+			String number = (String) session.getAttribute("approvedNumber");
+			String approverId = (String) session.getAttribute("approverNumber_1");
+
+			if (((String) session.getAttribute("flag")).equals("1")) {
+				approverId = (String) session.getAttribute("approverNumber_2");
+			}
+
+			message += "申請番号:" + number + "\n\n" + fromName + "により\n有給休暇が 申請 されました。\n"
+					+ Keyword.webSiteURL();
+
+			userName = userName_pick(approverId);
+
+			sendSlack(userName, message);
+		} else if (((String) session.getAttribute("sendAction")).equals("承認２")
 				|| ((String) session.getAttribute("sendAction")).equals("差戻２")) {
 			String number = (String) session.getAttribute("approvedNumber");
 			String approvedId = (String) session.getAttribute("approvedId");
 
-			message += "申請番号:" + number + "\n\n" + fromName + "により\n有給申請が" + sendAction.substring(0, 2) + "されました。\n"
+			message += "申請番号:" + number + "\n\n" + fromName + "により\n有給申請が " + sendAction.substring(0, 2) + " されました。\n"
 					+ Keyword.webSiteURL();
 
 			userName = userName_pick(approvedId);
@@ -59,8 +73,8 @@ public class SendSlack extends HttpServlet {
 			String number = (String) session.getAttribute("approvedNumber");
 			String nextNumber = (String) session.getAttribute("nextNumber");
 
-			message += "申請番号:" + number + "\n\n" + fromName + "により\n有給申請が" + sendAction.substring(0, 2)
-					+ "されました。\n申請番号:" + nextNumber + "\nへの操作をお願いいたします。\n"
+			message += "申請番号:" + number + "\n\n" + fromName + "により\n有給申請が " + sendAction
+					+ " されました。\n申請番号:" + nextNumber + "\nへの操作をお願いいたします。\n"
 					+ Keyword.webSiteURL();
 
 			if (sendAction.equals("承認")) {
@@ -87,7 +101,7 @@ public class SendSlack extends HttpServlet {
 						+ String.format("%02d", Integer.parseInt(historyList.get(1).substring(14)) + 1) + "となります。\n";
 			}
 
-			message += "申請番号:" + number + "\n\n" + fromName + "により\n有給申請が" + sendAction.substring(0, 2) + "されました。\n"
+			message += "申請番号:" + number + "\n\n" + fromName + "により\n有給申請が " + sendAction + " されました。\n"
 					+ message2 + Keyword.webSiteURL();
 
 			if (approve1notification.equals("1")) {
@@ -111,7 +125,7 @@ public class SendSlack extends HttpServlet {
 	}
 
 	private void sendSlack(String userName, String message) throws IOException {
-		String botToken = "xoxb-888499428870-1207231347280-zIXeAynu2vqxNxTI3pMkThFB";
+		String botToken = "xoxb-888499428870-1207231347280-qa6d9aeE1quOszCImWd4Ieau";
 
 		SlackletService slackService = new SlackletService(botToken);
 		slackService.start();
