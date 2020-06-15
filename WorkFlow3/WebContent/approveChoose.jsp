@@ -55,19 +55,17 @@ img {
 </head>
 <body>
 	<header>
-		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg"
-			alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg" alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
-			onsubmit="return logout()">
-			<div align="right">
-				<div>
-					<%=session.getAttribute("affiliationName")%>・
-					<%=session.getAttribute("fullname")%>
-					<input class="logoutbutton" type="submit" value="ログアウト">
-				</div>
+		onsubmit="return logout()">
+		<div align="right">
+			<div class="header_right">
+				<%=session.getAttribute("affiliationName") %>・
+				<%=session.getAttribute("fullname")%>
+				<input class="logoutbutton" type="submit" value="ログアウト">
 			</div>
-		</form>
-		<hr>
+		</div>
+	</form>
 	</header>
 	<script type="text/javascript">
 	<!--
