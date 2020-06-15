@@ -93,6 +93,7 @@ public class SendSlack extends HttpServlet {
 			String number = historyList.get(1);
 			String approve1notification = (String) session.getAttribute("approve1notification");
 			String approve2notification = (String) session.getAttribute("approve2notification");
+			String fix_delete_comment = (String) session.getAttribute("fix_delete_comment");
 
 			String message2 = "";
 
@@ -102,7 +103,7 @@ public class SendSlack extends HttpServlet {
 			}
 
 			message += "申請番号:" + number + "\n\n" + fromName + "により\n有給申請が " + sendAction + " されました。\n"
-					+ message2 + Keyword.webSiteURL();
+					+ message2 + sendAction + "コメント:\n" + fix_delete_comment + "\n" + Keyword.webSiteURL();
 
 			if (approve1notification.equals("1")) {
 
@@ -125,7 +126,7 @@ public class SendSlack extends HttpServlet {
 	}
 
 	private void sendSlack(String userName, String message) throws IOException {
-		String botToken = "xoxb-888499428870-1207231347280-4RJeWOCAig3ZsB9hFF2G2GmR";
+		String botToken = "xoxb-888499428870-1207231347280-aOUFgZNOwUoLSmBLAMTub2rf";
 
 		SlackletService slackService = new SlackletService(botToken);
 		slackService.start();

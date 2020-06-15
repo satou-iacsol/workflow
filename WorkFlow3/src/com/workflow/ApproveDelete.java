@@ -38,12 +38,14 @@ public class ApproveDelete extends HttpServlet {
 		@SuppressWarnings("unchecked")
 		ArrayList<String> historyList = (ArrayList<String>) session.getAttribute("historyList");
 
-		String status = historyList.get(7);
+		String approvedStatus = historyList.get(7);
 
 		// データベース・テーブルに接続する準備
 		Connection con = null;
 		Statement stmtData = null;
 		ResultSet resultData = null;
+		Statement stmtData1 = null;
+		ResultSet resultData1 = null;
 		PreparedStatement pstmtData = null;
 		// 接続文字列の設定
 		String url = Keyword.url();
@@ -59,82 +61,107 @@ public class ApproveDelete extends HttpServlet {
 
 			// SELECT文の作成・実行
 			stmtData = con.createStatement();
-			String sqlData = "SELECT * from data";
+			String sqlData = "SELECT * from data for update nowait";
 			resultData = stmtData.executeQuery(sqlData);
 
+			String status = "";
+
 			while (resultData.next()) {
+				// 申請番号(最新)と一致するデータを取得
+				if (resultData.getString("number").equals(historyList.get(1))) {
+					status = resultData.getString("status");
+					break;
+				}
+			}
 
-				if (resultData.getString("number").substring(0, 14).equals(historyList.get(0).substring(0, 14))) {
+			// ステータスが空白以外だと承認者が編集済
+			if (status.equals("")) {
+				// SELECT文の作成・実行
+				stmtData1 = con.createStatement();
+				String sqlData1 = "SELECT * from data for";
+				resultData1 = stmtData1.executeQuery(sqlData1);
+
+				while (resultData1.next()) {
+
 					// 上14桁が一致するデータを取得
-					String number = resultData.getString("number");
+					if (resultData1.getString("number").substring(0, 14).equals(historyList.get(0).substring(0, 14))) {
+						String number = resultData1.getString("number");
 
-					if (number.equals(historyList.get(1)) && status.equals("承認待ち")) {
-						// SELECT文の作成・実行
-						pstmtData = con.prepareStatement(
-								"UPDATE data set status = ?,fix_delete_comment = ?,delete_flag = ? WHERE number = ?");
+						if (number.equals(historyList.get(1)) && approvedStatus.equals("承認待ち")) {
+							// SELECT文の作成・実行
+							pstmtData = con.prepareStatement(
+									"UPDATE data set status = ?,fix_delete_comment = ?,delete_flag = ? WHERE number = ?");
 
-						// 取消コメントの更新
-						pstmtData.setString(1, "取消");
-						// 取消コメントの更新
-						pstmtData.setString(2, (String) session.getAttribute("fix_delete_comment"));
-						// 削除フラグをたてる
-						pstmtData.setString(3, (String) "1");
-						// 更新する申請番号
-						pstmtData.setString(4, number);
-					} else {
-						// SELECT文の作成・実行
-						pstmtData = con.prepareStatement(
-								"UPDATE data set fix_delete_comment = ?,delete_flag = ? WHERE number = ?");
+							// 取消コメントの更新
+							pstmtData.setString(1, "取消");
+							// 取消コメントの更新
+							pstmtData.setString(2, (String) session.getAttribute("fix_delete_comment"));
+							// 削除フラグをたてる
+							pstmtData.setString(3, (String) "1");
+							// 更新する申請番号
+							pstmtData.setString(4, number);
+						} else {
+							// SELECT文の作成・実行
+							pstmtData = con.prepareStatement(
+									"UPDATE data set fix_delete_comment = ?,delete_flag = ? WHERE number = ?");
 
-						// 取消コメントの更新
-						pstmtData.setString(1, (String) session.getAttribute("fix_delete_comment"));
-						// 削除フラグをたてる
-						pstmtData.setString(2, (String) "1");
-						// 更新する申請番号
-						pstmtData.setString(3, number);
+							// 取消コメントの更新
+							pstmtData.setString(1, (String) session.getAttribute("fix_delete_comment"));
+							// 削除フラグをたてる
+							pstmtData.setString(2, (String) "1");
+							// 更新する申請番号
+							pstmtData.setString(3, number);
+						}
+					}
+					try {
+						pstmtData.executeUpdate();
+						con.commit();
+					} catch (Exception e) {
+						con.rollback();
 					}
 				}
-				try {
-					pstmtData.executeUpdate();
-					con.commit();
-				} catch (Exception e) {
-					con.rollback();
-				}
-			}
-			if (status.equals("差戻")) {
-				response.sendRedirect("menu.jsp");
-			} else {
-				String approve1notification = "0";
-				String approve2notification = "0";
-
-				if (historyList.get(5).equals(session.getAttribute("approverNumber_1"))) {
-					approve1notification = "1";
+				if (approvedStatus.equals("差戻")) {
+					response.sendRedirect("menu.jsp");
 				} else {
-					if (historyList.get(11).equals("1")) {
-						approve2notification = "1";
-					} else {
+					String approve1notification = "0";
+					String approve2notification = "0";
+
+					if (historyList.get(5).equals(session.getAttribute("approverNumber_1"))) {
 						approve1notification = "1";
-						approve2notification = "1";
+					} else {
+						if (historyList.get(11).equals("1")) {
+							approve2notification = "1";
+						} else {
+							approve1notification = "1";
+							approve2notification = "1";
+						}
 					}
+
+					session.setAttribute("sendAction", "取消");
+					session.setAttribute("approve1notification", approve1notification);
+					session.setAttribute("approve2notification", approve2notification);
+					request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
 				}
-
-				session.setAttribute("sendAction", "取消");
-				session.setAttribute("approve1notification", approve1notification);
-				session.setAttribute("approve2notification", approve2notification);
-				request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
+			} else {
+				con.commit();
+				session.setAttribute("statusError", status);
+				response.sendRedirect("approveChoose.jsp");
 			}
-		} catch (
 
-		Exception e) {
+		} catch (SQLException e) {
+			session.setAttribute("statusError", "error");
+			response.sendRedirect("approveHistoryChoose.jsp");
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			// クローズ処理
 			try {
-				if (stmtData != null) {
-					stmtData.close();
+				if (stmtData1 != null) {
+					stmtData1.close();
 				}
-				if (resultData != null) {
-					resultData.close();
+				if (resultData1 != null) {
+					resultData1.close();
 				}
 				if (pstmtData != null) {
 					pstmtData.close();

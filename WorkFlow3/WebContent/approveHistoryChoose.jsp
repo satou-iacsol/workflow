@@ -90,6 +90,26 @@ img {
 	<br>
 	<div align="center">有給休暇取得申請システム 申請一覧画面</div>
 	<br>
+	<%
+		if (!(session.getAttribute("statusError").equals(null))) {
+	%>
+	<div align="center">
+		<font color="red">申請が申請者によって<%=session.getAttribute("statusError")%>されました。
+		</font>
+	</div>
+	<br>
+	<%
+		}
+	%><%
+		if (!(session.getAttribute("statusError").equals(null))) {
+	%>
+	<div align="center">
+		<font color="red">申請が承認者によって<%=session.getAttribute("statusError")%>されました。
+		</font>
+	</div>
+	<%
+		}
+	%>
 	<br>
 	<table class="table">
 		<tr height="30">

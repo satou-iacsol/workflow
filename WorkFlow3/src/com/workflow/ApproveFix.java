@@ -60,13 +60,20 @@ public class ApproveFix extends HttpServlet {
 
 			// SELECT文の作成・実行
 			stmtData = con.createStatement();
-			String sqlData = "SELECT * from data";
+			String sqlData = "SELECT * from data for update nowait";
 			resultData = stmtData.executeQuery(sqlData);
+
+			String status = "";
 
 			while (resultData.next()) {
 
+				// 申請番号(最新)と一致するデータを取得
 				if (resultData.getString("number").equals(historyList.get(1))) {
-					// 申請番号(最新)と一致するデータを取得
+					// ステータスが空白以外だと承認者が編集済
+					status = resultData.getString("status");
+					if (!status.equals("")) {
+						break;
+					}
 
 					if (resultData.getString("fix_delete_comment").equals("")) {
 
@@ -93,81 +100,90 @@ public class ApproveFix extends HttpServlet {
 					break;
 				}
 			}
-			if (didntFix || request.getAttribute("approver_switch").equals("1")) {
+			if (status.equals("")) {
+				if (didntFix || request.getAttribute("approver_switch").equals("1")) {
 
-				String nextNumber = historyList.get(1).substring(0, 14)
-						+ String.format("%02d", Integer.parseInt(historyList.get(1).substring(14)) + 1);
-				pstmtNextData = con.prepareStatement(
-						"INSERT INTO data (number, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, approvernumber, approvercomment, approveddate, status, fix_delete_comment, delete_flag)SELECT ?, id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '', '', '', ?, '0' FROM data WHERE number = ?");
-				pstmtNextData.setString(1, nextNumber);
-				pstmtNextData.setString(2, (String) session.getAttribute("fix_type"));
-				pstmtNextData.setString(3, (String) session.getAttribute("fix_date_1"));
-				pstmtNextData.setString(4, (String) session.getAttribute("fix_date_2"));
-				pstmtNextData.setString(5, (String) session.getAttribute("fix_date_3"));
-				pstmtNextData.setString(6, (String) session.getAttribute("fix_date_4"));
-				pstmtNextData.setString(7, (String) session.getAttribute("fix_comment"));
-				pstmtNextData.setString(8, (String) session.getAttribute("fix_tellnumber"));
-				pstmtNextData.setString(9, (String) session.getAttribute("fix_bikou"));
-				pstmtNextData.setString(10, (String) session.getAttribute("fix_flag"));
-				pstmtNextData.setString(11, (String) session.getAttribute("fix_approverNumber"));
-				pstmtNextData.setString(12, (String) session.getAttribute("fix_delete_comment"));
-				pstmtNextData.setString(13, historyList.get(1));
+					String nextNumber = historyList.get(1).substring(0, 14)
+							+ String.format("%02d", Integer.parseInt(historyList.get(1).substring(14)) + 1);
+					pstmtNextData = con.prepareStatement(
+							"INSERT INTO data (number, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, approvernumber, approvercomment, approveddate, status, fix_delete_comment, delete_flag)SELECT ?, id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '', '', '', ?, '0' FROM data WHERE number = ?");
+					pstmtNextData.setString(1, nextNumber);
+					pstmtNextData.setString(2, (String) session.getAttribute("fix_type"));
+					pstmtNextData.setString(3, (String) session.getAttribute("fix_date_1"));
+					pstmtNextData.setString(4, (String) session.getAttribute("fix_date_2"));
+					pstmtNextData.setString(5, (String) session.getAttribute("fix_date_3"));
+					pstmtNextData.setString(6, (String) session.getAttribute("fix_date_4"));
+					pstmtNextData.setString(7, (String) session.getAttribute("fix_comment"));
+					pstmtNextData.setString(8, (String) session.getAttribute("fix_tellnumber"));
+					pstmtNextData.setString(9, (String) session.getAttribute("fix_bikou"));
+					pstmtNextData.setString(10, (String) session.getAttribute("fix_flag"));
+					pstmtNextData.setString(11, (String) session.getAttribute("fix_approverNumber"));
+					pstmtNextData.setString(12, (String) session.getAttribute("fix_delete_comment"));
+					pstmtNextData.setString(13, historyList.get(1));
 
-				try {
-					pstmtNextData.executeUpdate();
-					con.commit();
-				} catch (Exception e) {
-					con.rollback();
-				}
+					try {
+						pstmtNextData.executeUpdate();
+						con.commit();
+					} catch (Exception e) {
+						con.rollback();
+					}
 
-				String approve1notification = "0";
-				String approve2notification = "0";
+					String approve1notification = "0";
+					String approve2notification = "0";
 
-				if (session.getAttribute("approver_switch").equals("0")) {
-					if (historyList.get(5).equals(session.getAttribute("approverNumber_1"))
-							&& historyList.get(11).equals("0")) {
+					if (session.getAttribute("approver_switch").equals("0")) {
+						if (historyList.get(5).equals(session.getAttribute("approverNumber_1"))
+								&& historyList.get(11).equals("0")) {
+							approve1notification = "1";
+						} else if (historyList.get(5).equals(session.getAttribute("approverNumber_2"))
+								&& historyList.get(11).equals("1")) {
+							approve2notification = "1";
+						}
+					} else {
 						approve1notification = "1";
-					} else if (historyList.get(5).equals(session.getAttribute("approverNumber_2"))
-							&& historyList.get(11).equals("1")) {
 						approve2notification = "1";
 					}
+
+					session.setAttribute("sendAction", "修正");
+					session.setAttribute("approve1notification", approve1notification);
+					session.setAttribute("approve2notification", approve2notification);
+					request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
 				} else {
-					approve1notification = "1";
-					approve2notification = "1";
-				}
 
-				session.setAttribute("sendAction", "修正");
-				session.setAttribute("approve1notification", approve1notification);
-				session.setAttribute("approve2notification", approve2notification);
-				request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
+					pstmtNextData = con.prepareStatement(
+							"UPDATE data SET type = ?, date_1 = ?, date_2 = ?, date_3 = ?, date_4 = ?, comment = ?, tellnumber = ?, bikou = ?, flag = ?, approvernumber = ?, approvercomment = '', approveddate = '', status = '', fix_delete_comment = ?, delete_flag='0' WHERE number = ?");
+					pstmtNextData.setString(1, (String) session.getAttribute("fix_type"));
+					pstmtNextData.setString(2, (String) session.getAttribute("fix_date_1"));
+					pstmtNextData.setString(3, (String) session.getAttribute("fix_date_2"));
+					pstmtNextData.setString(4, (String) session.getAttribute("fix_date_3"));
+					pstmtNextData.setString(5, (String) session.getAttribute("fix_date_4"));
+					pstmtNextData.setString(6, (String) session.getAttribute("fix_comment"));
+					pstmtNextData.setString(7, (String) session.getAttribute("fix_tellnumber"));
+					pstmtNextData.setString(8, (String) session.getAttribute("fix_bikou"));
+					pstmtNextData.setString(9, (String) session.getAttribute("fix_flag"));
+					pstmtNextData.setString(10, (String) session.getAttribute("fix_approverNumber"));
+					pstmtNextData.setString(11, (String) session.getAttribute("fix_delete_comment"));
+					pstmtNextData.setString(12, historyList.get(1));
+
+					try {
+						pstmtNextData.executeUpdate();
+						con.commit();
+					} catch (Exception e) {
+						con.rollback();
+					}
+					response.sendRedirect("menu.jsp");
+				}
 			} else {
-
-				pstmtNextData = con.prepareStatement(
-						"UPDATE data SET type = ?, date_1 = ?, date_2 = ?, date_3 = ?, date_4 = ?, comment = ?, tellnumber = ?, bikou = ?, flag = ?, approvernumber = ?, approvercomment = '', approveddate = '', status = '', fix_delete_comment = ?, delete_flag='0' WHERE number = ?");
-				pstmtNextData.setString(1, (String) session.getAttribute("fix_type"));
-				pstmtNextData.setString(2, (String) session.getAttribute("fix_date_1"));
-				pstmtNextData.setString(3, (String) session.getAttribute("fix_date_2"));
-				pstmtNextData.setString(4, (String) session.getAttribute("fix_date_3"));
-				pstmtNextData.setString(5, (String) session.getAttribute("fix_date_4"));
-				pstmtNextData.setString(6, (String) session.getAttribute("fix_comment"));
-				pstmtNextData.setString(7, (String) session.getAttribute("fix_tellnumber"));
-				pstmtNextData.setString(8, (String) session.getAttribute("fix_bikou"));
-				pstmtNextData.setString(9, (String) session.getAttribute("fix_flag"));
-				pstmtNextData.setString(10, (String) session.getAttribute("fix_approverNumber"));
-				pstmtNextData.setString(11, (String) session.getAttribute("fix_delete_comment"));
-				pstmtNextData.setString(12, historyList.get(1));
-
-				try {
-					pstmtNextData.executeUpdate();
-					con.commit();
-				} catch (Exception e) {
-					con.rollback();
-				}
-				response.sendRedirect("menu.jsp");
+				con.commit();
+				session.setAttribute("statusError", status);
+				response.sendRedirect("approveChoose.jsp");
 			}
-		} catch (
 
-		Exception e) {
+		} catch (SQLException e) {
+			session.setAttribute("statusError", "error");
+			response.sendRedirect("approveHistoryChoose.jsp");
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			// クローズ処理
