@@ -114,7 +114,7 @@ public class Output extends HttpServlet {
 
 			//実行するSQL文とパラメータを指定する
 			ps = con.prepareStatement(sql);
-			ps.setString(1, sdf.format(c.getTime()) + id + date_1_1 + "01");
+			ps.setString(1, approvednumber);
 			ps.setString(2, id);
 			if (type.equals("有給休暇")) {
 				ps.setString(3, type_1);
