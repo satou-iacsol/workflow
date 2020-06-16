@@ -52,7 +52,6 @@ public class SessionCreate extends HttpServlet {
 		String approvedReason = "";
 		String approvedAddress = "";
 		String approvedRemarks = "";
-		String approvedSkip = "";
 		String approvedOverComment = "";
 		String approvedStatus = "";
 		String preComment = "";
@@ -98,7 +97,6 @@ public class SessionCreate extends HttpServlet {
 					approvedReason = resultData.getString("comment");
 					approvedAddress = resultData.getString("tellnumber");
 					approvedRemarks = resultData.getString("bikou");
-					approvedSkip = resultData.getString("flag");
 					approvedOverComment = resultData.getString("approverComment");
 					approvedStatus = resultData.getString("status");
 					break;
@@ -255,7 +253,7 @@ public class SessionCreate extends HttpServlet {
 		session.setAttribute("approvedReason", approvedReason);
 		session.setAttribute("approvedAddress", approvedAddress);
 		session.setAttribute("approvedRemarks", approvedRemarks);
-		session.setAttribute("approvedSkip", approvedSkip);
+		session.setAttribute("approvedSkip", flag);
 		session.setAttribute("approvedOverComment", approvedOverComment);
 		session.setAttribute("approvedStatus", approvedStatus);
 		if (flag.equals("1")) {
