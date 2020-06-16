@@ -78,31 +78,6 @@ img {
 			</div>
 		</form>
 	</header>
-	<script type="text/javascript">
-	<!--
-		function formCheck() {
-			if (document.approveForm.action.value == "差戻") {
-				if (document.approveForm.comment.value == "") {
-					document.getElementById('notice').style.display = "block";
-					return false;
-				} else {
-					document.getElementById('notice').style.display = "none";
-					return true;
-				}
-			} else {
-				document.getElementById('notice').style.display = "none";
-				return true;
-			}
-		}
-		function logout() {
-			if (confirm("ログアウトしますか？")) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	// -->
-	</script>
 	<br>
 	<br>
 	<form name="approveForm" action="approveCheck.jsp" method="post"

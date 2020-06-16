@@ -78,17 +78,6 @@ img {
 			</div>
 		</form>
 	</header>
-	<script type="text/javascript">
-	<!--
-		function logout() {
-			if (confirm("ログアウトしますか？")) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	// -->
-	</script>
 	<br>
 	<br>
 	<form action="Approve" method="post">
