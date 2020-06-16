@@ -242,12 +242,14 @@ img {
 				<button onclick="history.back();">&nbsp;戻る&nbsp;</button>
 			</td>
 
-			<%
-				} catch (Exception e) {
-				response.sendRedirect("login.jsp");
-			}
-			%>
 		</tr>
 	</table>
+	<%
+		} catch (Exception e) {
+		response.sendRedirect("login.jsp");
+	}
+	%>
+	<script src="jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="logout.js"></script>
 </body>
 </html>

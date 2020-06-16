@@ -37,19 +37,38 @@ table {
 	border: solid 1px;
 }
 
+body {
+	background-color: #fafafa;
+	margin: 0;
+}
+
 header {
 	position: fixed;
 	left: 0;
 	width: 100%;
+	height: 42px;
+	background: #36D1DC; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to top, #5B86E5, #36D1DC);
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to top, #5B86E5, #36D1DC);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 img {
 	float: left;
+	width: 100px;
+	position: absolute;
+	top: 50%;
+	left: 0;
+	transform: translateY(-50%);
 }
 
-.logoutbutton {
-	margin-left: 20px;
-	margin-right: 20px;
+.header_right {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 20px;
+	font-size: 16px;
 }
 </style>
 </head>
@@ -162,7 +181,15 @@ img {
 				</td>
 				<td align="left">&nbsp;<%=list.get(i).get(5)%>&nbsp;
 				</td>
-				<td align="left"><% if (Long.parseLong(list.get(i).get(3)) > Long.parseLong(list.get(i).get(4))) {%>&nbsp;データ異常<%} else {%><%=Keyword.type((String) list.get(i).get(2))%><% } %>&nbsp;
+				<td align="left">
+					<%
+						if (Long.parseLong(list.get(i).get(3)) > Long.parseLong(list.get(i).get(4))) {
+					%>&nbsp;データ異常<%
+						} else {
+					%><%=Keyword.type((String) list.get(i).get(2))%>
+					<%
+						}
+					%>&nbsp;
 				</td>
 				<td align="left">&nbsp;<%=list.get(i).get(14)%></td>
 			</tr>
@@ -182,5 +209,7 @@ img {
 		response.sendRedirect("login.jsp");
 	}
 	%>
+	<script src="jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="logout.js"></script>
 </body>
 </html>

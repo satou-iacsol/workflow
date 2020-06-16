@@ -23,9 +23,6 @@
 <head>
 <meta charset="UTF-8"></meta>
 <title>有給休暇取得申請システム</title>
-<script src="https://code.jquery.com/jquery-3.5.1.js"
-	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-	crossorigin="anonymous"></script>
 <style>
 table, td, th {
 	border: 0px;
@@ -36,19 +33,38 @@ table {
 	margin: 0 auto;
 }
 
+body {
+	background-color: #fafafa;
+	margin: 0;
+}
+
 header {
 	position: fixed;
 	left: 0;
 	width: 100%;
+	height: 42px;
+	background: #36D1DC; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to top, #5B86E5, #36D1DC);
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to top, #5B86E5, #36D1DC);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 img {
 	float: left;
+	width: 100px;
+	position: absolute;
+	top: 50%;
+	left: 0;
+	transform: translateY(-50%);
 }
 
-.logoutbutton {
-	margin-left: 20px;
-	margin-right: 20px;
+.header_right {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 20px;
+	font-size: 16px;
 }
 </style>
 </head>
@@ -59,14 +75,13 @@ img {
 		<form name="login_logout" action="login.jsp" method="post"
 			onsubmit="return logout()">
 			<div align="right">
-				<div>
+				<div class="header_right">
 					<%=session.getAttribute("affiliationName")%>・
 					<%=session.getAttribute("fullname")%>
 					<input class="logoutbutton" type="submit" value="ログアウト">
 				</div>
 			</div>
 		</form>
-		<hr>
 	</header>
 	<script type="text/javascript">
 	<!--
@@ -169,5 +184,7 @@ img {
 		response.sendRedirect("login.jsp");
 	}
 	%>
+	<script src="jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="logout.js"></script>
 </body>
 </html>
