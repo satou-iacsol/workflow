@@ -87,7 +87,7 @@ img {
 		if (session.getAttribute("statusError") != null) {
 	%>
 	<div align="center">
-		<font color="red">申請が申請者によって<%=session.getAttribute("statusError")%>されました。
+		<font color="red">申請が申請者によって<%=session.getAttribute("statusError")%>されました。<br>新しい申請番号よりもう一度操作をお願いいたします。
 		</font>
 	</div>
 	<br>
