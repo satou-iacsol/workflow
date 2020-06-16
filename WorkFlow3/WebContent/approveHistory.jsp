@@ -154,7 +154,7 @@ img {
 		</tr>
 		<tr>
 			<%
-				if (!historyList.get(11).equals("")) {
+				if (!(historyList.get(12).equals(""))) {
 			%>
 			<td align="left">修正コメント:</td>
 			<td colspan="3"><%=historyList.get(12)%></td>
