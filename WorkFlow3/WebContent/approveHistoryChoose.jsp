@@ -41,7 +41,7 @@ header {
 	background: -webkit-linear-gradient(to top, #5B86E5, #36D1DC);
 	/* Chrome 10-25, Safari 5.1-6 */
 	background: linear-gradient(to top, #5B86E5, #36D1DC);
-		/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 img {
@@ -52,7 +52,8 @@ img {
 	left: 0;
 	transform: translateY(-50%);
 }
-.header_right{
+
+.header_right {
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
@@ -63,17 +64,18 @@ img {
 </head>
 <body>
 	<header>
-		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg" alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg"
+			alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
-		onsubmit="return logout()">
-		<div align="right">
-			<div class="header_right">
-				<%=session.getAttribute("affiliationName") %>・
-				<%=session.getAttribute("fullname")%>
-				<input class="logoutbutton" type="submit" value="ログアウト">
+			onsubmit="return logout()">
+			<div align="right">
+				<div class="header_right">
+					<%=session.getAttribute("affiliationName")%>・
+					<%=session.getAttribute("fullname")%>
+					<input class="logoutbutton" type="submit" value="ログアウト">
+				</div>
 			</div>
-		</div>
-	</form>
+		</form>
 	</header>
 	<script type="text/javascript">
 	<!--
@@ -91,24 +93,25 @@ img {
 	<div align="center">有給休暇取得申請システム 申請一覧画面</div>
 	<br>
 	<%
-		if (!(session.getAttribute("statusError").equals(null))) {
+		if (session.getAttribute("statusError") != null) {
+		if (session.getAttribute("statusError").equals("error")) {
 	%>
 	<div align="center">
-		<font color="red">申請が申請者によって<%=session.getAttribute("statusError")%>されました。
+		<font color="red">申請が承認者によって変更されました。<br>新しい申請番号よりもう一度操作をお願いいたします。
+		</font>
+	</div>
+	<br>
+	<%
+		} else {
+	%>
+	<div align="center">
+		<font color="red">申請が承認者によって<%=session.getAttribute("statusError")%>されました。<br>新しい申請番号よりもう一度操作をお願いいたします。
 		</font>
 	</div>
 	<br>
 	<%
 		}
-	%><%
-		if (!(session.getAttribute("statusError").equals(null))) {
-	%>
-	<div align="center">
-		<font color="red">申請が承認者によって<%=session.getAttribute("statusError")%>されました。
-		</font>
-	</div>
-	<%
-		}
+	}
 	%>
 	<br>
 	<table class="table">
@@ -140,10 +143,16 @@ img {
 				String from = list[3].substring(0, 4) + "年" + list[3].substring(4, 6) + "月"
 					+ list[3].substring(6, 8) + "日 " + list[3].substring(8, 10) + "時"
 					+ list[3].substring(10, 12) + "分";
+			if (Long.parseLong(list[3]) >= Long.parseLong(list[4])) {
+				from = "データ異常";
+			}
 			%><%=from%>&nbsp;～<br>&nbsp;&nbsp;&nbsp;<%
 				String to = list[4].substring(0, 4) + "年" + list[4].substring(4, 6) + "月"
 					+ list[4].substring(6, 8) + "日 " + list[4].substring(8, 10) + "時"
 					+ list[4].substring(10, 12) + "分";
+			if (from.equals("データ異常")) {
+				to = "要修正";
+			}
 			%><%=to%>
 			</td>
 			<td align="center" valign="top" class="table">&nbsp;<%=list[6]%>&nbsp;<br>

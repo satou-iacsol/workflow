@@ -49,7 +49,7 @@ header {
 	background: -webkit-linear-gradient(to top, #5B86E5, #36D1DC);
 	/* Chrome 10-25, Safari 5.1-6 */
 	background: linear-gradient(to top, #5B86E5, #36D1DC);
-		/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 img {
@@ -60,7 +60,8 @@ img {
 	left: 0;
 	transform: translateY(-50%);
 }
-.header_right{
+
+.header_right {
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
@@ -71,17 +72,18 @@ img {
 </head>
 <body>
 	<header>
-		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg" alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg"
+			alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
-		onsubmit="return logout()">
-		<div align="right">
-			<div class="header_right">
-				<%=session.getAttribute("affiliationName") %>・
-				<%=session.getAttribute("fullname")%>
-				<input class="logoutbutton" type="submit" value="ログアウト">
+			onsubmit="return logout()">
+			<div align="right">
+				<div class="header_right">
+					<%=session.getAttribute("affiliationName")%>・
+					<%=session.getAttribute("fullname")%>
+					<input class="logoutbutton" type="submit" value="ログアウト">
+				</div>
 			</div>
-		</div>
-	</form>
+		</form>
 	</header>
 	<script type="text/javascript">
 	<!--
@@ -117,12 +119,18 @@ img {
 				<%
 					String fromDate = historyList.get(3).substring(0, 4) + "年" + historyList.get(3).substring(4, 6) + "月"
 						+ historyList.get(3).substring(6, 8) + "日";
+				if (Long.parseLong(historyList.get(3)) >= Long.parseLong(historyList.get(4))) {
+					fromDate = "データ異常";
+				}
 				%><%=fromDate%></td>
 			<td>&nbsp;～&nbsp;</td>
 			<td>
 				<%
 					String toDate = historyList.get(4).substring(0, 4) + "年" + historyList.get(4).substring(4, 6) + "月"
 						+ historyList.get(4).substring(6, 8) + "日";
+				if (fromDate.equals("データ異常")) {
+					toDate = "";
+				}
 				%><%=toDate%></td>
 		</tr>
 		<tr>
@@ -130,11 +138,17 @@ img {
 			<td>
 				<%
 					String fromTime = historyList.get(3).substring(8, 10) + "時" + historyList.get(3).substring(10, 12) + "分";
+				if (fromDate.equals("データ異常")) {
+					fromTime = "要修正";
+				}
 				%><%=fromTime%></td>
 			<td>&nbsp;～&nbsp;</td>
 			<td>
 				<%
 					String toTime = historyList.get(4).substring(8, 10) + "時" + historyList.get(4).substring(10, 12) + "分";
+				if (fromDate.equals("データ異常")) {
+					toTime = "";
+				}
 				%><%=toTime%></td>
 		</tr>
 		<tr>

@@ -84,15 +84,41 @@ img {
 	<div align="center">有給休暇取得申請システム 承認画面</div>
 	<br>
 	<%
-		if (!(session.getAttribute("statusError").equals(null))) {
+		if (session.getAttribute("statusError") != null) {
+		if (session.getAttribute("statusError").equals("error")) {
 	%>
 	<div align="center">
-		<font color="red">申請が申請者によって<%=session.getAttribute("statusError")%>されました。
+		<font color="red">申請が申請者によって変更されました。<br>新しい申請番号よりもう一度操作をお願いいたします。(取消の場合は操作不要のため表示されません。)
+		</font>
+	</div>
+	<br>
+	<%
+		} else if (session.getAttribute("statusError").equals("修正")) {
+	%>
+	<div align="center">
+		<font color="red">申請が申請者によって修正されました。<br>新しい申請番号よりもう一度操作をお願いいたします。
+		</font>
+	</div>
+	<br>
+	<%
+		} else if (session.getAttribute("statusError").equals("修正２")) {
+	%>
+	<div align="center">
+		<font color="red">申請が申請者によって修正されました。<br>同一の申請番号よりもう一度操作をお願いいたします。
+		</font>
+	</div>
+	<br>
+	<%
+		} else {
+	%>
+	<div align="center">
+		<font color="red">申請が申請者によって<%=session.getAttribute("statusError")%>されました。<br>
 		</font>
 	</div>
 	<br>
 	<%
 		}
+	}
 	%>
 	<div align="center">
 		<font color="red">未処理の申請<%=session.getAttribute("approvedItems")%>件
@@ -136,7 +162,7 @@ img {
 				</td>
 				<td align="left">&nbsp;<%=list.get(i).get(5)%>&nbsp;
 				</td>
-				<td align="left"><%=Keyword.type((String) list.get(i).get(2))%>&nbsp;
+				<td align="left"><% if (Long.parseLong(list.get(i).get(3)) > Long.parseLong(list.get(i).get(4))) {%>&nbsp;データ異常<%} else {%><%=Keyword.type((String) list.get(i).get(2))%><% } %>&nbsp;
 				</td>
 				<td align="left">&nbsp;<%=list.get(i).get(14)%></td>
 			</tr>

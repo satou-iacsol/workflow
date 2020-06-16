@@ -2,6 +2,7 @@ package com.workflow;
 
 public class Keyword {
 	static final private String webSiteURL = "http://localhost:8080/WorkFlow3/login.jsp";
+	static final private String botToken = "xoxb-888499428870-1207231347280-aOUFgZNOwUoLSmBLAMTub2rf";
 	static final private String url = "jdbc:postgresql://localhost:5432/postgres";
 	static final private String user = "postgres";
 	static final private String password = "0978781";
@@ -22,6 +23,9 @@ public class Keyword {
 
 	static String webSiteURL () {
 		return webSiteURL;
+	}
+	static String botToken () {
+		return botToken;
 	}
 	static String url () {
 		return url;

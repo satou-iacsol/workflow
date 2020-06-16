@@ -244,12 +244,14 @@ public class SessionCreate extends HttpServlet {
 		session.setAttribute("approve2Id", approve2Id);
 		session.setAttribute("approve1Name", approve1Name);
 		session.setAttribute("approve2Name", approve2Name);
+		session.setAttribute("approveDate_1", date_1);
+		session.setAttribute("approveDate_2", date_2);
+		session.setAttribute("approveDate_3", date_3);
+		session.setAttribute("approveDate_4", date_4);
 		session.setAttribute("approvedFromDate", fromDate);
 		session.setAttribute("approvedToDate", toDate);
-		session.setAttribute("approvedDate", fromDate + " ～ " + toDate);
 		session.setAttribute("approvedFromTime", fromTime);
 		session.setAttribute("approvedToTime", toTime);
-		session.setAttribute("approvedTime", fromTime + " ～ " + toTime);
 		session.setAttribute("approvedReason", approvedReason);
 		session.setAttribute("approvedAddress", approvedAddress);
 		session.setAttribute("approvedRemarks", approvedRemarks);
