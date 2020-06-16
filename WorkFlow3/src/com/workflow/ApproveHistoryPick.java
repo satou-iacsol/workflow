@@ -49,10 +49,6 @@ public class ApproveHistoryPick extends HttpServlet {
 		ResultSet resultData1 = null;
 		ResultSet resultData2 = null;
 		ResultSet resultData3 = null;
-		Statement stmtEmployee = null;
-		ResultSet resultEmployee = null;
-		Statement stmtEmployee1 = null;
-		ResultSet resultEmployee1 = null;
 
 		// 接続文字列の設定
 		String url = Keyword.url();
@@ -116,41 +112,26 @@ public class ApproveHistoryPick extends HttpServlet {
 					}
 
 					if (status.equals("承認")) {
-						stmtEmployee = con.createStatement();
-						String sqlEmployee = "SELECT * from employee_muster";
-						resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
-						while (resultEmployee.next()) {
-							if (resultEmployee.getString("id").equals(approverNumber)) {
-								flow = resultEmployee.getString("fullname");
-								break;
-							}
+						if (session.getAttribute("approve1Id").equals(approverNumber)) {
+							flow = (String) session.getAttribute("approve1Name");
+						} else if (session.getAttribute("approve2Id").equals(approverNumber)) {
+							flow = (String) session.getAttribute("approve2Name");
 						}
 						result = "承認完了";
 					} else if (status.equals("差戻")) {
-						stmtEmployee = con.createStatement();
-						String sqlEmployee = "SELECT * from employee_muster";
-						resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
-						while (resultEmployee.next()) {
-							if (resultEmployee.getString("id").equals(approverNumber)) {
-								flow = resultEmployee.getString("fullname");
-								break;
-							}
+						if (session.getAttribute("approve1Id").equals(approverNumber)) {
+							flow = (String) session.getAttribute("approve1Name");
+						} else if (session.getAttribute("approve2Id").equals(approverNumber)) {
+							flow = (String) session.getAttribute("approve2Name");
 						}
 						result = "差戻";
 					} else {
 						String beforeApprover = "";
 						String afterApprover = "";
 
-						if (numberNow.substring(14).equals("01")) {
-							stmtEmployee = con.createStatement();
-							String sqlEmployee = "SELECT * from employee_muster";
-							resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
-							while (resultEmployee.next()) {
-								if (resultEmployee.getString("id").equals(id)) {
-									beforeApprover = resultEmployee.getString("fullname");
-									break;
-								}
-							}
+						if (numberNow.substring(14).equals("01")
+								|| !(resultData.getString("fix_delete_comment").equals(""))) {
+							beforeApprover = (String) session.getAttribute("approvedName");
 						} else {
 							String BeforeApproverNumber = "";
 
@@ -165,25 +146,16 @@ public class ApproveHistoryPick extends HttpServlet {
 									break;
 								}
 							}
-
-							stmtEmployee = con.createStatement();
-							String sqlEmployee = "SELECT * from employee_muster";
-							resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
-							while (resultEmployee.next()) {
-								if (resultEmployee.getString("id").equals(BeforeApproverNumber)) {
-									beforeApprover = resultEmployee.getString("fullname");
-									break;
-								}
+							if (session.getAttribute("approve1Id").equals(BeforeApproverNumber)) {
+								beforeApprover = (String) session.getAttribute("approve1Name");
+							} else if (session.getAttribute("approve2Id").equals(BeforeApproverNumber)) {
+								beforeApprover = (String) session.getAttribute("approve2Name");
 							}
 						}
-						stmtEmployee1 = con.createStatement();
-						String sqlEmployee1 = "SELECT * from employee_muster";
-						resultEmployee1 = stmtEmployee1.executeQuery(sqlEmployee1);
-						while (resultEmployee1.next()) {
-							if (resultEmployee1.getString("id").equals(approverNumber)) {
-								afterApprover = resultEmployee1.getString("fullname");
-								break;
-							}
+						if (session.getAttribute("approve1Id").equals(approverNumber)) {
+							afterApprover = (String) session.getAttribute("approve1Name");
+						} else if (session.getAttribute("approve2Id").equals(approverNumber)) {
+							afterApprover = (String) session.getAttribute("approve2Name");
 						}
 						flow = beforeApprover + "  →  " + afterApprover;
 						result = "承認待ち";
@@ -251,18 +223,6 @@ public class ApproveHistoryPick extends HttpServlet {
 				}
 				if (stmtData3 != null) {
 					stmtData3.close();
-				}
-				if (stmtEmployee != null) {
-					stmtEmployee.close();
-				}
-				if (resultEmployee != null) {
-					resultEmployee.close();
-				}
-				if (stmtEmployee1 != null) {
-					stmtEmployee1.close();
-				}
-				if (resultEmployee1 != null) {
-					resultEmployee1.close();
 				}
 				if (con != null) {
 					con.close();
