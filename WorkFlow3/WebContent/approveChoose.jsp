@@ -162,7 +162,7 @@ img {
 				</td>
 				<td align="left">&nbsp;<%=list.get(i).get(5)%>&nbsp;
 				</td>
-				<td align="left"><%=Keyword.type((String) list.get(i).get(2))%>&nbsp;
+				<td align="left"><% if (Long.parseLong(list.get(i).get(3)) > Long.parseLong(list.get(i).get(4))) {%>&nbsp;データ異常<%} else {%><%=Keyword.type((String) list.get(i).get(2))%><% } %>&nbsp;
 				</td>
 				<td align="left">&nbsp;<%=list.get(i).get(14)%></td>
 			</tr>

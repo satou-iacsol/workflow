@@ -143,10 +143,16 @@ img {
 				String from = list[3].substring(0, 4) + "年" + list[3].substring(4, 6) + "月"
 					+ list[3].substring(6, 8) + "日 " + list[3].substring(8, 10) + "時"
 					+ list[3].substring(10, 12) + "分";
+			if (Long.parseLong(list[3]) >= Long.parseLong(list[4])) {
+				from = "データ異常";
+			}
 			%><%=from%>&nbsp;～<br>&nbsp;&nbsp;&nbsp;<%
 				String to = list[4].substring(0, 4) + "年" + list[4].substring(4, 6) + "月"
 					+ list[4].substring(6, 8) + "日 " + list[4].substring(8, 10) + "時"
 					+ list[4].substring(10, 12) + "分";
+			if (from.equals("データ異常")) {
+				to = "要修正";
+			}
 			%><%=to%>
 			</td>
 			<td align="center" valign="top" class="table">&nbsp;<%=list[6]%>&nbsp;<br>
