@@ -94,24 +94,24 @@ img {
 	<br>
 	<%
 		if (session.getAttribute("statusError") != null) {
+		if (session.getAttribute("statusError").equals("error")) {
 	%>
 	<div align="center">
-		<font color="red">申請が申請者によって<%=session.getAttribute("statusError")%>されました。<br>新しい申請番号よりもう一度操作をお願いいたします。
+		<font color="red">申請が承認者によって変更されました。<br>新しい申請番号よりもう一度操作をお願いいたします。
 		</font>
 	</div>
 	<br>
 	<%
-		}
-	%>
-	<%
-		if (session.getAttribute("statusError") != null) {
+		} else {
 	%>
 	<div align="center">
 		<font color="red">申請が承認者によって<%=session.getAttribute("statusError")%>されました。<br>新しい申請番号よりもう一度操作をお願いいたします。
 		</font>
 	</div>
+	<br>
 	<%
 		}
+	}
 	%>
 	<br>
 	<table class="table">

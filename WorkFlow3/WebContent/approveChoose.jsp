@@ -85,6 +85,15 @@ img {
 	<br>
 	<%
 		if (session.getAttribute("statusError") != null) {
+		if (session.getAttribute("statusError").equals("error")) {
+	%>
+	<div align="center">
+		<font color="red">申請が申請者によって操作されました。<br>新しい申請番号よりもう一度操作をお願いいたします。(取消の場合は表示されなくなります。)
+		</font>
+	</div>
+	<br>
+	<%
+		} else if (session.getAttribute("statusError").equals("修正")) {
 	%>
 	<div align="center">
 		<font color="red">申請が申請者によって<%=session.getAttribute("statusError")%>されました。<br>新しい申請番号よりもう一度操作をお願いいたします。
@@ -92,7 +101,16 @@ img {
 	</div>
 	<br>
 	<%
+		} else {
+	%>
+	<div align="center">
+		<font color="red">申請が申請者によって<%=session.getAttribute("statusError")%>されました。<br>
+		</font>
+	</div>
+	<br>
+	<%
 		}
+	}
 	%>
 	<div align="center">
 		<font color="red">未処理の申請<%=session.getAttribute("approvedItems")%>件
