@@ -84,7 +84,7 @@ img {
 	<div align="center">有給休暇取得申請システム 承認画面</div>
 	<br>
 	<%
-		if (!(session.getAttribute("statusError").equals(null))) {
+		if (session.getAttribute("statusError") != null) {
 	%>
 	<div align="center">
 		<font color="red">申請が申請者によって<%=session.getAttribute("statusError")%>されました。

@@ -41,7 +41,7 @@ header {
 	background: -webkit-linear-gradient(to top, #5B86E5, #36D1DC);
 	/* Chrome 10-25, Safari 5.1-6 */
 	background: linear-gradient(to top, #5B86E5, #36D1DC);
-		/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 img {
@@ -52,7 +52,8 @@ img {
 	left: 0;
 	transform: translateY(-50%);
 }
-.header_right{
+
+.header_right {
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
@@ -63,17 +64,18 @@ img {
 </head>
 <body>
 	<header>
-		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg" alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg"
+			alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
-		onsubmit="return logout()">
-		<div align="right">
-			<div class="header_right">
-				<%=session.getAttribute("affiliationName") %>・
-				<%=session.getAttribute("fullname")%>
-				<input class="logoutbutton" type="submit" value="ログアウト">
+			onsubmit="return logout()">
+			<div align="right">
+				<div class="header_right">
+					<%=session.getAttribute("affiliationName")%>・
+					<%=session.getAttribute("fullname")%>
+					<input class="logoutbutton" type="submit" value="ログアウト">
+				</div>
 			</div>
-		</div>
-	</form>
+		</form>
 	</header>
 	<script type="text/javascript">
 	<!--
@@ -91,7 +93,7 @@ img {
 	<div align="center">有給休暇取得申請システム 申請一覧画面</div>
 	<br>
 	<%
-		if (!(session.getAttribute("statusError").equals(null))) {
+		if (session.getAttribute("statusError") != null) {
 	%>
 	<div align="center">
 		<font color="red">申請が申請者によって<%=session.getAttribute("statusError")%>されました。
@@ -100,7 +102,8 @@ img {
 	<br>
 	<%
 		}
-	%><%
+	%>
+	<%
 		if (!(session.getAttribute("statusError").equals(null))) {
 	%>
 	<div align="center">
