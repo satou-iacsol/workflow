@@ -88,7 +88,7 @@ img {
 		if (session.getAttribute("statusError").equals("error")) {
 	%>
 	<div align="center">
-		<font color="red">申請が申請者によって操作されました。<br>新しい申請番号よりもう一度操作をお願いいたします。(取消の場合は表示されなくなります。)
+		<font color="red">申請が申請者によって変更されました。<br>新しい申請番号よりもう一度操作をお願いいたします。(取消の場合は操作不要のため表示されません。)
 		</font>
 	</div>
 	<br>
@@ -96,7 +96,15 @@ img {
 		} else if (session.getAttribute("statusError").equals("修正")) {
 	%>
 	<div align="center">
-		<font color="red">申請が申請者によって<%=session.getAttribute("statusError")%>されました。<br>新しい申請番号よりもう一度操作をお願いいたします。
+		<font color="red">申請が申請者によって修正されました。<br>新しい申請番号よりもう一度操作をお願いいたします。
+		</font>
+	</div>
+	<br>
+	<%
+		} else if (session.getAttribute("statusError").equals("修正２")) {
+	%>
+	<div align="center">
+		<font color="red">申請が申請者によって修正されました。<br>同一の申請番号よりもう一度操作をお願いいたします。
 		</font>
 	</div>
 	<br>

@@ -37,6 +37,14 @@ public class Approve extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		String number = (String) session.getAttribute("approvedNumber");
+		String type = (String) session.getAttribute("approvedType");
+		String date_1 = (String) session.getAttribute("approvedDate_1");
+		String date_2 = (String) session.getAttribute("approvedDate_2");
+		String date_3 = (String) session.getAttribute("approvedDate_3");
+		String date_4 = (String) session.getAttribute("approvedDate_4");
+		String reason = (String) session.getAttribute("approvedReason");
+		String address = (String) session.getAttribute("approvedAddress");
+		String remarks = (String) session.getAttribute("approvedRemarks");
 
 		// データベース・テーブルに接続する準備
 		Connection con = null;
@@ -65,6 +73,15 @@ public class Approve extends HttpServlet {
 			while (resultData.next()) {
 				if (resultData.getString("number").equals(number)) {
 					status = resultData.getString("status");
+					if (!(type.equals(resultData.getString("type"))) || !(date_1.equals(resultData.getString("date_1")))
+							|| !(date_2.equals(resultData.getString("date_2")))
+							|| !(date_3.equals(resultData.getString("date_3")))
+							|| !(date_4.equals(resultData.getString("date_4")))
+							|| !(reason.equals(resultData.getString("comment")))
+							|| !(address.equals(resultData.getString("tellnumber")))
+							|| !(remarks.equals(resultData.getString("bikou")))) {
+						status = "修正２";
+					}
 					break;
 				}
 			}
