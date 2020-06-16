@@ -13,7 +13,6 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 <head>
 <meta charset="UTF-8">
 <title>申請画面</title>
-<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="shinsei.css">
 </head>
 <body>
@@ -96,6 +95,8 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 		response.sendRedirect("login.jsp");
 	}
 	%>
+	<script src="jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="logout.js"></script>
 	 <script type="text/javascript">
       $(document).ready(function(){
           var dColor = '#999999';    //ヒント（初期値）の文字色
@@ -194,6 +195,5 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 	     }
 
       </script>
-   		<script type="text/javascript" src="logout.js"></script>
 </body>
 </html>
