@@ -9,7 +9,6 @@ request.setCharacterEncoding("UTF8");
 final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
 @SuppressWarnings("unchecked")
 ArrayList<ArrayList<String>> lists = (ArrayList<ArrayList<String>>) session.getAttribute("lists");
-
 %>
 
 <!DOCTYPE html>

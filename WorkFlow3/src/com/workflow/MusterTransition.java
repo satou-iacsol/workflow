@@ -73,12 +73,12 @@ public class MusterTransition extends HttpServlet {
 
 			while (resultEmployee.next()) {
 				ArrayList<String> list = new ArrayList<>();
-				list.add((String) resultEmployee.getString("id"));
-				list.add((String) resultEmployee.getString("pass"));
-				list.add((String) resultEmployee.getString("authority"));
-				list.add((String) resultEmployee.getString("fullname"));
-				list.add((String) resultEmployee.getString("affiliationcode"));
-				list.add((String) resultEmployee.getString("username"));
+				list.add(resultEmployee.getString("id"));
+				list.add(resultEmployee.getString("pass"));
+				list.add(resultEmployee.getString("authority"));
+				list.add(resultEmployee.getString("fullname"));
+				list.add(resultEmployee.getString("affiliationcode"));
+				list.add(resultEmployee.getString("username"));
 				lists.add(list);
 			}
 
