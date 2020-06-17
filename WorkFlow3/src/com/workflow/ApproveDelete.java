@@ -75,7 +75,7 @@ public class ApproveDelete extends HttpServlet {
 			}
 
 			// ステータスが空白以外だと承認者が編集済
-			if (status.equals("")) {
+			if (status.equals("") || status.equals("差戻")) {
 				// SELECT文の作成・実行
 				stmtData1 = con.createStatement();
 				String sqlData1 = "SELECT * from data";
