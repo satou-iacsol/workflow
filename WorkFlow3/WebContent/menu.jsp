@@ -19,17 +19,18 @@ String authority = (String) session.getAttribute("authority");
 
 <body>
 	<header>
-		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg" alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg"
+			alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
-		onsubmit="return logout()">
-		<div align="right">
-			<div class="header_right">
-				<%=session.getAttribute("affiliationName") %>・
-				<%=session.getAttribute("fullname")%>
-				<input class="logoutbutton" type="submit" value="ログアウト">
+			onsubmit="return logout()">
+			<div align="right">
+				<div class="header_right">
+					<%=session.getAttribute("affiliationName")%>・
+					<%=session.getAttribute("fullname")%>
+					<input class="logoutbutton" type="submit" value="ログアウト">
+				</div>
 			</div>
-		</div>
-	</form>
+		</form>
 	</header>
 
 	<%
@@ -40,26 +41,44 @@ String authority = (String) session.getAttribute("authority");
 	%>
 	<br>
 
-	<div class="h1"><h1>有給休暇取得申請システム メニュー画面</h1></div>
+	<div class="h1">
+		<h1>有給休暇取得申請システム メニュー画面</h1>
+	</div>
 	<div class="content">
-		<br>
+		<div class="block">
+			<br>
 			<div class="hoge">
-				<input type="button" class="subbtn" onclick="location.href='./shinsei.jsp'" value="申請画面">
+				<input type="button" class="subbtn"
+					onclick="location.href='./shinsei.jsp'" value="申請画面">
 			</div>
 
-		<form action="<%=request.getContextPath()%>/ApproveHistoryPick" method="post">
-			<div class="hoge">
-				<button class="subbtn" type="submit">申請一覧</button>
-			</div>
-		</form>
+			<form action="<%=request.getContextPath()%>/ApproveHistoryPick"
+				method="post">
+				<div class="hoge">
+					<button class="subbtn" type="submit">申請一覧</button>
+				</div>
+			</form>
+			<%
+				if (session.getAttribute("authority").equals("1") || session.getAttribute("authority").equals("2")) {
+			%>
+			<form action="<%=request.getContextPath()%>/ApprovePick"
+				method="post">
+				<div class="hoge">
+					<button class="subbtn" type="submit">承認画面</button>
+				</div>
+			</form>
+			<%
+				}
+			%>
+		</div>
 		<%
-			if (session.getAttribute("authority").equals("1")) {
+			if (session.getAttribute("authority").equals("2")) {
 		%>
-		<form action="<%=request.getContextPath()%>/ApprovePick" method="post">
-			<div class="hoge">
-				<button class="subbtn" type="submit">承認画面</button>
+			<div class="muster">
+				<h2 class="muster_box">マスタメンテ</h2>
+				<input type="button" class="musterEbtn" onclick="location.href='./muster.jsp'" value="社員マスタ">
+				<input type="button" class="musterBbtn" onclick="location.href='./muster.jsp'" value="部署マスタ">
 			</div>
-		</form>
 		<%
 			}
 		%>

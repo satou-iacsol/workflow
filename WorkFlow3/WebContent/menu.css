@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-@import url(default.css);
 
 body {
 	background-color: #fafafa;
@@ -16,7 +15,7 @@ header {
 	background: -webkit-linear-gradient(to top, #5B86E5, #36D1DC);
 	/* Chrome 10-25, Safari 5.1-6 */
 	background: linear-gradient(to top, #5B86E5, #36D1DC);
-		/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 img {
@@ -27,7 +26,8 @@ img {
 	left: 0;
 	transform: translateY(-50%);
 }
-.header_right{
+
+.header_right {
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
@@ -38,26 +38,26 @@ img {
 .content {
 	background-color: #fff;
 	width: 600px;
-	margin: 30px auto;
+	height: 250px; margin : 30px auto;
 	border: 1px solid #d1d1d1;
 	padding: 30px;
+	margin: 30px auto;
 }
 
 h1 {
 	margin-top: 50px;
-	margin-bottom:0;
-	padding:0;
+	margin-bottom: 0;
+	padding: 0;
 	font-size: 24px;
 	font-weight: normal;
 	text-align: center;
 }
 
 .hoge {
-	margin-left: 80px;
-	margin-bottom: 20px;
+	margin: 0 0 20px 80px;
 }
 
-.subbtn {
+.subbtn, .musterEbtn, .musterBbtn {
 	width: 75px;
 	height: 35px;
 	display: inline-block;
@@ -74,7 +74,7 @@ h1 {
 	border: 2px solid #000066; /* 枠の指定 */
 }
 
-.subbtn:hover {
+.subbtn:hover, .musterEbtn:hover, .musterBbtn:hover {
 	box-shadow: none; /* カーソル時の影消去 */
 	color: #000066; /* 背景色     */
 	background: #ffffff; /* 文字色     */
@@ -82,4 +82,47 @@ h1 {
 
 .foo {
 	margin-top: 100px;
+}
+
+.block {
+	float: left;
+}
+
+.muster {
+	float: creal;
+	margin: 20.8px 30px 0 250px;
+	border: 1px solid;
+	border-radius: 25px;
+	padding: 70px;
+	box-shadow:5px 5px;
+}
+
+.musterEbtn {
+	position: relative;
+	top: -60px;
+	left: -50px;
+	width: 100px;
+	height: 100px;
+	float: left;
+}
+
+.musterBbtn {
+	position: relative;
+	top: -160px;
+	left: 70px;
+	width: 100px;
+	height: 100px;
+	float: left;
+}
+
+.muster .muster_box {
+	position: relative;
+	top: -80px;
+	margin: 0 0 0 0;
+	font-size: 1em;
+	padding: 0 1em;
+	border-radius: 25px;
+	background-color: pink;
+	box-shadow: 5px 5px;
+	text-shadow: 1px 2px 3px #808080;
 }

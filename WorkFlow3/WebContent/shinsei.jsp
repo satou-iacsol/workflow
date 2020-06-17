@@ -86,6 +86,7 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 				<option value="1">1(有)</option>
 			</select> <br> <br>
 
+
 		</form>
 		<button type="submit" form="Confirmation">確認</button>
 		<button onclick="history.back()">キャンセル</button>
