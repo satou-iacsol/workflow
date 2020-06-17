@@ -107,7 +107,7 @@ public class SendSlack extends HttpServlet {
 
 			if (approve1notification.equals("1")) {
 
-				userName = userName_pick((String) session.getAttribute("approverName_1"));
+				userName = userName_pick((String) session.getAttribute("approverNumber_1"));
 
 				sendSlack(userName, message);
 
@@ -115,7 +115,7 @@ public class SendSlack extends HttpServlet {
 
 			if (approve2notification.equals("1")) {
 
-				userName = userName_pick((String) session.getAttribute("approverName_2"));
+				userName = userName_pick((String) session.getAttribute("approverNumber_2"));
 
 				sendSlack(userName, message);
 
