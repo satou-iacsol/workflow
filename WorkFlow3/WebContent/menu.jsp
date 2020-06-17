@@ -74,14 +74,19 @@ String authority = (String) session.getAttribute("authority");
 		<%
 			if (session.getAttribute("authority").equals("2")) {
 		%>
+		<form action="<%=request.getContextPath()%>/MusterGet" method="post">
 			<div class="muster">
 				<h2 class="muster_box">マスタメンテ</h2>
-				<input type="button" class="musterEbtn" onclick="location.href='./muster.jsp'" value="社員マスタ">
-				<input type="button" class="musterBbtn" onclick="location.href='./muster.jsp'" value="部署マスタ">
+				<input type="button" class="musterEbtn"
+					onclick="location.href='./muster.jsp'" value="社員マスタ"> <input
+					type="button" class="musterBbtn"
+					onclick="location.href='./muster.jsp'" value="部署マスタ">
 			</div>
-		<%
-			}
-		%>
+		</form>
+			<%
+				}
+			%>
+
 	</div>
 	<%
 		} catch (Exception e) {
