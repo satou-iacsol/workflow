@@ -67,19 +67,20 @@ public class Approve extends HttpServlet {
 
 			// SELECT文の作成・実行
 			stmtData = con.createStatement();
-			String sqlData = "SELECT * from employee_muster for update nowait";
+			String sqlData = "SELECT * from data for update nowait";
 			resultData = stmtData.executeQuery(sqlData);
 
 			while (resultData.next()) {
 				if (resultData.getString("number").equals(number)) {
-					status = resultData.getString("status");
-					if (!(type.equals(resultData.getString("type"))) || !(date_1.equals(resultData.getString("date_1")))
-							|| !(date_2.equals(resultData.getString("date_2")))
-							|| !(date_3.equals(resultData.getString("date_3")))
-							|| !(date_4.equals(resultData.getString("date_4")))
-							|| !(reason.equals(resultData.getString("comment")))
-							|| !(address.equals(resultData.getString("tellnumber")))
-							|| !(remarks.equals(resultData.getString("bikou")))) {
+					if (type.equals(resultData.getString("type")) && date_1.equals(resultData.getString("date_1"))
+							&& date_2.equals(resultData.getString("date_2"))
+							&& date_3.equals(resultData.getString("date_3"))
+							&& date_4.equals(resultData.getString("date_4"))
+							&& reason.equals(resultData.getString("comment"))
+							&& address.equals(resultData.getString("tellnumber"))
+							&& remarks.equals(resultData.getString("bikou"))) {
+						status = resultData.getString("status");
+					} else {
 						status = "修正２";
 					}
 					break;
@@ -117,6 +118,13 @@ public class Approve extends HttpServlet {
 						pstmtNextData.setString(3, number);
 
 						sendAction = (String) session.getAttribute("approvedAction");
+
+						try {
+							pstmtNextData.executeUpdate();
+						} catch (Exception e) {
+							session.setAttribute("statusError", "error");
+							response.sendRedirect("approveChoose.jsp");
+						}
 					}
 				} else if (((String) session.getAttribute("approvedAction")).equals("差戻")) {
 					if (((String) session.getAttribute("id")).equals((String) session.getAttribute("approve1Id"))) {
@@ -133,22 +141,29 @@ public class Approve extends HttpServlet {
 						pstmtNextData.setString(3, number);
 
 						sendAction = (String) session.getAttribute("approvedAction");
+
+						try {
+							pstmtNextData.executeUpdate();
+						} catch (Exception e) {
+							session.setAttribute("statusError", "error");
+							response.sendRedirect("approveChoose.jsp");
+						}
 					}
 				}
 
 				try {
 					pstmtData.executeUpdate();
-					pstmtNextData.executeUpdate();
 					con.commit();
+					session.setAttribute("nextNumber", nextNumber);
+					session.setAttribute("sendAction", sendAction);
+					request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
 				} catch (Exception e) {
 					con.rollback();
+					session.setAttribute("statusError", "error");
+					response.sendRedirect("approveChoose.jsp");
 				}
-
-				session.setAttribute("nextNumber", nextNumber);
-				session.setAttribute("sendAction", sendAction);
-				request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
-
 			} else {
+				// ステータスが空白でなかった場合、排他を閉じるためコミット
 				con.commit();
 				session.setAttribute("statusError", status);
 				response.sendRedirect("approveChoose.jsp");

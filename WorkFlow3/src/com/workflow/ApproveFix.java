@@ -88,13 +88,6 @@ public class ApproveFix extends HttpServlet {
 							pstmtData.setString(1, "修正");
 							// 更新する申請番号
 							pstmtData.setString(2, historyList.get(1));
-
-							try {
-								pstmtData.executeUpdate();
-								con.commit();
-							} catch (Exception e) {
-								con.rollback();
-							}
 						}
 					}
 					break;
@@ -122,10 +115,13 @@ public class ApproveFix extends HttpServlet {
 					pstmtNextData.setString(13, historyList.get(1));
 
 					try {
+						pstmtData.executeUpdate();
 						pstmtNextData.executeUpdate();
 						con.commit();
 					} catch (Exception e) {
 						con.rollback();
+						session.setAttribute("statusError", "error");
+						response.sendRedirect("approveHistoryChoose.jsp");
 					}
 
 					String approve1notification = "0";
@@ -166,19 +162,22 @@ public class ApproveFix extends HttpServlet {
 					pstmtNextData.setString(12, historyList.get(1));
 
 					try {
+						pstmtData.executeUpdate();
 						pstmtNextData.executeUpdate();
 						con.commit();
 					} catch (Exception e) {
 						con.rollback();
+						session.setAttribute("statusError", "error");
+						response.sendRedirect("approveHistoryChoose.jsp");
 					}
 					response.sendRedirect("menu.jsp");
 				}
 			} else {
+				// ステータスが空白でなかった場合、排他を閉じるためコミット
 				con.commit();
 				session.setAttribute("statusError", status);
-				response.sendRedirect("approveChoose.jsp");
+				response.sendRedirect("approveHistoryChoose.jsp");
 			}
-
 		} catch (SQLException e) {
 			session.setAttribute("statusError", "error");
 			response.sendRedirect("approveHistoryChoose.jsp");

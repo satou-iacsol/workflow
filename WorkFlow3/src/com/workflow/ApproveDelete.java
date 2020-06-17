@@ -143,9 +143,10 @@ public class ApproveDelete extends HttpServlet {
 					request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
 				}
 			} else {
+				// ステータスが空白でなかった場合、排他を閉じるためコミット
 				con.commit();
 				session.setAttribute("statusError", status);
-				response.sendRedirect("approveChoose.jsp");
+				response.sendRedirect("approveHistoryChoose.jsp");
 			}
 
 		} catch (SQLException e) {
