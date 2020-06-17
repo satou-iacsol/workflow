@@ -78,7 +78,7 @@ public class ApproveDelete extends HttpServlet {
 			if (status.equals("")) {
 				// SELECT文の作成・実行
 				stmtData1 = con.createStatement();
-				String sqlData1 = "SELECT * from data for";
+				String sqlData1 = "SELECT * from data";
 				resultData1 = stmtData1.executeQuery(sqlData1);
 
 				while (resultData1.next()) {
