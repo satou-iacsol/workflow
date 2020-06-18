@@ -53,7 +53,7 @@ img {
 </head>
 <body>
 	<header>
-		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg"
+		<img src="./imge/apple-touch-icon-120x120.png"
 			alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
 	</header>
 	<br>
