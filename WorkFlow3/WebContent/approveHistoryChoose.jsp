@@ -19,6 +19,7 @@
 <head>
 <meta charset="UTF-8"></meta>
 <title>有給休暇取得申請システム</title>
+<link rel="icon" href="./imge/favicon.ico">
 <style>
 .table {
 	border-collapse: collapse;
@@ -64,7 +65,7 @@ img {
 </head>
 <body>
 	<header>
-		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg"
+		<img src="./imge/apple-touch-icon-120x120.png"
 			alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
 			onsubmit="return logout()">

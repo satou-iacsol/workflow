@@ -12,11 +12,12 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 <head>
 <meta charset="UTF-8">
 <title>確認画面</title>
+<link rel="icon" href="./imge/favicon.ico">
 <link rel="stylesheet" href="shinsei.css">
 </head>
 <body>
 	<header>
-		<img src="https://www.homepage-tukurikata.com/image/hanikami.jpg" alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<img src="./imge/apple-touch-icon-120x120.png" alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
 		onsubmit="return logout()">
 		<div align="right">
