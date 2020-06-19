@@ -23,18 +23,19 @@ import javax.servlet.http.HttpSession;
 public class MusterTransition extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public MusterTransition() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public MusterTransition() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
@@ -42,35 +43,30 @@ public class MusterTransition extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		HttpSession session = request.getSession();
-
 		// データベース・テーブルに接続する準備
 		Connection con = null;
 		PreparedStatement ps = null;
 		Statement stmtEmployee = null;
 		ResultSet resultEmployee = null;
-
 		// 接続文字列の設定
 		String url = Keyword.url();
 		String user = Keyword.user();
 		String password = Keyword.password();
-
 		//作業用
 		ArrayList<ArrayList<String>> lists = new ArrayList<>();
-
 		try {
 			// PostgreSQLに接続
 			con = DriverManager.getConnection(url, user, password);
 			con.setAutoCommit(false);
-
 			//SELECT文の実行
 			stmtEmployee = con.createStatement();
 			String sqlEmployee = "SELECT * from employee_muster";
 			resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
-
 			while (resultEmployee.next()) {
 				ArrayList<String> list = new ArrayList<>();
 				list.add(resultEmployee.getString("id"));
@@ -81,7 +77,6 @@ public class MusterTransition extends HttpServlet {
 				list.add(resultEmployee.getString("username"));
 				lists.add(list);
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -103,7 +98,6 @@ public class MusterTransition extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-
 		session.setAttribute("test", "test");
 		session.setAttribute("lists", lists);
 		response.sendRedirect("muster.jsp");
