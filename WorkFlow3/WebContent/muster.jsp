@@ -26,7 +26,6 @@ String affiliationcode_M = (String)session.getAttribute("affiliationcode_M");
 <link rel="stylesheet" href="menu.css">
 </head>
 <body>
-	<%=session.getAttribute("fullname_M") %>
 	<%=session.getAttribute("test") %>
 	<h1 class="h1">社員マスタメンテナンス</h1>
 	<div class="content">
@@ -50,7 +49,7 @@ String affiliationcode_M = (String)session.getAttribute("affiliationcode_M");
 					<%if(id_M != null){ %>value=<%=id_M %><%} %>>
 				</div>
 				<div class="fullname">
-					氏　　　名：<input type="text" id="nameF" name="nameF" value=fullname_M
+					氏　　　名：<input type="text" id="nameF" name="nameF"
 					<%if(fullname_M != null){ %>value=<%=fullname_M %><%} %>>
 				</div>
 				<div class="password">
@@ -75,6 +74,7 @@ String affiliationcode_M = (String)session.getAttribute("affiliationcode_M");
 				<input type="submit" name="new" value="新規登録">
 				<input type="submit" name="update" value="更新">
 				<input type="submit" name="delete" value="削除">
+				<button type="submit" name="test" value="test">あああ</button>
 			</div>
 		</form>
 		<button onclick="history.back()">もどる</button>

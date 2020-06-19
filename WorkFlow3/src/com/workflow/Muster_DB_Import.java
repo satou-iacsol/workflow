@@ -50,6 +50,8 @@ public class Muster_DB_Import extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		String select = request.getParameter("select");
+		String submit = request.getParameter("new");
+		String test2 = request.getParameter("test");
 		ArrayList<String> emp = new ArrayList<>();
 
 		//データベース・テーブルに接続する準備
@@ -110,7 +112,7 @@ public class Muster_DB_Import extends HttpServlet {
 
 		}
 
-		session.setAttribute("test", select);
+		session.setAttribute("test", test2);
 		session.setAttribute("fullname_M", emp.get(0));
 		session.setAttribute("id_M", emp.get(1));
 		session.setAttribute("pass_M", emp.get(2));
