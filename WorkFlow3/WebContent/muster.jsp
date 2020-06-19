@@ -26,7 +26,6 @@ String affiliationcode_M = (String)session.getAttribute("affiliationcode_M");
 <link rel="stylesheet" href="menu.css">
 </head>
 <body>
-	<%=session.getAttribute("test") %>
 	<h1 class="h1">社員マスタメンテナンス</h1>
 	<div class="content">
 		<div class="selectionE">
@@ -38,11 +37,11 @@ String affiliationcode_M = (String)session.getAttribute("affiliationcode_M");
 
 				<%} %>
 			</select>
-			<button type="submit">決定</button>
+			<button type="submit" name="submitbtn" value="determination">決定</button>
 			</form>
 			<p class="warnning_note">※新規登録の場合は未選択のまま、下記項目へ入力してください</p>
 		</div>
-		<form action="#" method="post">
+		<form action="Muster_DB_Import" method="post">
 			<div class="item">
 				<div class="employee_number">
 					社員番号　：<input type="text" id="numberE" name="numberE"
@@ -71,19 +70,12 @@ String affiliationcode_M = (String)session.getAttribute("affiliationcode_M");
 				</div>
 			</div>
 			<div class="button">
-				<input type="submit" name="new" value="新規登録">
-				<input type="submit" name="update" value="更新">
-				<input type="submit" name="delete" value="削除">
-				<button type="submit" name="test" value="test">あああ</button>
+				<button type="submit" name="submitbtn" value="new">新規登録</button>
+				<button type="submit" name="submitbtn" value="update">更新</button>
+				<button type="submit" name="submitbtn" value="delete">削除</button>
 			</div>
 		</form>
-		<button onclick="history.back()">もどる</button>
+		<button onclick="location.href='menu.jsp'">もどる</button>
 	</div>
-	<script src="jquery-3.5.1.min.js"></script>
-	<script>
-		$(document).on('change','.select',function(){
-
-		});
-	</script>
 </body>
 </html>

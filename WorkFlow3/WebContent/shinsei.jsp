@@ -90,7 +90,7 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 
 		</form>
 		<button type="submit" form="Confirmation">確認</button>
-		<button onclick="history.back()">キャンセル</button>
+		<button onclick="history.back()">もどる</button>
 	</div>
 	<%
 		} catch (Exception e) {
