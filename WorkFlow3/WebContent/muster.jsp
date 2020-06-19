@@ -9,6 +9,13 @@ request.setCharacterEncoding("UTF8");
 final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
 @SuppressWarnings("unchecked")
 ArrayList<ArrayList<String>> lists = (ArrayList<ArrayList<String>>) session.getAttribute("lists");
+String fullname_M = (String)session.getAttribute("fullname_M");
+String id_M = (String)session.getAttribute("id_M");
+String pass_M = (String)session.getAttribute("pass_M");
+String authority_M = (String)session.getAttribute("authority_M");
+String username_M = (String)session.getAttribute("username_M");
+String affiliationcode_M = (String)session.getAttribute("affiliationcode_M");
+
 %>
 
 <!DOCTYPE html>
@@ -19,36 +26,42 @@ ArrayList<ArrayList<String>> lists = (ArrayList<ArrayList<String>>) session.getA
 <link rel="stylesheet" href="menu.css">
 </head>
 <body>
+	<%=session.getAttribute("fullname_M") %>
+	<%=session.getAttribute("test") %>
 	<h1 class="h1">社員マスタメンテナンス</h1>
 	<div class="content">
 		<div class="selectionE">
-			社員選択：<select class="select">
+			<form action="Muster_DB_Import" method="post">
+			社員選択：<select class="select" name="select">
 				<option value="">--- 更新・削除する場合は選択してください ---</option>
 				<% for(int i = 0;i < lists.size();i++){ %>
 					<option value=""><%=lists.get(i).get(3) %></option>
 
 				<%} %>
 			</select>
+			<button type="submit">決定</button>
+			</form>
 			<p class="warnning_note">※新規登録の場合は未選択のまま、下記項目へ入力してください</p>
 		</div>
 		<form action="#" method="post">
 			<div class="item">
 				<div class="employee_number">
-					社員番号　：<input type="text" id="numberE" name="numberE">
+					社員番号　：<input type="text" id="numberE" name="numberE"
+					<%if(id_M != null){ %>value=id_M<%} %>>
 				</div>
-				<div class="employee_number">
-					氏　　　名：<input type="text" id="nameF" name="nameF">
+				<div class="fullname">
+					氏　　　名：<input type="text" id="nameF" name="nameF" value=fullname_M>
 				</div>
-				<div class="employee_number">
+				<div class="password">
 					パスワード：<input type="text" id="password" name="password">
 				</div>
-				<div class="employee_number">
+				<div class="approval">
 					承認権限　：<input type="text" id="approvalP" name="approvalP">
 				</div>
-				<div class="employee_number">
+				<div class="affiliation">
 					所属コード：<input type="text" id="affiliationC" name="affiliationC">
 				</div>
-				<div class="employee_number">
+				<div class="user_name">
 					ユーザー名：<input type="text" id="userN" name="userN">
 					<p class="slack_name">(slack)</p>
 				</div>
@@ -61,5 +74,11 @@ ArrayList<ArrayList<String>> lists = (ArrayList<ArrayList<String>>) session.getA
 		</form>
 		<button onclick="history.back()">もどる</button>
 	</div>
+	<script src="jquery-3.5.1.min.js"></script>
+	<script>
+		$(document).on('change','.select',function(){
+
+		});
+	</script>
 </body>
 </html>
