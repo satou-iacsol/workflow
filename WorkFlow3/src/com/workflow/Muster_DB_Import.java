@@ -74,10 +74,10 @@ public class Muster_DB_Import extends HttpServlet {
 			resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
 
 			while (resultEmployee.next()) {
+				String ver = resultEmployee.getString("fullname");
 
-				emp.add(resultEmployee.getString("fullname"));
-
-				if (emp.get(0).equals(select)) {
+				if (ver.equals(select)) {
+					emp.add(resultEmployee.getString("fullname"));
 					emp.add(resultEmployee.getString("id"));
 					emp.add(resultEmployee.getString("pass"));
 					emp.add(resultEmployee.getString("authority"));
