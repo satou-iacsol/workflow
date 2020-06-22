@@ -17,13 +17,15 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/pleiades/eclipse/plugins/javax.mail_1.4.0.v201005080615.jar"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/akashi-iacsol/git/workflow/WorkFlow3/WebContent/WEB-INF/lib/slacklet-1.0.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Yusuke/git/workflow/WorkFlow3/WebContent/WEB-INF/lib/postgresql-42.2.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Yusuke/git/workflow/WorkFlow3/WebContent/WEB-INF/lib/slacklet-1.0.4.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
