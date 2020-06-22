@@ -14,6 +14,7 @@ String pass_M = (String)session.getAttribute("pass_M");
 String authority_M = (String)session.getAttribute("authority_M");
 String username_M = (String)session.getAttribute("username_M");
 String affiliationcode_M = (String)session.getAttribute("affiliationcode_M");
+String flag_M = (String)session.getAttribute("flag_M");
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -27,20 +28,20 @@ String affiliationcode_M = (String)session.getAttribute("affiliationcode_M");
 	<div class="content">
 		<div class="selectionE">
 			<form action="Muster_DB_Import" method="post">
-			社員選択：<select class="select" name="select">
+			社員選択：<select class="select" name="select" id="select">
 				<option value="">--- 更新・削除する場合は選択してください ---</option>
 				<% for(int i = 0;i < lists.size();i++){ %>
 					<option value=<%=lists.get(i).get(3)%>><%=lists.get(i).get(3) %></option>
 				<%} %>
 			</select>
-			<button type="submit" name="submitbtn" value="determination">決定</button>
+			<button type="submit" id="submitbtn" name="submitbtn" value="determination">決定</button>
 			</form>
 			<p class="warnning_note">※新規登録の場合は未選択のまま、下記項目へ入力してください</p>
 		</div>
 		<form action="Muster_DB_Import" method="post">
 			<div class="item">
 				<div class="employee_number">
-					社員番号　：<input type="text" id="numberE" name="numberE"
+					社員番号　：<input type="text" id="numberE" name="numberE" <%if(flag_M.equals("1")){ %>disabled<%} %>
 					<%if(id_M != null){ %>value=<%=id_M %><%} %>>
 				</div>
 				<div class="fullname">
@@ -71,7 +72,19 @@ String affiliationcode_M = (String)session.getAttribute("affiliationcode_M");
 				<button type="submit" name="submitbtn" value="delete">削除</button>
 			</div>
 		</form>
+		<form action="DownloadCSV" method="post">
+			<div class="button">
+				<button type="submit"  name="buttonCSV" value="employeeCSV" onClick="downloadCSV.submit();">.csvダウンロード</button>
+			</div>
+		</form>
+
 		<button onclick="location.href='menu.jsp'">もどる</button>
 	</div>
+	<script src="jquery-3.5.1.min.js"></script>
+	<script>
+		$(document).on('click','#submitbtn',function(){
+			$("#numberE").attr("disabled","disabled");
+		})
+	</script>
 </body>
 </html>

@@ -58,6 +58,7 @@ public class Muster_DB_Import extends HttpServlet {
 		String approvalP = request.getParameter("approvalP");
 		String affiliationC = request.getParameter("affiliationC");
 		String userN = request.getParameter("userN");
+		String sel = request.getParameter("select");
 		ArrayList<String> emp = new ArrayList<>();
 		//データベース・テーブルに接続する準備
 		Connection con = null;
@@ -68,6 +69,12 @@ public class Muster_DB_Import extends HttpServlet {
 		String url = Keyword.url();
 		String user = Keyword.user();
 		String password = Keyword.password();
+
+		//名前一覧出力用
+		ArrayList<ArrayList<String>> lists = new ArrayList<>();
+		//flag用
+		String flag_M = "";
+
 		try {
 			//PostgreSQLに接続
 			con = DriverManager.getConnection(url, user, password);
@@ -90,6 +97,7 @@ public class Muster_DB_Import extends HttpServlet {
 						break;
 					}
 				}
+				flag_M = "1";
 			}
 			//★新規登録ボタン押下時の処理★
 			if (submitbtn.equals("new")) {
@@ -110,9 +118,46 @@ public class Muster_DB_Import extends HttpServlet {
 			}
 			//★更新ボタン押下時の処理★
 			if (submitbtn.equals("update")) {
+				//SQL文
+				String sql = "UPDATE employee_muster SET pass=?, authority=?, fullname=?, affiliationcode=?, username=? WHERE id=?";
+				ps = con.prepareStatement(sql);
+				ps.setString(1, pass);
+				ps.setString(2, approvalP);
+				ps.setString(3, nameF);
+				ps.setString(4, affiliationC);
+				ps.setString(5, userN);
+				ps.setString(6, numberE);
+				//UPDATE文を実行
+				ps.executeUpdate();
+				//コミット
+				con.commit();
+
 			}
 			//★削除ボタン押下時の処理★
 			if (submitbtn.equals("delete")) {
+				//SQL文
+				String sql = "DELETE FROM employee_muster WHERE id = ?";
+				ps = con.prepareStatement(sql);
+				ps.setString(1, numberE);
+				//DELETE文を実行
+				ps.executeUpdate();
+				//コミット
+				con.commit();
+			}
+
+			//名前一覧出力用
+			stmtEmployee = con.createStatement();
+			String sqlEmployee = "SELECT * from employee_muster";
+			resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
+			while (resultEmployee.next()) {
+				ArrayList<String> list = new ArrayList<>();
+				list.add(resultEmployee.getString("id"));
+				list.add(resultEmployee.getString("pass"));
+				list.add(resultEmployee.getString("authority"));
+				list.add(resultEmployee.getString("fullname"));
+				list.add(resultEmployee.getString("affiliationcode"));
+				list.add(resultEmployee.getString("username"));
+				lists.add(list);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -142,7 +187,18 @@ public class Muster_DB_Import extends HttpServlet {
 			session.setAttribute("authority_M", emp.get(3));
 			session.setAttribute("affiliationcode_M", emp.get(4));
 			session.setAttribute("username_M", emp.get(5));
+			session.setAttribute("flag_M", flag_M);
 		}
+		if(submitbtn.equals("update")) {
+			session.setAttribute("fullname_M", nameF);
+			session.setAttribute("id_M", numberE);
+			session.setAttribute("pass_M", pass);
+			session.setAttribute("authority_M", approvalP);
+			session.setAttribute("affiliationcode_M", affiliationC);
+			session.setAttribute("username_M", userN);
+		}
+		session.setAttribute("lists", lists);
+		session.setAttribute("sel", sel);
 		response.sendRedirect("muster.jsp");
 	}
 }

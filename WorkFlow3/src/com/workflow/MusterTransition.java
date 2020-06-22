@@ -47,6 +47,8 @@ public class MusterTransition extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
+		//flag用
+		String flag_M = "0";
 		HttpSession session = request.getSession();
 		// データベース・テーブルに接続する準備
 		Connection con = null;
@@ -98,8 +100,8 @@ public class MusterTransition extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		session.setAttribute("test", "test");
 		session.setAttribute("lists", lists);
+		session.setAttribute("flag_M", flag_M);
 		response.sendRedirect("muster.jsp");
 	}
 }
