@@ -42,7 +42,7 @@ public class DownloadCSV extends HttpServlet {
 			nameCSV = "社員マスタ";
 		} else if (request.getParameter("buttonCSV").equals("belongsCSV")) {
 			databaseName = "belongs";
-			nameCSV = "所属マスタ";
+			nameCSV = "部署マスタ";
 		}
 
 		ArrayList<ArrayList<String>> database = new ArrayList<>();
