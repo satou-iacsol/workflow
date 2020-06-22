@@ -110,7 +110,7 @@ public class UploadBelongsCSV extends HttpServlet {
 
 				if (asUploadError) {
 					session.setAttribute("uploadResult", uploadError);
-					response.sendRedirect("muster.jsp");
+					response.sendRedirect("musterApp.jsp");
 				}
 
 				database.add(databaseSub);
@@ -185,6 +185,6 @@ public class UploadBelongsCSV extends HttpServlet {
 			}
 		}
 		session.setAttribute("uploadResult", "csvのアップロードが完了しました。");
-		response.sendRedirect("menu.jsp");
+		response.sendRedirect("musterApp.jsp");
 	}
 }
