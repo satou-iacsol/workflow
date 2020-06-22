@@ -54,7 +54,7 @@ public class UploadBelongsCSV extends HttpServlet {
 		String databaseName = "belongs";
 		String nameCSV = "部署マスタ";
 		LocalDateTime localDateTime = LocalDateTime.now();
-		String dateTime = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_").format(localDateTime);
+		String dateTime = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss_").format(localDateTime);
 
 		Part part = request.getPart("upCSV");
 		part.write(location + dateTime + nameCSV + ".csv");
@@ -110,7 +110,7 @@ public class UploadBelongsCSV extends HttpServlet {
 
 				if (asUploadError) {
 					session.setAttribute("uploadResult", uploadError);
-					response.sendRedirect("muster.jsp");
+					response.sendRedirect("musterApp.jsp");
 				}
 
 				database.add(databaseSub);
@@ -185,6 +185,6 @@ public class UploadBelongsCSV extends HttpServlet {
 			}
 		}
 		session.setAttribute("uploadResult", "csvのアップロードが完了しました。");
-		response.sendRedirect("muster.jsp");
+		response.sendRedirect("musterApp.jsp");
 	}
 }
