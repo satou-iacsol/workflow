@@ -23,7 +23,9 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Yusuke/git/workflow/WorkFlow3/WebContent/WEB-INF/lib/postgresql-42.2.12.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Yusuke/git/workflow/WorkFlow3/WebContent/WEB-INF/lib/slacklet-1.0.4.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/postgresql-42.2.12.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/slacklet-1.0.4.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
