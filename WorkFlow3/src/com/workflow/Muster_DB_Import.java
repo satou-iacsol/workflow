@@ -99,6 +99,10 @@ public class Muster_DB_Import extends HttpServlet {
 				}
 				flag_M = "1";
 			}
+			//★クリアボタン押下時の処理★
+			if(submitbtn.contentEquals("clea")) {
+				flag_M = "0";
+			}
 			//★新規登録ボタン押下時の処理★
 			if (submitbtn.equals("new")) {
 				//SQL文
@@ -189,6 +193,15 @@ public class Muster_DB_Import extends HttpServlet {
 			session.setAttribute("username_M", emp.get(5));
 			session.setAttribute("flag_M", flag_M);
 		}
+		if(submitbtn.equals("clea")) {
+			session.setAttribute("fullname_M", "");
+			session.setAttribute("id_M", "");
+			session.setAttribute("pass_M", "");
+			session.setAttribute("authority_M", "");
+			session.setAttribute("affiliationcode_M", "");
+			session.setAttribute("username_M", "");
+			session.setAttribute("flag_M", flag_M);
+		}
 		if(submitbtn.equals("update")) {
 			session.setAttribute("fullname_M", nameF);
 			session.setAttribute("id_M", numberE);
@@ -199,6 +212,6 @@ public class Muster_DB_Import extends HttpServlet {
 		}
 		session.setAttribute("lists", lists);
 		session.setAttribute("sel", sel);
-		response.sendRedirect("muster.jsp");
+		response.sendRedirect("musterEmp.jsp");
 	}
 }

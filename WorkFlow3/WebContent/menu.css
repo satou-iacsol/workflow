@@ -142,3 +142,6 @@ h1 {
 .button{
 	float: left;
 }
+#deterbtn,#cleabtn{
+	border-radius: 25px;
+}

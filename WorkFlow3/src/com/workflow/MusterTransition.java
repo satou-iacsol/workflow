@@ -102,6 +102,6 @@ public class MusterTransition extends HttpServlet {
 		}
 		session.setAttribute("lists", lists);
 		session.setAttribute("flag_M", flag_M);
-		response.sendRedirect("muster.jsp");
+		response.sendRedirect("musterEmp.jsp");
 	}
 }
