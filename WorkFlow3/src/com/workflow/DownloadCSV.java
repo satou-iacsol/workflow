@@ -37,12 +37,15 @@ public class DownloadCSV extends HttpServlet {
 
 		String databaseName = "";
 		String nameCSV = "";
+		String column = "";
 		if (request.getParameter("buttonCSV").equals("employeeCSV")) {
 			databaseName = "employee_muster";
 			nameCSV = "社員マスタ";
+			column ="社員番号,パスワード,承認権限,氏名,所属コード,ユーザー名\r\n";
 		} else if (request.getParameter("buttonCSV").equals("belongsCSV")) {
 			databaseName = "belongs";
 			nameCSV = "部署マスタ";
+			column ="所属コード,所属,承認者１社員番号,承認者２社員番号\r\n";
 		}
 
 		ArrayList<ArrayList<String>> database = new ArrayList<>();
@@ -96,6 +99,7 @@ public class DownloadCSV extends HttpServlet {
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
 		PrintWriter writer = response.getWriter();
 
+		writer.write(column);
 		for (int i = 0; i < database.size(); i++) {
 			for (int j = 0; j < database.get(i).size(); j++) {
 				if (j == 0) {
