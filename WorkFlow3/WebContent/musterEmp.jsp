@@ -76,18 +76,19 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 				<button type="submit" id="deletebtn" name="submitbtn" value="delete">削除</button>
 			</div>
 		</form>
-		<form action="DownloadCSV" method="post">
-			<div class="button">
-				<button type="submit"  name="buttonCSV" value="employeeCSV" onClick="downloadCSV.submit();">.csvダウンロード</button>
-			</div>
-		</form>
-		<form action="UploadEmployeeCSV" method="post" enctype="multipart/form-data">
-			<div class="button">
-				<input type="file" name="upCSV" /><button type="submit">.csvアップロード</button>
-			</div>
-		</form>
-
-		<button onclick="location.href='menu.jsp'">もどる</button>
+		<div class="csv">
+			<form action="DownloadCSV" method="post">
+				<div class="button">
+					<button type="submit" id="buttonCSV" name="buttonCSV" value="employeeCSV" onClick="downloadCSV.submit();">.csvダウンロード</button>
+				</div>
+			</form>
+			<form action="UploadEmployeeCSV" method="post" enctype="multipart/form-data">
+				<div class="button">
+					<input type="file" id="upFile" name="upCSV" /><button id="csvbtn"type="submit">.csvアップロード</button>
+				</div>
+			</form>
+		</div>
+		<button id="backbtn" onclick="location.href='menu.jsp'">もどる</button>
 	</div>
 	<script src="jquery-3.5.1.min.js"></script>
 	<script>

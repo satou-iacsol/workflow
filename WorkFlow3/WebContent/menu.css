@@ -144,4 +144,26 @@ h1 {
 }
 #deterbtn,#cleabtn{
 	border-radius: 25px;
+
+}
+.csv{
+	position: relative;
+	top: -195px;
+	left: 320px;
+	width: 250px;
+	height: 100px;
+	border: 1px solid #d1d1d1;
+	border-radius: 25px;
+	padding: 20px;
+}
+#buttonCSV,#upFile{
+	margin-bottom: 7px;
+}
+#buttonCSV,#csvbtn{
+	border-radius: 25px;
+}
+#backbtn{
+	position: relative;
+	top: -141px;
+	left: 220px;
 }
