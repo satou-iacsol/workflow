@@ -1,6 +1,7 @@
 package com.workflow;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -140,6 +141,8 @@ public class UploadEmployeeCSV extends HttpServlet {
 
 		if (asUploadError) {
 			session.setAttribute("uploadResult", uploadError);
+			File delete = new File(location + dateTime + nameCSV + ".csv");
+			delete.delete();
 			response.sendRedirect("musterEmp.jsp");
 		}
 		if (!asUploadError) {
