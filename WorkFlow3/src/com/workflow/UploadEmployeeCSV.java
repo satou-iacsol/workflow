@@ -29,7 +29,7 @@ import javax.servlet.http.Part;
  */
 @WebServlet("/UploadEmployeeCSV")
 // location = "" をcsvを保存する場所に変更してください。
-@MultipartConfig(location = "C:/Users/Yusuke/git/workflow/")
+@MultipartConfig(location = "C:\\Users\\seiya_saitou\\Desktop\\ワークフロープロジェクト")
 public class UploadEmployeeCSV extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -44,7 +44,7 @@ public class UploadEmployeeCSV extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// location = "" をcsvを保存する場所に変更してください。
-		String location = "C:/Users/Yusuke/git/workflow/";
+		String location = "C:\\Users\\seiya_saitou\\Desktop\\ワークフロープロジェクト";
 
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");

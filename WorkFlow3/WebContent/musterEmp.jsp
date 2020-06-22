@@ -108,7 +108,7 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 			let aff = document.getElementById("affiliationC").value;
 			let user = document.getElementById("userN").value;
 
-			if(num == "" || name == "" || pass == "" || app == "" || aff == "" || user == ""){
+			if(num == "" || name == "" || pass == "" || app == "" || app != "0" || "1" || "2"|| aff == "" || user == ""){
 				if(num == ""){
 					document.getElementById("employee_number").style.color="red";
 				}else{
@@ -124,7 +124,7 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 				}else{
 					document.getElementById("passWord").style.color="black";
 				}
-				if(app == ""){
+				if(app == "" || app != "0" || "1" || "2"){
 					document.getElementById("approval").style.color="red";
 				}else{
 					document.getElementById("approval").style.color="black";
