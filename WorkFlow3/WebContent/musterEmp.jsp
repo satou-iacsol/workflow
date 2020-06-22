@@ -91,22 +91,28 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 	</div>
 	<script src="jquery-3.5.1.min.js"></script>
 	<script>
+		let num = document.getElementById("numberE").value;
+		let name = document.getElementById("nameF").value;
+		let pass = document.getElementById("password").value;
+		let app = document.getElementById("approvalP").value;
+		let aff = document.getElementById("affiliationC").value;
+		let user = document.getElementById("userN").value;
 		//社員選択にて、社員が選択された時、決定ボタンの背景色をピンクに変更
 		$(document).on('change','#select',function(){
 			$('#deterbtn').css({'background-color':'pink'});
 		});
+		//すべての項目に対して、入力が行われたらクリアボタンを水色に変更
 		$(document).on('change','#numberE,#nameF,#password,#approvalP,#affiliationC,#userN',function(){
 			$('#cleabtn').css({'background-color':'#8BD1FA'});
 		});
+		//社員番号に文字が入力されていたらクリアボタンを水色に変更
+		if(num != ""){
+			console.log("test");
+			document.getElementById('cleabtn').style.backgroundColor="#8BD1FA";
+		}
 
 		//項目が未入力のまま、新規登録ボタンを押下された場合、アラート出力
 		function check(){
-			let num = document.getElementById("numberE").value;
-			let name = document.getElementById("nameF").value;
-			let pass = document.getElementById("password").value;
-			let app = document.getElementById("approvalP").value;
-			let aff = document.getElementById("affiliationC").value;
-			let user = document.getElementById("userN").value;
 
 			if(num == "" || name == "" || pass == "" || app == "" || app != "0" || "1" || "2"|| aff == "" || user == ""){
 				if(num == ""){
