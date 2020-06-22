@@ -54,7 +54,7 @@ public class UploadEmployeeCSV extends HttpServlet {
 		String databaseName = "employee_muster";
 		String nameCSV = "社員マスタ";
 		LocalDateTime localDateTime = LocalDateTime.now();
-		String dateTime = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_").format(localDateTime);
+		String dateTime = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss_").format(localDateTime);
 
 		Part part = request.getPart("upCSV");
 		part.write(location + dateTime + nameCSV + ".csv");
@@ -201,7 +201,7 @@ public class UploadEmployeeCSV extends HttpServlet {
 			}
 		}
 		session.setAttribute("uploadResult", "csvのアップロードが完了しました。");
-		response.sendRedirect("muster.jsp");
+		response.sendRedirect("menu.jsp");
 	}
 
 }
