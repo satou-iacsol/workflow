@@ -1,6 +1,7 @@
 package com.workflow;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -29,7 +30,7 @@ import javax.servlet.http.Part;
  */
 @WebServlet("/UploadBelongsCSV")
 //location = "" をcsvを保存する場所に変更してください。
-@MultipartConfig(location="C:/Users/Yusuke/git/workflow/")
+@MultipartConfig(location = "C:/Users/Yusuke/git/workflow/")
 public class UploadBelongsCSV extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -83,34 +84,29 @@ public class UploadBelongsCSV extends HttpServlet {
 				if (databaseStr[0].length() == 4) {
 					databaseSub.add(databaseStr[0]);
 				} else {
-					uploadError += "所属コードが異常です。/n";
+					uploadError += "所属コードが異常です。\n";
 					asUploadError = true;
 				}
 
 				if (databaseStr[1].length() <= 50) {
 					databaseSub.add(databaseStr[1]);
 				} else {
-					uploadError += "所属が異常です。/n";
+					uploadError += "所属が異常です。\n";
 					asUploadError = true;
 				}
 
 				if (databaseStr[2].length() == 4) {
 					databaseSub.add(databaseStr[2]);
 				} else {
-					uploadError += "承認者１社員番号が異常です。/n";
+					uploadError += "承認者１社員番号が異常です。\n";
 					asUploadError = true;
 				}
 
 				if (databaseStr[3].length() == 4) {
 					databaseSub.add(databaseStr[3]);
 				} else {
-					uploadError += "承認者２社員番号が異常です。/n";
+					uploadError += "承認者２社員番号が異常です。\n";
 					asUploadError = true;
-				}
-
-				if (asUploadError) {
-					session.setAttribute("uploadResult", uploadError);
-					response.sendRedirect("musterApp.jsp");
 				}
 
 				database.add(databaseSub);
@@ -129,62 +125,74 @@ public class UploadBelongsCSV extends HttpServlet {
 			}
 		}
 
-		// データベース・テーブルに接続する準備
-		Connection con = null;
-		Statement stmt = null;
-		PreparedStatement pstmt = null;
+		if (asUploadError) {
+			session.setAttribute("uploadResult", uploadError);
+			File delete = new File(location + dateTime + nameCSV + ".csv");
+			delete.delete();
+			response.sendRedirect("musterEmp.jsp");
+		}
+		if (!asUploadError) {
+			// データベース・テーブルに接続する準備
+			Connection con = null;
+			Statement stmt = null;
+			PreparedStatement pstmt = null;
 
-		// 接続文字列の設定
-		String url = Keyword.url();
-		String user = Keyword.user();
-		String password = Keyword.password();
+			// 接続文字列の設定
+			String url = Keyword.url();
+			String user = Keyword.user();
+			String password = Keyword.password();
 
-		try {
-			// PostgreSQLに接続
-			con = DriverManager.getConnection(url, user, password);
-			con.setAutoCommit(false);
-
-			// TRUNCATE文の作成・実行
-			stmt = con.createStatement();
-			String sql = "TRUNCATE TABLE " + databaseName;
-			stmt.executeUpdate(sql);
-
-			for (int i = 0; i < database.size(); i++) {
-				//実行するSQL文とパラメータを指定する
-				String psql = "INSERT INTO " + databaseName + " values(?,?,?,?)";
-
-				pstmt = con.prepareStatement(psql);
-				pstmt.setString(1, database.get(i).get(0));
-				pstmt.setString(2, database.get(i).get(1));
-				pstmt.setString(3, database.get(i).get(2));
-				pstmt.setString(4, database.get(i).get(3));
-
-				//INSERT文を実行
-				pstmt.executeUpdate();
-			}
-
-			//コミット
-			con.commit();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			// クローズ処理
 			try {
-				if (stmt != null) {
-					stmt.close();
+				// PostgreSQLに接続
+				con = DriverManager.getConnection(url, user, password);
+				con.setAutoCommit(false);
+
+				// TRUNCATE文の作成・実行
+				stmt = con.createStatement();
+				String sql = "TRUNCATE TABLE " + databaseName;
+				stmt.executeUpdate(sql);
+
+				for (int i = 0; i < database.size(); i++) {
+					//実行するSQL文とパラメータを指定する
+					String psql = "INSERT INTO " + databaseName + " values(?,?,?,?)";
+
+					pstmt = con.prepareStatement(psql);
+					pstmt.setString(1, database.get(i).get(0));
+					pstmt.setString(2, database.get(i).get(1));
+					pstmt.setString(3, database.get(i).get(2));
+					pstmt.setString(4, database.get(i).get(3));
+
+					//INSERT文を実行
+					pstmt.executeUpdate();
 				}
-				if (pstmt != null) {
-					pstmt.close();
+
+				//コミット
+				try {
+					con.commit();
+				} catch (Exception e) {
+					con.rollback();
 				}
-				if (con != null) {
-					con.close();
-				}
+
 			} catch (SQLException e) {
 				e.printStackTrace();
+			} finally {
+				// クローズ処理
+				try {
+					if (stmt != null) {
+						stmt.close();
+					}
+					if (pstmt != null) {
+						pstmt.close();
+					}
+					if (con != null) {
+						con.close();
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
+			session.setAttribute("uploadResult", "csvのアップロードが完了しました。");
+			response.sendRedirect("musterApp.jsp");
 		}
-		session.setAttribute("uploadResult", "csvのアップロードが完了しました。");
-		response.sendRedirect("musterApp.jsp");
 	}
 }
