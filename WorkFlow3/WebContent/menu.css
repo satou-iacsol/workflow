@@ -101,18 +101,20 @@ h1 {
 	position: relative;
 	top: -60px;
 	left: -50px;
-	width: 100px;
+	width: 120px;
 	height: 100px;
 	float: left;
+	font-size: 16px;
 }
 
 .musterBbtn {
 	position: relative;
-	top: -160px;
-	left: 70px;
-	width: 100px;
+	top: -130.8px;
+	left: -10px;
+	width: 120px;
 	height: 100px;
 	float: left;
+	font-size: 16px;
 }
 
 .muster .muster_box {
@@ -125,6 +127,7 @@ h1 {
 	background-color: pink;
 	box-shadow: 5px 5px;
 	text-shadow: 1px 2px 3px #808080;
+	text-align: center;
 }
 .select{
 	margin:0;
