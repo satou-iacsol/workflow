@@ -30,7 +30,7 @@ import javax.servlet.http.Part;
  */
 @WebServlet("/UploadBelongsCSV")
 //location = "" をcsvを保存する場所に変更してください。
-@MultipartConfig(location = "C:/Users/Yusuke/git/workflow/")
+@MultipartConfig(location = "C:\\Users\\akashi-iacsol\\git\\workflow")
 public class UploadBelongsCSV extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -45,7 +45,7 @@ public class UploadBelongsCSV extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// location = "" をcsvを保存する場所に変更してください。
-		String location = "C:/Users/Yusuke/git/workflow/";
+		String location = "C:\\Users\\akashi-iacsol\\git\\workflow";
 
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
@@ -73,6 +73,11 @@ public class UploadBelongsCSV extends HttpServlet {
 					Paths.get(location + dateTime + nameCSV + ".csv"),
 					Charset.forName("Shift_JIS"));
 			String lineDatabase = "";
+
+			if (brDatabase.readLine() == null) {
+				uploadError += "ファイルをアップロードしてください。\n";
+				asUploadError = true;
+			}
 
 			while ((lineDatabase = brDatabase.readLine()) != null) {
 				String[] databaseStr = lineDatabase.split(",", -1);

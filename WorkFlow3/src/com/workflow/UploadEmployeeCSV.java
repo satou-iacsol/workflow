@@ -30,7 +30,7 @@ import javax.servlet.http.Part;
  */
 @WebServlet("/UploadEmployeeCSV")
 // location = "" をcsvを保存する場所に変更してください。
-@MultipartConfig(location = "C:\\Users\\seiya_saitou\\Desktop\\ワークフロープロジェクト")
+@MultipartConfig(location = "C:\\Users\\akashi-iacsol\\git\\workflow")
 public class UploadEmployeeCSV extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -45,7 +45,7 @@ public class UploadEmployeeCSV extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// location = "" をcsvを保存する場所に変更してください。
-		String location = "C:\\Users\\seiya_saitou\\Desktop\\ワークフロープロジェクト";
+		String location = "C:\\Users\\akashi-iacsol\\git\\workflow";
 
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
@@ -73,6 +73,11 @@ public class UploadEmployeeCSV extends HttpServlet {
 					Paths.get(location + dateTime + nameCSV + ".csv"),
 					Charset.forName("Shift_JIS"));
 			String lineDatabase = "";
+
+			if (brDatabase.readLine() == null) {
+				uploadError += "ファイルをアップロードしてください。\n";
+				asUploadError = true;
+			}
 
 			while ((lineDatabase = brDatabase.readLine()) != null) {
 				String[] databaseStr = lineDatabase.split(",", -1);
@@ -121,10 +126,6 @@ public class UploadEmployeeCSV extends HttpServlet {
 				} else {
 					uploadError += "ユーザー名が異常です。\n";
 					asUploadError = true;
-				}
-
-				if (asUploadError) {
-					break;
 				}
 
 				database.add(databaseSub);
