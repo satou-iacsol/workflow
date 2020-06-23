@@ -67,7 +67,7 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 					ユーザー名：<input type="text" id="userN" name="userN" maxlength="50"
 					<%if(username_M != null){ %>value=<%=username_M %><%} %>>
 					<p class="slack_name">(slack)</p>
-					<%if(uploadResult != null){ %><%=uploadResult%><%} %>
+					<%if(uploadResult != null){ %><%=uploadResult%><%} session.setAttribute("uploadResult","");%>
 				</div>
 			</div>
 			<div class="button">
