@@ -181,7 +181,7 @@ img {
 						}
 					%>&nbsp;
 				</td>
-				<td align="left">&nbsp;<%=list.get(i).get(14)%></td>
+				<td align="left">&nbsp;<%=list.get(i).get(7)%></td>
 			</tr>
 			<%
 				}

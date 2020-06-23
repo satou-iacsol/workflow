@@ -105,16 +105,14 @@ public class ApprovePick extends HttpServlet {
 						&& resultData.getString("status").equals("")) {
 					ArrayList<String> listSub = new ArrayList<>();
 
-					for (int i = 1; i <= 5; i++) {
+					for (int i = 1; i <= 3; i++) {
 						listSub.add(resultData.getString(i));
 					}
-
+					listSub.add((String) resultData.getString("date_1") + resultData.getString("date_3"));
+					listSub.add((String) resultData.getString("date_2") + resultData.getString("date_4"));
 					listSub.add(fullname);
 					listSub.add(affiliationName);
-
-					for (int i = 8; i <= 15; i++) {
-						listSub.add(resultData.getString(i));
-					}
+					listSub.add(resultData.getString("status"));
 					sortList.add(listSub);
 				}
 
@@ -203,16 +201,14 @@ public class ApprovePick extends HttpServlet {
 						&& resultData1.getString("status").equals("差戻")) {
 					ArrayList<String> listSub = new ArrayList<>();
 
-					for (int i = 1; i <= 5; i++) {
+					for (int i = 1; i <= 3; i++) {
 						listSub.add(resultData1.getString(i));
 					}
-
+					listSub.add((String) resultData1.getString("date_1") + resultData1.getString("date_3"));
+					listSub.add((String) resultData1.getString("date_2") + resultData1.getString("date_4"));
 					listSub.add(fullname);
 					listSub.add(affiliationName);
-
-					for (int i = 8; i <= 15; i++) {
-						listSub.add(resultData1.getString(i));
-					}
+					listSub.add(resultData1.getString("status"));
 					list.add(listSub);
 				}
 
@@ -277,16 +273,14 @@ public class ApprovePick extends HttpServlet {
 						&& resultData2.getString("status").equals("承認")) {
 					ArrayList<String> listSub = new ArrayList<>();
 
-					for (int i = 1; i <= 5; i++) {
+					for (int i = 1; i <= 3; i++) {
 						listSub.add(resultData2.getString(i));
 					}
-
+					listSub.add((String) resultData2.getString("date_1") + resultData2.getString("date_3"));
+					listSub.add((String) resultData2.getString("date_2") + resultData2.getString("date_4"));
 					listSub.add(fullname);
 					listSub.add(affiliationName);
-
-					for (int i = 8; i <= 15; i++) {
-						listSub.add(resultData2.getString(i));
-					}
+					listSub.add(resultData2.getString("status"));
 					list.add(listSub);
 				}
 
