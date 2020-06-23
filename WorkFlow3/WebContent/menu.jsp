@@ -75,7 +75,7 @@ String authority = (String) session.getAttribute("authority");
 		<%
 			if (session.getAttribute("authority").equals("2")) {
 		%>
-		<form action="MusterTransition" method="post">
+		<form action="MusterEmpTransition" method="post">
 			<div class="muster">
 				<h2 class="muster_box">マスタメンテ</h2>
 				<button class="musterEbtn" type="submit">社員マスタ</button>
