@@ -151,7 +151,7 @@ public class ApproveHistoryCreate extends HttpServlet {
 		session.setAttribute("historyList", list);
 
 		if (request.getParameter("action").equals("history")) {
-			session.setAttribute("flowList", flowListCreate(number.substring(0, 14), (String) session.getAttribute("approverNumber_1") , (String) session.getAttribute("approverNumber_1")));
+			session.setAttribute("flowList", flowListCreate(number.substring(0, 14), (String) session.getAttribute("approverNumber_1") , (String) session.getAttribute("approverNumber_2")));
 			response.sendRedirect("approveHistory.jsp");
 		} else if (request.getParameter("action").equals("fix")) {
 			response.sendRedirect("approveFixAction.jsp");
@@ -194,6 +194,14 @@ public class ApproveHistoryCreate extends HttpServlet {
 				ArrayList<String> listSub = new ArrayList<>();
 				if (resultData.getString("number").substring(0, 14).equals(number14)) {
 					number = resultData.getString("number");
+					switch (resultData.getString("approverNumber")) {
+					case "1":
+						approverId = approverNumber_1;
+						break;
+					case "2":
+						approverId = approverNumber_2;
+						break;
+					}
 
 					Statement stmtEmployee = null;
 					ResultSet resultEmployee = null;
@@ -203,15 +211,6 @@ public class ApproveHistoryCreate extends HttpServlet {
 					resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
 
 					while (resultEmployee.next()) {
-						switch (resultData.getString("approverNumber")) {
-						case "1":
-							approverId = approverNumber_1;
-							break;
-						case "2":
-							approverId = approverNumber_2;
-							break;
-						}
-
 						if (resultEmployee.getString("id").equals(approverId)) {
 							approver = resultEmployee.getString("fullname");
 							break;
