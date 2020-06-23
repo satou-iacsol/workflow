@@ -26,14 +26,14 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 <link rel="stylesheet" href="menu.css">
 </head>
 <body>
-	<h1 class="h1">社員マスタメンテナンス</h1>
+	<h1 class="h1">部署マスタメンテナンス</h1>
 	<div class="content">
 		<div class="selectionE">
 			<form action="Muster_DB_Import" method="post">
-			社員選択：<select class="select" name="select" id="select">
+			部署選択：<select class="select" name="select" id="select">
 				<option value="">--- 更新・削除する場合は選択してください ---</option>
 				<% for(int i = 0;i < lists.size();i++){ %>
-					<option value=<%=lists.get(i).get(3)%>><%=lists.get(i).get(3) %></option>
+					<option value=<%=lists.get(i).get(1)%>><%=lists.get(i).get(1) %></option>
 				<%} %>
 			</select>
 			<button type="submit" id="deterbtn" name="submitbtn" value="determination">決定</button>
@@ -44,31 +44,22 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 		<form action="Muster_DB_Import" method="post" onsubmit="return check()">
 			<div class="item">
 				<div class="employee_number" id="employee_number">
-					社員番号　：<input type="text" id="numberE" name="numberE" maxlength="4" <%if(flag_M.equals("1")){ %>disabled<%} %>
+					部　署 コ　ー　ド：<input type="text" id="numberE" name="numberE" maxlength="4" <%if(flag_M.equals("1")){ %>disabled<%} %>
 					<%if(id_M != null){ %>value=<%=id_M %><%} %>>
 				</div>
 				<div class="fullname" id="fullname">
-					氏　　　名：<input type="text" id="nameF" name="nameF" maxlength="10"
+					　部　　署　　名  ：<input type="text" id="nameF" name="nameF" maxlength="10"
 					<%if(fullname_M != null){ %>value=<%=fullname_M %><%} %>>
 				</div>
 				<div class="password" id="passWord">
-					パスワード：<input type="text" id="password" name="password" maxlength="8"
+					承認者1(社員番号)：<input type="text" id="password" name="password" maxlength="8"
 					<%if(pass_M != null){ %>value=<%=pass_M %><%} %>>
 				</div>
 				<div class="approval" id="approval">
-					承認権限　：<input type="text" id="approvalP" name="approvalP" maxlength="1"
+					承認者2(社員番号)：<input type="text" id="approvalP" name="approvalP" maxlength="1"
 					<%if(authority_M != null){ %>value=<%=authority_M %><%} %>>
 				</div>
-				<div class="affiliation" id="affiliation">
-					所属コード：<input type="text" id="affiliationC" name="affiliationC" maxlength="4"
-					<%if(affiliationcode_M != null){ %>value=<%=affiliationcode_M %><%} %>>
-				</div>
-				<div class="user_name" id="user_name">
-					ユーザー名：<input type="text" id="userN" name="userN" maxlength="50"
-					<%if(username_M != null){ %>value=<%=username_M %><%} %>>
-					<p class="slack_name">(slack)</p>
 					<%if(uploadResult != null){ %><%=uploadResult%><%} %>
-				</div>
 			</div>
 			<div class="button">
 				<button type="submit" id="newbtn" name="submitbtn" value="new">新規登録</button>
@@ -81,7 +72,7 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 				<button type="submit"  name="buttonCSV" value="employeeCSV" onClick="downloadCSV.submit();">.csvダウンロード</button>
 			</div>
 		</form>
-		<form action="UploadEmployeeCSV" method="post" enctype="multipart/form-data">
+		<form action="UploadBelongsCSV" method="post" enctype="multipart/form-data">
 			<div class="button">
 				<input type="file" name="upCSV" /><button type="submit">.csvアップロード</button>
 			</div>

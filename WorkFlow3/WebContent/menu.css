@@ -57,7 +57,7 @@ h1 {
 	margin: 0 0 20px 80px;
 }
 
-.subbtn, .musterEbtn, .musterBbtn {
+.subbtn, .musterAbtn, .musterEbtn {
 	width: 75px;
 	height: 35px;
 	display: inline-block;
@@ -74,7 +74,7 @@ h1 {
 	border: 2px solid #000066; /* 枠の指定 */
 }
 
-.subbtn:hover, .musterEbtn:hover, .musterBbtn:hover {
+.subbtn:hover, .musterEbtn:hover, .musterAbtn:hover {
 	box-shadow: none; /* カーソル時の影消去 */
 	color: #000066; /* 背景色     */
 	background: #ffffff; /* 文字色     */
@@ -107,10 +107,10 @@ h1 {
 	font-size: 16px;
 }
 
-.musterBbtn {
+.musterAbtn {
 	position: relative;
-	top: -130.8px;
-	left: -10px;
+	top: -160px;
+	left: 110px;
 	width: 120px;
 	height: 100px;
 	float: left;

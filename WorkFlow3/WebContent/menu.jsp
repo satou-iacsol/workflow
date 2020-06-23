@@ -20,8 +20,8 @@ String authority = (String) session.getAttribute("authority");
 
 <body>
 	<header>
-		<img src="./imge/apple-touch-icon-120x120.png"
-			alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<img src="./imge/apple-touch-icon-120x120.png" alt="IACロゴ"
+			title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
 			onsubmit="return logout()">
 			<div align="right">
@@ -75,17 +75,18 @@ String authority = (String) session.getAttribute("authority");
 		<%
 			if (session.getAttribute("authority").equals("2")) {
 		%>
-		<form action="MusterEmpTransition" method="post">
-			<div class="muster">
-				<h2 class="muster_box">マスタメンテ</h2>
+		<div class="muster">
+			<h2 class="muster_box">マスタメンテ</h2>
+			<form action="MusterEmpTransition" method="post">
 				<button class="musterEbtn" type="submit">社員マスタ</button>
-			</div>
-		</form>
-				<input type="button" class="musterBbtn"
-					onclick="location.href='./muster.jsp'" value="部署マスタ">
+			</form>
+			<form action="MusterAppTransition" method="post">
+				<button class="musterAbtn" type="submit">部署マスタ</button>
+			</form>
 			<%
 				}
 			%>
+		</div>
 
 	</div>
 	<%

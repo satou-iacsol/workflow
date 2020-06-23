@@ -44,7 +44,7 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 		<form action="Muster_DB_Import" method="post" onsubmit="return check()">
 			<div class="item">
 				<div class="employee_number" id="employee_number">
-					社員番号　：<input type="text" id="numberE" name="numberE" maxlength="4" <%if(flag_M.equals("1")){ %>disabled<%} %>
+					社員番号　：<input type="text" id="numberE" name="numberE" maxlength="4" <%if(flag_M.equals("1")){ %>readonly<%} %>
 					<%if(id_M != null){ %>value=<%=id_M %><%} %>>
 				</div>
 				<div class="fullname" id="fullname">
@@ -93,11 +93,6 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 	<script src="jquery-3.5.1.min.js"></script>
 	<script>
 		let num = document.getElementById("numberE").value;
-		let name = document.getElementById("nameF").value;
-		let pass = document.getElementById("password").value;
-		let app = document.getElementById("approvalP").value;
-		let aff = document.getElementById("affiliationC").value;
-		let user = document.getElementById("userN").value;
 		//社員選択にて、社員が選択された時、決定ボタンの背景色をピンクに変更
 		$(document).on('change','#select',function(){
 			$('#deterbtn').css({'background-color':'pink'});
@@ -108,15 +103,20 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 		});
 		//社員番号に文字が入力されていたらクリアボタンを水色に変更
 		if(num != ""){
-			console.log("test");
 			document.getElementById('cleabtn').style.backgroundColor="#8BD1FA";
 		}
 
 		//項目が未入力のまま、新規登録ボタンを押下された場合、アラート出力
 		function check(){
+			let num = document.getElementById("numberE").value;
+			let name = document.getElementById("nameF").value;
+			let pass = document.getElementById("password").value;
+			let app = document.getElementById("approvalP").value;
+			let aff = document.getElementById("affiliationC").value;
+			let user = document.getElementById("userN").value;
 
-			if(num == "" || name == "" || pass == "" || app == "" || app != "0" || "1" || "2"|| aff == "" || user == ""){
-				if(num == ""){
+			if(num == 1 || name == "" || pass == "" || app == "" || app != "0" || "1" || "2" || aff == "" || user == ""){
+				if(num == 1){
 					document.getElementById("employee_number").style.color="red";
 				}else{
 					document.getElementById("employee_number").style.color="black";

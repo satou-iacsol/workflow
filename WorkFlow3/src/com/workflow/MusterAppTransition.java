@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class MusterTransition
  */
-@WebServlet("/MusterEmpTransition")
+@WebServlet("/MusterAppTransition")
 public class MusterAppTransition extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -67,16 +67,14 @@ public class MusterAppTransition extends HttpServlet {
 			con.setAutoCommit(false);
 			//SELECT文の実行
 			stmtEmployee = con.createStatement();
-			String sqlEmployee = "SELECT * from employee_muster";
+			String sqlEmployee = "SELECT * from belongs";
 			resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
 			while (resultEmployee.next()) {
 				ArrayList<String> list = new ArrayList<>();
-				list.add(resultEmployee.getString("id"));
-				list.add(resultEmployee.getString("pass"));
-				list.add(resultEmployee.getString("authority"));
-				list.add(resultEmployee.getString("fullname"));
 				list.add(resultEmployee.getString("affiliationcode"));
-				list.add(resultEmployee.getString("username"));
+				list.add(resultEmployee.getString("affiliationname"));
+				list.add(resultEmployee.getString("approvernumber_1"));
+				list.add(resultEmployee.getString("approvernumber_2"));
 				lists.add(list);
 			}
 		} catch (Exception e) {
@@ -102,6 +100,6 @@ public class MusterAppTransition extends HttpServlet {
 		}
 		session.setAttribute("lists", lists);
 		session.setAttribute("flag_M", flag_M);
-		response.sendRedirect("musterEmp.jsp");
+		response.sendRedirect("musterApp.jsp");
 	}
 }
