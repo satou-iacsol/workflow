@@ -67,7 +67,7 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 					ユーザー名：<input type="text" id="userN" name="userN" maxlength="50"
 					<%if(username_M != null){ %>value=<%=username_M %><%} %>>
 					<p class="slack_name">(slack)</p>
-					<%if(uploadResult != null){ %><%=uploadResult%><%}%>
+					<%if(uploadResult != null){ %><%=uploadResult%><%} %>
 				</div>
 			</div>
 			<div class="button">
@@ -76,19 +76,18 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 				<button type="submit" id="deletebtn" name="submitbtn" value="delete">削除</button>
 			</div>
 		</form>
-		<div class="csv">
-			<form action="DownloadCSV" method="post">
-				<div class="button">
-					<button type="submit" id="buttonCSV" name="buttonCSV" value="employeeCSV" onClick="downloadCSV.submit();">.csvダウンロード</button>
-				</div>
-			</form>
-			<form action="UploadEmployeeCSV" method="post" enctype="multipart/form-data">
-				<div class="button">
-					<input type="file" id="upFile" name="upCSV" /><button id="csvbtn"type="submit">.csvアップロード</button>
-				</div>
-			</form>
-		</div>
-		<button id="backbtn" onclick="location.href='menu.jsp'">もどる</button>
+		<form action="DownloadCSV" method="post">
+			<div class="button">
+				<button type="submit"  name="buttonCSV" value="employeeCSV" onClick="downloadCSV.submit();">.csvダウンロード</button>
+			</div>
+		</form>
+		<form action="UploadEmployeeCSV" method="post" enctype="multipart/form-data">
+			<div class="button">
+				<input type="file" name="upCSV" /><button type="submit">.csvアップロード</button>
+			</div>
+		</form>
+
+		<button onclick="location.href='menu.jsp'">もどる</button>
 	</div>
 	<script src="jquery-3.5.1.min.js"></script>
 	<script>

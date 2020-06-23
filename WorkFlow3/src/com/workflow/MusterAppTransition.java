@@ -19,14 +19,14 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class MusterTransition
  */
-@WebServlet("/MusterTransition")
-public class MusterTransition extends HttpServlet {
+@WebServlet("/MusterEmpTransition")
+public class MusterAppTransition extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public MusterTransition() {
+	public MusterAppTransition() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
