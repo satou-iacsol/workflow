@@ -76,7 +76,6 @@ public class ApproveHistoryPick extends HttpServlet {
 				String type = "";
 				String fromDateTime = "";
 				String toDateTime = "";
-				String approverNumber = "";
 				String approverId = "";
 				String flow = "";
 				String result = "";
