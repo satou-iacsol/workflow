@@ -67,33 +67,51 @@ public class ApprovePick extends HttpServlet {
 				ResultSet resultEmployee = null;
 				Statement stmtBelongs = null;
 				ResultSet resultBelongs = null;
+				String fullname = "";
+				String affiliationName = "";
+				String approverId = "";
 
-				if (resultData.getString("approverNumber").equals(id)
+				stmtEmployee = con.createStatement();
+				String sqlEmployee = "SELECT * from employee_muster";
+				resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
+				while (resultEmployee.next()) {
+					if (resultEmployee.getString("id").equals(resultData.getString("id"))) {
+						fullname = resultEmployee.getString("fullname");
+						break;
+					}
+				}
+
+				stmtBelongs = con.createStatement();
+				String sqlBelongs = "SELECT * from belongs";
+				resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
+				while (resultBelongs.next()) {
+					if (resultBelongs.getString("affiliationCode")
+							.equals(resultEmployee.getString("affiliationCode"))) {
+						affiliationName = resultBelongs.getString("affiliationName");
+						switch (resultData.getString("approverNumber")) {
+						case "1":
+							approverId = resultBelongs.getString("approvernumber_1");
+							break;
+						case "2":
+							approverId = resultBelongs.getString("approvernumber_2");
+							break;
+						}
+
+						break;
+					}
+				}
+
+				if (approverId.equals(id)
 						&& resultData.getString("status").equals("")) {
 					ArrayList<String> listSub = new ArrayList<>();
 
 					for (int i = 1; i <= 5; i++) {
 						listSub.add(resultData.getString(i));
 					}
-					stmtEmployee = con.createStatement();
-					String sqlEmployee = "SELECT * from employee_muster";
-					resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
-					while (resultEmployee.next()) {
-						if (resultEmployee.getString("id").equals(resultData.getString("id"))) {
-							listSub.add(resultEmployee.getString("fullname"));
-							break;
-						}
-					}
-					stmtBelongs = con.createStatement();
-					String sqlBelongs = "SELECT * from belongs";
-					resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
-					while (resultBelongs.next()) {
-						if (resultBelongs.getString("affiliationCode")
-								.equals(resultEmployee.getString("affiliationCode"))) {
-							listSub.add(resultBelongs.getString("affiliationName"));
-							break;
-						}
-					}
+
+					listSub.add(fullname);
+					listSub.add(affiliationName);
+
 					for (int i = 8; i <= 15; i++) {
 						listSub.add(resultData.getString(i));
 					}
@@ -147,33 +165,51 @@ public class ApprovePick extends HttpServlet {
 				ResultSet resultEmployee = null;
 				Statement stmtBelongs = null;
 				ResultSet resultBelongs = null;
+				String fullname = "";
+				String affiliationName = "";
+				String approverId = "";
 
-				if (resultData1.getString("approverNumber").equals(id)
+				stmtEmployee = con.createStatement();
+				String sqlEmployee = "SELECT * from employee_muster";
+				resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
+				while (resultEmployee.next()) {
+					if (resultEmployee.getString("id").equals(resultData1.getString("id"))) {
+						fullname = resultEmployee.getString("fullname");
+						break;
+					}
+				}
+
+				stmtBelongs = con.createStatement();
+				String sqlBelongs = "SELECT * from belongs";
+				resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
+				while (resultBelongs.next()) {
+					if (resultBelongs.getString("affiliationCode")
+							.equals(resultEmployee.getString("affiliationCode"))) {
+						affiliationName = resultBelongs.getString("affiliationName");
+						switch (resultData1.getString("approverNumber")) {
+						case "1":
+							approverId = resultBelongs.getString("approvernumber_1");
+							break;
+						case "2":
+							approverId = resultBelongs.getString("approvernumber_2");
+							break;
+						}
+
+						break;
+					}
+				}
+
+				if (approverId.equals(id)
 						&& resultData1.getString("status").equals("差戻")) {
 					ArrayList<String> listSub = new ArrayList<>();
 
 					for (int i = 1; i <= 5; i++) {
 						listSub.add(resultData1.getString(i));
 					}
-					stmtEmployee = con.createStatement();
-					String sqlEmployee = "SELECT * from employee_muster";
-					resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
-					while (resultEmployee.next()) {
-						if (resultEmployee.getString("id").equals(resultData1.getString("id"))) {
-							listSub.add(resultEmployee.getString("fullname"));
-							break;
-						}
-					}
-					stmtBelongs = con.createStatement();
-					String sqlBelongs = "SELECT * from belongs";
-					resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
-					while (resultBelongs.next()) {
-						if (resultBelongs.getString("affiliationCode")
-								.equals(resultEmployee.getString("affiliationCode"))) {
-							listSub.add(resultBelongs.getString("affiliationName"));
-							break;
-						}
-					}
+
+					listSub.add(fullname);
+					listSub.add(affiliationName);
+
 					for (int i = 8; i <= 15; i++) {
 						listSub.add(resultData1.getString(i));
 					}
@@ -203,33 +239,51 @@ public class ApprovePick extends HttpServlet {
 				ResultSet resultEmployee = null;
 				Statement stmtBelongs = null;
 				ResultSet resultBelongs = null;
+				String fullname = "";
+				String affiliationName = "";
+				String approverId = "";
 
-				if (resultData2.getString("approverNumber").equals(id)
+				stmtEmployee = con.createStatement();
+				String sqlEmployee = "SELECT * from employee_muster";
+				resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
+				while (resultEmployee.next()) {
+					if (resultEmployee.getString("id").equals(resultData2.getString("id"))) {
+						fullname = resultEmployee.getString("fullname");
+						break;
+					}
+				}
+
+				stmtBelongs = con.createStatement();
+				String sqlBelongs = "SELECT * from belongs";
+				resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
+				while (resultBelongs.next()) {
+					if (resultBelongs.getString("affiliationCode")
+							.equals(resultEmployee.getString("affiliationCode"))) {
+						affiliationName = resultBelongs.getString("affiliationName");
+						switch (resultData2.getString("approverNumber")) {
+						case "1":
+							approverId = resultBelongs.getString("approvernumber_1");
+							break;
+						case "2":
+							approverId = resultBelongs.getString("approvernumber_2");
+							break;
+						}
+
+						break;
+					}
+				}
+
+				if (approverId.equals(id)
 						&& resultData2.getString("status").equals("承認")) {
 					ArrayList<String> listSub = new ArrayList<>();
 
 					for (int i = 1; i <= 5; i++) {
 						listSub.add(resultData2.getString(i));
 					}
-					stmtEmployee = con.createStatement();
-					String sqlEmployee = "SELECT * from employee_muster";
-					resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
-					while (resultEmployee.next()) {
-						if (resultEmployee.getString("id").equals(resultData2.getString("id"))) {
-							listSub.add(resultEmployee.getString("fullname"));
-							break;
-						}
-					}
-					stmtBelongs = con.createStatement();
-					String sqlBelongs = "SELECT * from belongs";
-					resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
-					while (resultBelongs.next()) {
-						if (resultBelongs.getString("affiliationCode")
-								.equals(resultEmployee.getString("affiliationCode"))) {
-							listSub.add(resultBelongs.getString("affiliationName"));
-							break;
-						}
-					}
+
+					listSub.add(fullname);
+					listSub.add(affiliationName);
+
 					for (int i = 8; i <= 15; i++) {
 						listSub.add(resultData2.getString(i));
 					}

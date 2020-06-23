@@ -77,6 +77,7 @@ public class ApproveHistoryPick extends HttpServlet {
 				String fromDateTime = "";
 				String toDateTime = "";
 				String approverNumber = "";
+				String approverId = "";
 				String flow = "";
 				String result = "";
 
@@ -109,18 +110,27 @@ public class ApproveHistoryPick extends HttpServlet {
 							type = resultData2.getString("type");
 							fromDateTime = resultData2.getString("date_1") + resultData2.getString("date_3");
 							toDateTime = resultData2.getString("date_2") + resultData2.getString("date_4");
-							approverNumber = resultData2.getString("approverNumber");
+							switch (resultData2.getString("approverNumber")) {
+							case "1":
+								approverId = (String) session.getAttribute("approverNumber_1");
+								break;
+							case "2":
+								approverId = (String) session.getAttribute("approverNumber_2");
+								break;
+							}
 							status = resultData2.getString("status");
 							break;
 						}
 					}
+
+
 
 					if (status.equals("承認")) {
 						stmtEmployee = con.createStatement();
 						String sqlEmployee = "SELECT * from employee_muster";
 						resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
 						while (resultEmployee.next()) {
-							if (resultEmployee.getString("id").equals(approverNumber)) {
+							if (resultEmployee.getString("id").equals(approverId)) {
 								flow = resultEmployee.getString("fullname");
 								break;
 							}
@@ -131,7 +141,7 @@ public class ApproveHistoryPick extends HttpServlet {
 						String sqlEmployee = "SELECT * from employee_muster";
 						resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
 						while (resultEmployee.next()) {
-							if (resultEmployee.getString("id").equals(approverNumber)) {
+							if (resultEmployee.getString("id").equals(approverId)) {
 								flow = resultEmployee.getString("fullname");
 								break;
 							}
@@ -161,7 +171,14 @@ public class ApproveHistoryPick extends HttpServlet {
 							while (resultData3.next()) {
 								if (resultData3.getString("number").equals(numberNow.substring(0, 14)
 										+ String.format("%02d", Integer.parseInt(numberNow.substring(14)) - 1))) {
-									BeforeApproverNumber = resultData3.getString("approverNumber");
+									switch (resultData3.getString("approverNumber")) {
+									case "1":
+										BeforeApproverNumber = (String) session.getAttribute("approverNumber_1");
+										break;
+									case "2":
+										BeforeApproverNumber = (String) session.getAttribute("approverNumber_2");
+										break;
+									}
 									break;
 								}
 							}
@@ -180,7 +197,7 @@ public class ApproveHistoryPick extends HttpServlet {
 						String sqlEmployee1 = "SELECT * from employee_muster";
 						resultEmployee1 = stmtEmployee1.executeQuery(sqlEmployee1);
 						while (resultEmployee1.next()) {
-							if (resultEmployee1.getString("id").equals(approverNumber)) {
+							if (resultEmployee1.getString("id").equals(approverId)) {
 								afterApprover = resultEmployee1.getString("fullname");
 								break;
 							}
@@ -193,7 +210,7 @@ public class ApproveHistoryPick extends HttpServlet {
 					listSub.add(type);
 					listSub.add(fromDateTime);
 					listSub.add(toDateTime);
-					listSub.add(approverNumber);
+					listSub.add(approverId);
 					listSub.add(flow);
 					listSub.add(result);
 
