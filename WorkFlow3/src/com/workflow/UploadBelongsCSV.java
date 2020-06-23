@@ -109,6 +109,10 @@ public class UploadBelongsCSV extends HttpServlet {
 					asUploadError = true;
 				}
 
+				if (asUploadError) {
+					break;
+				}
+
 				database.add(databaseSub);
 
 			}

@@ -123,6 +123,10 @@ public class UploadEmployeeCSV extends HttpServlet {
 					asUploadError = true;
 				}
 
+				if (asUploadError) {
+					break;
+				}
+
 				database.add(databaseSub);
 
 			}
