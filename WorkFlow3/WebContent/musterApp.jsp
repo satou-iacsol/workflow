@@ -59,7 +59,20 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 					承認者2(社員番号)：<input type="text" id="approvalP" name="approvalP" maxlength="1"
 					<%if(authority_M != null){ %>value=<%=authority_M %><%} %>>
 				</div>
+<<<<<<< HEAD
 					<%if(uploadResult != null){ %><%=uploadResult%><%} %>
+=======
+				<div class="affiliation" id="affiliation">
+					所属コード：<input type="text" id="affiliationC" name="affiliationC" maxlength="4"
+					<%if(affiliationcode_M != null){ %>value=<%=affiliationcode_M %><%} %>>
+				</div>
+				<div class="user_name" id="user_name">
+					ユーザー名：<input type="text" id="userN" name="userN" maxlength="50"
+					<%if(username_M != null){ %>value=<%=username_M %><%} %>>
+					<p class="slack_name">(slack)</p>
+					<%if(uploadResult != null){ %><%=uploadResult%><%} session.setAttribute("uploadResult","");%>
+				</div>
+>>>>>>> branch 'muster' of https://github.com/satou-iacsol/workflow
 			</div>
 			<div class="button">
 				<button type="submit" id="newbtn" name="submitbtn" value="new">新規登録</button>

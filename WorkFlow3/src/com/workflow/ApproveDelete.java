@@ -126,7 +126,7 @@ public class ApproveDelete extends HttpServlet {
 					String approve1notification = "0";
 					String approve2notification = "0";
 
-					if (historyList.get(5).equals(session.getAttribute("approverNumber_1"))) {
+					if (historyList.get(5).equals("1")) {
 						approve1notification = "1";
 					} else {
 						if (historyList.get(11).equals("1")) {

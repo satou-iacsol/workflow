@@ -128,10 +128,10 @@ public class ApproveFix extends HttpServlet {
 					String approve2notification = "0";
 
 					if (session.getAttribute("approver_switch").equals("0")) {
-						if (historyList.get(5).equals(session.getAttribute("approverNumber_1"))
+						if (historyList.get(5).equals("1")
 								&& historyList.get(11).equals("0")) {
 							approve1notification = "1";
-						} else if (historyList.get(5).equals(session.getAttribute("approverNumber_2"))
+						} else if (historyList.get(5).equals("2")
 								&& historyList.get(11).equals("1")) {
 							approve2notification = "1";
 						}
