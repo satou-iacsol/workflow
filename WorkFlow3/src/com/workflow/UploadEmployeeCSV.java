@@ -75,57 +75,62 @@ public class UploadEmployeeCSV extends HttpServlet {
 			String lineDatabase = "";
 
 			if (brDatabase.readLine() == null) {
-				uploadError += "ファイルをアップロードしてください。\n";
+				uploadError = "ファイルをアップロードしてください。";
 				asUploadError = true;
 			}
 
 			while ((lineDatabase = brDatabase.readLine()) != null) {
 				String[] databaseStr = lineDatabase.split(",", -1);
 				ArrayList<String> databaseSub = new ArrayList<>();
-				if (databaseStr[0].equals("社員番号")) {
-					continue;
+
+				try {
+					Integer.parseInt(databaseStr[0]);
+					Integer.parseInt(databaseStr[2]);
+					Integer.parseInt(databaseStr[4]);
+				} catch (Exception e) {
+					asUploadError = true;
 				}
 
 				if (databaseStr[0].length() == 4) {
 					databaseSub.add(databaseStr[0]);
 				} else {
-					uploadError += "社員番号が異常です。\n";
 					asUploadError = true;
 				}
 
 				if (databaseStr[1].length() == 8) {
 					databaseSub.add(databaseStr[1]);
 				} else {
-					uploadError += "パスワードが異常です。\n";
 					asUploadError = true;
 				}
 
 				if (databaseStr[2].length() == 1) {
 					databaseSub.add(databaseStr[2]);
 				} else {
-					uploadError += "承認権限が異常です。\n";
 					asUploadError = true;
 				}
 
 				if (databaseStr[3].length() <= 10) {
 					databaseSub.add(databaseStr[3]);
 				} else {
-					uploadError += "氏名が異常です。\n";
 					asUploadError = true;
 				}
 
 				if (databaseStr[4].length() == 4) {
 					databaseSub.add(databaseStr[4]);
 				} else {
-					uploadError += "所属コードが異常です。\n";
 					asUploadError = true;
 				}
 
 				if (databaseStr[5].length() <= 50) {
 					databaseSub.add(databaseStr[5]);
 				} else {
-					uploadError += "ユーザー名が異常です。\n";
+
 					asUploadError = true;
+				}
+
+				if (asUploadError) {
+					uploadError = "csv内の情報に間違いがあります。";
+					break;
 				}
 
 				database.add(databaseSub);

@@ -75,46 +75,48 @@ public class UploadBelongsCSV extends HttpServlet {
 			String lineDatabase = "";
 
 			if (brDatabase.readLine() == null) {
-				uploadError += "ファイルをアップロードしてください。\n";
+				uploadError = "ファイルをアップロードしてください。";
 				asUploadError = true;
 			}
 
 			while ((lineDatabase = brDatabase.readLine()) != null) {
 				String[] databaseStr = lineDatabase.split(",", -1);
 				ArrayList<String> databaseSub = new ArrayList<>();
-				if (databaseStr[0].equals("所属コード")) {
-					continue;
+
+				try {
+					Integer.parseInt(databaseStr[0]);
+					Integer.parseInt(databaseStr[2]);
+					Integer.parseInt(databaseStr[3]);
+				} catch (Exception e) {
+					asUploadError = true;
 				}
 
 				if (databaseStr[0].length() == 4) {
 					databaseSub.add(databaseStr[0]);
 				} else {
-					uploadError += "所属コードが異常です。\n";
 					asUploadError = true;
 				}
 
 				if (databaseStr[1].length() <= 50) {
 					databaseSub.add(databaseStr[1]);
 				} else {
-					uploadError += "所属が異常です。\n";
 					asUploadError = true;
 				}
 
 				if (databaseStr[2].length() == 4) {
 					databaseSub.add(databaseStr[2]);
 				} else {
-					uploadError += "承認者１社員番号が異常です。\n";
 					asUploadError = true;
 				}
 
 				if (databaseStr[3].length() == 4) {
 					databaseSub.add(databaseStr[3]);
 				} else {
-					uploadError += "承認者２社員番号が異常です。\n";
 					asUploadError = true;
 				}
 
 				if (asUploadError) {
+					uploadError = "csv内の情報に間違いがあります。";
 					break;
 				}
 
