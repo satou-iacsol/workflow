@@ -158,9 +158,9 @@ public class Output extends HttpServlet {
 			}
 			ps.setString(11, flag);
 			if (approver_1_2.equals(approverName_1)) {
-				ps.setString(12, approverNumber_1);
+				ps.setString(12, "1");
 			} else if (approver_1_2.equals(approverName_2)) {
-				ps.setString(12, approverNumber_2);
+				ps.setString(12, "2");
 			}
 			ps.setString(13, "");
 			ps.setString(14, "");
