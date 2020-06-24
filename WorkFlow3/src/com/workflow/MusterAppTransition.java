@@ -60,7 +60,7 @@ public class MusterAppTransition extends HttpServlet {
 		String user = Keyword.user();
 		String password = Keyword.password();
 		//作業用
-		ArrayList<ArrayList<String>> lists = new ArrayList<>();
+		ArrayList<ArrayList<String>> belongs_lists = new ArrayList<>();
 		try {
 			// PostgreSQLに接続
 			con = DriverManager.getConnection(url, user, password);
@@ -75,7 +75,7 @@ public class MusterAppTransition extends HttpServlet {
 				list.add(resultEmployee.getString("affiliationname"));
 				list.add(resultEmployee.getString("approvernumber_1"));
 				list.add(resultEmployee.getString("approvernumber_2"));
-				lists.add(list);
+				belongs_lists.add(list);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -98,7 +98,7 @@ public class MusterAppTransition extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		session.setAttribute("lists", lists);
+		session.setAttribute("belongs_lists", belongs_lists);
 		session.setAttribute("flag_M", flag_M);
 		response.sendRedirect("musterApp.jsp");
 	}

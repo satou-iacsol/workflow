@@ -7,13 +7,11 @@
 request.setCharacterEncoding("UTF8");
 final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
 @SuppressWarnings("unchecked")
-ArrayList<ArrayList<String>> lists = (ArrayList<ArrayList<String>>) session.getAttribute("lists");
-String fullname_M = (String)session.getAttribute("fullname_M");
-String id_M = (String)session.getAttribute("id_M");
-String pass_M = (String)session.getAttribute("pass_M");
-String authority_M = (String)session.getAttribute("authority_M");
-String username_M = (String)session.getAttribute("username_M");
-String affiliationcode_M = (String)session.getAttribute("affiliationcode_M");
+ArrayList<ArrayList<String>> belongs_lists = (ArrayList<ArrayList<String>>) session.getAttribute("belongs_lists");
+String belongsN = (String)session.getAttribute("belongsN");
+String belongsC = (String)session.getAttribute("belongsC");
+String app1 = (String)session.getAttribute("app1");
+String app2 = (String)session.getAttribute("app2");
 String flag_M = (String)session.getAttribute("flag_M");
 String uploadResult = (String)session.getAttribute("uploadResult");
 %>
@@ -29,11 +27,11 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 	<h1 class="h1">部署マスタメンテナンス</h1>
 	<div class="content">
 		<div class="selectionE">
-			<form action="Muster_DB_Import" method="post">
-			部署選択：<select class="select" name="select" id="select">
+			<form action="<%=request.getContextPath()%>/Belongs_DB_Import" method="post">
+				部署選択：<select class="select" name="select" id="select">
 				<option value="">--- 更新・削除する場合は選択してください ---</option>
-				<% for(int i = 0;i < lists.size();i++){ %>
-					<option value=<%=lists.get(i).get(1)%>><%=lists.get(i).get(1) %></option>
+				<% for(int i = 0;i < belongs_lists.size();i++){ %>
+					<option value=<%=belongs_lists.get(i).get(1)%>><%=belongs_lists.get(i).get(1) %></option>
 				<%} %>
 			</select>
 			<button type="submit" id="deterbtn" name="submitbtn" value="determination">決定</button>
@@ -41,113 +39,94 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 			</form>
 			<p class="warnning_note">※新規登録の場合は未選択のまま、下記項目へ入力してください</p>
 		</div>
-		<form action="Muster_DB_Import" method="post" onsubmit="return check()">
 			<div class="item">
-				<div class="employee_number" id="employee_number">
-					部　署 コ　ー　ド：<input type="text" id="numberE" name="numberE" maxlength="4" <%if(flag_M.equals("1")){ %>disabled<%} %>
-					<%if(id_M != null){ %>value=<%=id_M %><%} %>>
+		<form action="<%=request.getContextPath()%>/Belongs_DB_Import" method="post" id="Belongs_DB_Import" onsubmit="return check()">
+				<div class="belongs_code" id="belongs_code">
+					<div class="type">部署コード：</div><input type="text" id="belongsC" name="belongsC" maxlength="4" <%if(flag_M.equals("1")){ %>readonly<%} %>
+					<%if(belongsC != null){ %>value=<%=belongsC%><%} %>>
 				</div>
-				<div class="fullname" id="fullname">
-					　部　　署　　名  ：<input type="text" id="nameF" name="nameF" maxlength="10"
-					<%if(fullname_M != null){ %>value=<%=fullname_M %><%} %>>
+				<div class="belongs_name" id="belongs_name">
+					<div class="type">部署名：</div><input type="text" id="belongsN" name="belongsN" maxlength="50"
+					<%if(belongsN != null){ %>value=<%=belongsN %><%} %>>
 				</div>
-				<div class="password" id="passWord">
-					承認者1(社員番号)：<input type="text" id="password" name="password" maxlength="8"
-					<%if(pass_M != null){ %>value=<%=pass_M %><%} %>>
+				<div class="approver_1" id="approver_1">
+					<div class="type">承認者1(社員番号)：</div><input type="text" id="app1" name="app1" maxlength="4"
+					<%if(app1 != null){ %>value=<%=app1 %><%} %>>
 				</div>
-				<div class="approval" id="approval">
-					承認者2(社員番号)：<input type="text" id="approvalP" name="approvalP" maxlength="1"
-					<%if(authority_M != null){ %>value=<%=authority_M %><%} %>>
+				<div class="approver_2" id="approver_2">
+					<div class="type">承認者2(社員番号)：</div><input type="text" id="app2" name="app2" maxlength="4"
+					<%if(app2 != null){ %>value=<%=app2 %><%} %>>
 				</div>
-<<<<<<< HEAD
 					<%if(uploadResult != null){ %><%=uploadResult%><%} %>
-=======
-				<div class="affiliation" id="affiliation">
-					所属コード：<input type="text" id="affiliationC" name="affiliationC" maxlength="4"
-					<%if(affiliationcode_M != null){ %>value=<%=affiliationcode_M %><%} %>>
+		</form>
+			</div>
+		<div class="csv">
+			<form action="DownloadCSV" method="post">
+				<div class="button">
+					<button type="submit" id="buttonCSV" name="buttonCSV" value="employeeCSV" onClick="downloadCSV.submit();">.csvダウンロード</button>
 				</div>
-				<div class="user_name" id="user_name">
-					ユーザー名：<input type="text" id="userN" name="userN" maxlength="50"
-					<%if(username_M != null){ %>value=<%=username_M %><%} %>>
-					<p class="slack_name">(slack)</p>
-					<%if(uploadResult != null){ %><%=uploadResult%><%} session.setAttribute("uploadResult","");%>
+			</form>
+			<form action="UploadEmployeeCSV" method="post" enctype="multipart/form-data">
+				<div class="button">
+					<input type="file" id="upFile" name="upCSV" /><button id="csvbtn"type="submit">.csvアップロード</button>
 				</div>
->>>>>>> branch 'muster' of https://github.com/satou-iacsol/workflow
-			</div>
+			</form>
+		</div>
+			<div class="actionbtn">
 			<div class="button">
-				<button type="submit" id="newbtn" name="submitbtn" value="new">新規登録</button>
-				<button type="submit" id="updatebtn" name="submitbtn" value="update">更新</button>
-				<button type="submit" id="deletebtn" name="submitbtn" value="delete">削除</button>
+				<button type="submit" id="newbtn" name="submitbtn" form="Belongs_DB_Import" value="new">新規登録</button>
+				<button type="submit" id="updatebtn" name="submitbtn" form="Belongs_DB_Import" value="update">更新</button>
+				<button type="submit" id="deletebtn" name="submitbtn" form="Belongs_DB_Import" value="delete">削除</button>
+				<button id="backbtn" onclick="location.href='menu.jsp'">もどる</button>
 			</div>
-		</form>
-		<form action="DownloadCSV" method="post">
-			<div class="button">
-				<button type="submit"  name="buttonCSV" value="employeeCSV" onClick="downloadCSV.submit();">.csvダウンロード</button>
 			</div>
-		</form>
-		<form action="UploadBelongsCSV" method="post" enctype="multipart/form-data">
-			<div class="button">
-				<input type="file" name="upCSV" /><button type="submit">.csvアップロード</button>
-			</div>
-		</form>
-
-		<button onclick="location.href='menu.jsp'">もどる</button>
-	</div>
+	</div><!-- content -->
 	<script src="jquery-3.5.1.min.js"></script>
 	<script>
-		let num = document.getElementById("numberE").value;
-		let name = document.getElementById("nameF").value;
-		let pass = document.getElementById("password").value;
-		let app = document.getElementById("approvalP").value;
-		let aff = document.getElementById("affiliationC").value;
-		let user = document.getElementById("userN").value;
+		let code = document.getElementById("belongsC").value;
+		let name = document.getElementById("belongsN").value;
+		let app1 = document.getElementById("app1").value;
+		let app2 = document.getElementById("app2").value;
 		//社員選択にて、社員が選択された時、決定ボタンの背景色をピンクに変更
 		$(document).on('change','#select',function(){
 			$('#deterbtn').css({'background-color':'pink'});
 		});
 		//すべての項目に対して、入力が行われたらクリアボタンを水色に変更
-		$(document).on('change','#numberE,#nameF,#password,#approvalP,#affiliationC,#userN',function(){
+		$(document).on('change','#belongsC,#belongsN,#app1,#app2',function(){
 			$('#cleabtn').css({'background-color':'#8BD1FA'});
 		});
 		//社員番号に文字が入力されていたらクリアボタンを水色に変更
-		if(num != ""){
-			console.log("test");
+		if(code != ""){
 			document.getElementById('cleabtn').style.backgroundColor="#8BD1FA";
 		}
 
 		//項目が未入力のまま、新規登録ボタンを押下された場合、アラート出力
 		function check(){
+			let code = document.getElementById("belongsC").value;
+			let name = document.getElementById("belongsN").value;
+			let app1 = document.getElementById("app1").value;
+			let app2 = document.getElementById("app2").value;
 
-			if(num == "" || name == "" || pass == "" || app == "" || app != "0" || "1" || "2"|| aff == "" || user == ""){
-				if(num == ""){
-					document.getElementById("employee_number").style.color="red";
+			if(code == "" || name == "" || app1 == "" || app2 == ""){
+				if(code == ""){
+					document.getElementById("belongs_code").style.color="red";
 				}else{
-					document.getElementById("employee_number").style.color="black";
+					document.getElementById("belongs_code").style.color="black";
 				}
 				if(name == ""){
-					document.getElementById("fullname").style.color="red";
+					document.getElementById("belongs_name").style.color="red";
 				}else{
-					document.getElementById("fullname").style.color="black";
+					document.getElementById("belongs_name").style.color="black";
 				}
-				if(pass == ""){
-					document.getElementById("passWord").style.color="red";
+				if(app1 == ""){
+					document.getElementById("approver_1").style.color="red";
 				}else{
-					document.getElementById("passWord").style.color="black";
+					document.getElementById("approver_1").style.color="black";
 				}
-				if(app == "" || app != "0" || "1" || "2"){
-					document.getElementById("approval").style.color="red";
+				if(app2 == ""){
+					document.getElementById("approver_2").style.color="red";
 				}else{
-					document.getElementById("approval").style.color="black";
-				}
-				if(aff == ""){
-					document.getElementById("affiliation").style.color="red";
-				}else{
-					document.getElementById("affiliation").style.color="black";
-				}
-				if(user == ""){
-					document.getElementById("user_name").style.color="red";
-				}else{
-					document.getElementById("user_name").style.color="black";
+					document.getElementById("approver_2").style.color="black";
 				}
 
 				alert("入力内容を確認してください。");

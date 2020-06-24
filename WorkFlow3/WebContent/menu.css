@@ -1,9 +1,11 @@
 @charset "UTF-8";
 
-
 body {
 	background-color: #fafafa;
 	margin: 0;
+}
+button{
+	cursor: pointer;
 }
 
 header {
@@ -38,7 +40,8 @@ img {
 .content {
 	background-color: #fff;
 	width: 600px;
-	height: 250px; margin : 30px auto;
+	height: 250px;
+	margin: 30px auto;
 	border: 1px solid #d1d1d1;
 	padding: 30px;
 	margin: 30px auto;
@@ -49,7 +52,7 @@ h1 {
 	margin-bottom: 0;
 	padding: 0;
 	font-size: 24px;
-	font-weight: normal;
+	font-weight: bold;
 	text-align: center;
 }
 
@@ -94,7 +97,7 @@ h1 {
 	border: 1px solid;
 	border-radius: 25px;
 	padding: 70px;
-	box-shadow:5px 5px;
+	box-shadow: 5px 5px;
 }
 
 .musterEbtn {
@@ -129,41 +132,71 @@ h1 {
 	text-shadow: 1px 2px 3px #808080;
 	text-align: center;
 }
-.select{
-	margin:0;
-	padding:0;
+
+.select {
+	margin: 0;
+	padding: 0;
 }
-.warnning_note{
-	margin:0 0 0 20px;
-	padding:0;
+
+.warnning_note {
+	margin: 0 0 0 20px;
+	padding: 0;
 	font-size: 12px;
 	color: red;
 }
-.button{
+
+#deterbtn, #cleabtn {
+	border-radius: 25px;
+}
+
+.item {
+	margin-top: 20px;
 	float: left;
 }
-#deterbtn,#cleabtn{
-	border-radius: 25px;
 
+
+.type {
+	width: 165px;
+	text-align: left;
+	float: left;
+	display: inline-block;
 }
-.csv{
+.slack_name{
+	margin:0;
+	font-size:13px;
+}
+
+.csv {
+	margin-top: 20px;
 	position: relative;
-	top: -195px;
-	left: 320px;
-	width: 250px;
+	width: 220px;
 	height: 100px;
+	left: 355px;
 	border: 1px solid #d1d1d1;
 	border-radius: 25px;
 	padding: 20px;
 }
-#buttonCSV,#upFile{
-	margin-bottom: 7px;
+.csv .button #buttonCSV,#upFile,#csvbtn{
+	position: absolute;
+	left:10px
 }
-#buttonCSV,#csvbtn{
+.csv .button #buttonCSV,#csvbtn{
 	border-radius: 25px;
 }
-#backbtn{
-	position: relative;
-	top: -141px;
-	left: 220px;
+.csv .button #upFile{
+	top:40%;
+	cursor: pointer;
 }
+.csv .button #csvbtn{
+	top:65%;
+}
+
+.actionbtn{
+	clear:both;
+	margin-top:40px;
+}
+
+
+
+
+
