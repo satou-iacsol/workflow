@@ -181,10 +181,10 @@ img {
 				<td align="left">
 					<%
 						if (session.getAttribute("fix_flag").equals("0")) {
-						session.setAttribute("fix_approverNumber", session.getAttribute("approverNumber_1"));
+						session.setAttribute("fix_approverNumber", "1");
 					%> <%=session.getAttribute("approverName_1")%> <%
  	} else {
- 	session.setAttribute("fix_approverNumber", session.getAttribute("approverNumber_2"));
+ 	session.setAttribute("fix_approverNumber", "2");
  %><%=session.getAttribute("approverName_2")%> <%
  	}
  %>
