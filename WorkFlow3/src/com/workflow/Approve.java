@@ -114,7 +114,7 @@ public class Approve extends HttpServlet {
 						pstmtNextData = con.prepareStatement(
 								"INSERT INTO data (number, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, approvernumber, approvercomment, approveddate, status, fix_delete_comment, delete_flag)SELECT ?, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, ?, '', '', '', '', delete_flag FROM data WHERE number = ?");
 						pstmtNextData.setString(1, nextNumber);
-						pstmtNextData.setString(2, (String) session.getAttribute("approve2Id"));
+						pstmtNextData.setString(2, "2");
 						pstmtNextData.setString(3, number);
 
 						sendAction = (String) session.getAttribute("approvedAction");
@@ -137,7 +137,7 @@ public class Approve extends HttpServlet {
 						pstmtNextData = con.prepareStatement(
 								"INSERT INTO data (number, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, approvernumber, approvercomment, approveddate, status, fix_delete_comment, delete_flag)SELECT ?, id, type, date_1, date_2, date_3, date_4, comment, tellnumber, bikou, flag, ?, '', '', '', '', delete_flag FROM data WHERE number = ?");
 						pstmtNextData.setString(1, nextNumber);
-						pstmtNextData.setString(2, (String) session.getAttribute("approve1Id"));
+						pstmtNextData.setString(2, "1");
 						pstmtNextData.setString(3, number);
 
 						sendAction = (String) session.getAttribute("approvedAction");
