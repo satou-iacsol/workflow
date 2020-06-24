@@ -55,6 +55,7 @@ public class SessionCreate extends HttpServlet {
 		String approvedOverComment = "";
 		String approvedStatus = "";
 		String preComment = "";
+		String approvedFixComment = "";
 
 		// データベース・テーブルに接続する準備
 		Connection con = null;
@@ -99,6 +100,7 @@ public class SessionCreate extends HttpServlet {
 					approvedRemarks = resultData.getString("bikou");
 					approvedOverComment = resultData.getString("approverComment");
 					approvedStatus = resultData.getString("status");
+					approvedFixComment = resultData.getString("fix_delete_comment");
 					break;
 				}
 			}
@@ -256,6 +258,7 @@ public class SessionCreate extends HttpServlet {
 		session.setAttribute("approvedSkip", flag);
 		session.setAttribute("approvedOverComment", approvedOverComment);
 		session.setAttribute("approvedStatus", approvedStatus);
+		session.setAttribute("approvedFixComment", approvedFixComment);
 		if (flag.equals("1")) {
 			session.setAttribute("preComment", "承認者１はスキップされました。");
 		} else {

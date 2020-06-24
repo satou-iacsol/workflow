@@ -75,8 +75,8 @@ img {
 </head>
 <body>
 	<header>
-		<img src="./imge/apple-touch-icon-120x120.png"
-			alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<img src="./imge/apple-touch-icon-120x120.png" alt="IACロゴ"
+			title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
 			onsubmit="return logout()">
 			<div align="right">
@@ -93,7 +93,7 @@ img {
 	<div align="center">有給休暇取得申請システム 承認画面</div>
 	<br>
 	<%
-		if (session.getAttribute("statusError") != null) {
+		if (!(session.getAttribute("statusError") == null || session.getAttribute("statusError").equals(""))) {
 		if (session.getAttribute("statusError").equals("error")) {
 	%>
 	<div align="center">
@@ -128,6 +128,7 @@ img {
 	<%
 		}
 	}
+	session.setAttribute("statusError", "");
 	%>
 	<div align="center">
 		<font color="red">未処理の申請<%=session.getAttribute("approvedItems")%>件
@@ -176,10 +177,9 @@ img {
 						if (Long.parseLong(list.get(i).get(3)) > Long.parseLong(list.get(i).get(4))) {
 					%>&nbsp;データ異常<%
 						} else {
-					%><%=Keyword.type((String) list.get(i).get(2))%>
-					<%
-						}
-					%>&nbsp;
+					%><%=Keyword.type((String) list.get(i).get(2))%> <%
+ 	}
+ %>&nbsp;
 				</td>
 				<td align="left">&nbsp;<%=list.get(i).get(7)%></td>
 			</tr>

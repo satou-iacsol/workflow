@@ -65,8 +65,8 @@ img {
 </head>
 <body>
 	<header>
-		<img src="./imge/apple-touch-icon-120x120.png"
-			alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<img src="./imge/apple-touch-icon-120x120.png" alt="IACロゴ"
+			title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
 			onsubmit="return logout()">
 			<div align="right">
@@ -83,7 +83,7 @@ img {
 	<div align="center">有給休暇取得申請システム 申請一覧画面</div>
 	<br>
 	<%
-		if (session.getAttribute("statusError") != null) {
+		if (!(session.getAttribute("statusError") == null || session.getAttribute("statusError").equals(""))) {
 		if (session.getAttribute("statusError").equals("error")) {
 	%>
 	<div align="center">
@@ -102,6 +102,7 @@ img {
 	<%
 		}
 	}
+	session.setAttribute("statusError", "");
 	%>
 	<br>
 	<table class="table">

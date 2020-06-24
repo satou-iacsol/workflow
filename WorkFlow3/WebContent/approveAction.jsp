@@ -136,6 +136,12 @@ img {
 				<td align="left">備考:</td>
 				<td colspan="3"><%=session.getAttribute("approvedRemarks")%></td>
 			</tr>
+			<%if (!session.getAttribute("approvedFixComment").equals("")) {%>
+			<tr>
+				<td align="left">修正コメント:</td>
+				<td colspan="3"><%=session.getAttribute("approvedFixComment")%></td>
+			</tr>
+			<%} %>
 			<tr>
 				<td colspan="5" align="center"><br>
 					<noscript>
@@ -223,6 +229,24 @@ img {
 		response.sendRedirect("login.jsp");
 	}
 	%>
+	<script type="text/javascript">
+	<!--
+		function formCheck() {
+			if (document.approveForm.action.value == "差戻") {
+				if (document.approveForm.comment.value == "") {
+					document.getElementById('notice').style.display = "block";
+					return false;
+				} else {
+					document.getElementById('notice').style.display = "none";
+					return true;
+				}
+			} else {
+				document.getElementById('notice').style.display = "none";
+				return true;
+			}
+		}
+	// -->
+	</script>
 	<script src="jquery-3.5.1.min.js"></script>
 	<script type="text/javascript" src="logout.js"></script>
 </body>
