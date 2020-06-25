@@ -30,7 +30,7 @@ import javax.servlet.http.Part;
  */
 @WebServlet("/UploadBelongsCSV")
 //location = "" をcsvを保存する場所に変更してください。
-@MultipartConfig(location = "C:\\Users\\seiya_saitou\\git\\workflow")
+@MultipartConfig(location = "/usr/libexec/tomcat9/webapps/tmp")
 public class UploadBelongsCSV extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
