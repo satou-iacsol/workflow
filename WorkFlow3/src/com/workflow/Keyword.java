@@ -11,7 +11,7 @@ public class Keyword {
 
 		try {
 			// 生のバイトのストリーム
-			FileInputStream fis = new FileInputStream("/usr/libexec/tomcat9/webapps/Keyword.ini");
+			FileInputStream fis = new FileInputStream("絶対パスを記述/Keyword.ini");
 			// SHIFT_JIS として読み込む為の準備
 			InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
 			// 行単位で読み込む為の準備
