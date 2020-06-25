@@ -62,6 +62,10 @@ public class Keyword {
 		return getIni("password");
 	}
 
+	static String directry() {
+		return getIni("directry");
+	}
+
 	static public String type(String type) {
 		return getIni("type" + type);
 	}
