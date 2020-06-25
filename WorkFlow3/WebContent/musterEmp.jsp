@@ -69,7 +69,7 @@ String uploadResult = (String) session.getAttribute("uploadResult");
 				</div>
 				<div class="approval" id="approval">
 					<div class="type">承認権限 ：</div>
-					<select class="approval_select">
+					<select class="approval_select" name="approvalP">
 						<option value="0" <%if (authority_M != null && authority_M.equals("0")) {%> selected <%}%>>0(承認権限なし)</option>
 						<option value="1" <%if (authority_M != null && authority_M.equals("1")) {%> selected <%}%>>1(承認権限あり)</option>
 						<option value="2" <%if (authority_M != null && authority_M.equals("2")) {%> selected <%}%>>2(管理者権限)</option>
