@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class Muster_DB_Import
+ * Servlet implementation class Belongs_DB_Import
  */
 @WebServlet("/Belongs_DB_Import")
 public class Belongs_DB_Import extends HttpServlet {

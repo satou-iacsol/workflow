@@ -27,7 +27,7 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 	<h1 class="h1">部署マスタメンテナンス</h1>
 	<div class="content">
 		<div class="selectionE">
-			<form action="<%=request.getContextPath()%>/Belongs_DB_Import" method="post">
+			<form action="<%=request.getContextPath()%>/Belongs_DB_Import" method="post" id="detClea">
 				部署選択：<select class="select" name="select" id="select">
 				<option value="">--- 更新・削除する場合は選択してください ---</option>
 				<% for(int i = 0;i < belongs_lists.size();i++){ %>
@@ -134,6 +134,23 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 			}else{
 				return true;
 			}
+		}
+		/*社員選択欄：未選択時のエラー処理*/
+		$(document).on('click','#deterbtn',function(){
+			let d = document.getElementById("detClea");
+			d.setAttribute("onsubmit","return selectCheck()");
+		});
+		$(document).on('click','#cleabtn',function(){
+			let d = document.getElementById("detClea");
+			d.removeAttr("onsubmit");
+		});
+
+		function selectCheck(){
+			let select = document.getElementById('select').value;
+				if(select == ""){
+					return false;
+				}
+				return true;
 		}
 
 	</script>
