@@ -45,7 +45,7 @@ public class UploadBelongsCSV extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// location = "" をcsvを保存する場所に変更してください。
-		String location = "C:\\Users\\seiya_saitou\\git\\workflow";
+		String location = Keyword.directry();
 
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");

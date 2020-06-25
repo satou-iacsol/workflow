@@ -53,7 +53,7 @@ String uploadResult = (String) session.getAttribute("uploadResult");
 			<div class="item">
 				<div class="employee_number" id="employee_number">
 					<div class="type">社員番号：</div>
-					<input type="text" id="numberE" name="numberE" maxlength="4"
+					<input type="text" id="numberE" name="numberE" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]+/i,'')"
 						<%if (flag_M.equals("1")) {%> readonly <%}%>
 						<%if (id_M != null) {%> value=<%=id_M%> <%}%>>
 				</div>
@@ -77,7 +77,7 @@ String uploadResult = (String) session.getAttribute("uploadResult");
 				</div>
 				<div class="affiliation" id="affiliation">
 					<div class="type">所属コード：</div>
-					<input type="text" id="affiliationC" name="affiliationC"
+					<input type="text" id="affiliationC" name="affiliationC" onKeyup="this.value=this.value.replace(/[^0-9]+/i,'')"
 						maxlength="4" <%if (affiliationcode_M != null) {%>
 						value=<%=affiliationcode_M%> <%}%>>
 				</div>
@@ -150,11 +150,10 @@ String uploadResult = (String) session.getAttribute("uploadResult");
 			let num = document.getElementById("numberE").value;
 			let name = document.getElementById("nameF").value;
 			let pass = document.getElementById("password").value;
-			let app = document.getElementById("approvalP").value;
 			let aff = document.getElementById("affiliationC").value;
 			let user = document.getElementById("userN").value;
 
-			if (num == "" || name == "" || pass == "" || app == "" || aff == "" || user == "") {
+			if (num == "" || name == "" || pass == "" || aff == "" || user == "") {
 				if (num == "") {
 					document.getElementById("employee_number").style.color = "red";
 				} else {
@@ -169,11 +168,6 @@ String uploadResult = (String) session.getAttribute("uploadResult");
 					document.getElementById("passWord").style.color = "red";
 				} else {
 					document.getElementById("passWord").style.color = "black";
-				}
-				if (app == "") {
-					document.getElementById("approval").style.color = "red";
-				}else {
-					document.getElementById("approval").style.color = "black";
 				}
 				if (aff == "") {
 					document.getElementById("affiliation").style.color = "red";

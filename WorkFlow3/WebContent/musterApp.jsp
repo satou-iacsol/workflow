@@ -63,10 +63,10 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 		<div class="csv">
 			<form action="DownloadCSV" method="post">
 				<div class="button">
-					<button type="submit" id="buttonCSV" name="buttonCSV" value="employeeCSV" onClick="downloadCSV.submit();">.csvダウンロード</button>
+					<button type="submit" id="buttonCSV" name="buttonCSV" value="belongsCSV" onClick="downloadCSV.submit();">.csvダウンロード</button>
 				</div>
 			</form>
-			<form action="UploadEmployeeCSV" method="post" enctype="multipart/form-data">
+			<form action="UploadBelongsCSV" method="post" enctype="multipart/form-data">
 				<div class="button">
 					<input type="file" id="upFile" name="upCSV" /><button id="csvbtn"type="submit">.csvアップロード</button>
 				</div>
