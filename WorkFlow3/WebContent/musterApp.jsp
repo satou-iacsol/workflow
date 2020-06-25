@@ -74,7 +74,7 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 		</div>
 			<div class="actionbtn">
 			<div class="button">
-				<button type="submit" id="newbtn" name="submitbtn" form="Belongs_DB_Import" value="new">新規登録</button>
+				<button type="submit" id="newbtn" name="submitbtn" form="Belongs_DB_Import" value="new" <%if (flag_M.equals("1")) {%> disabled <%}%>>新規登録</button>
 				<button type="submit" id="updatebtn" name="submitbtn" form="Belongs_DB_Import" value="update">更新</button>
 				<button type="submit" id="deletebtn" name="submitbtn" form="Belongs_DB_Import" value="delete">削除</button>
 				<button id="backbtn" onclick="location.href='menu.jsp'">もどる</button>
