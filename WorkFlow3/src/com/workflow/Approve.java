@@ -123,7 +123,7 @@ public class Approve extends HttpServlet {
 							pstmtNextData.executeUpdate();
 						} catch (Exception e) {
 							session.setAttribute("statusError", "error");
-							response.sendRedirect("approveChoose.jsp");
+							request.getServletContext().getRequestDispatcher("/ApprovePick").forward(request, response);
 						}
 					}
 				} else if (((String) session.getAttribute("approvedAction")).equals("差戻")) {
@@ -146,7 +146,7 @@ public class Approve extends HttpServlet {
 							pstmtNextData.executeUpdate();
 						} catch (Exception e) {
 							session.setAttribute("statusError", "error");
-							response.sendRedirect("approveChoose.jsp");
+							request.getServletContext().getRequestDispatcher("/ApprovePick").forward(request, response);
 						}
 					}
 				}
@@ -160,18 +160,18 @@ public class Approve extends HttpServlet {
 				} catch (Exception e) {
 					con.rollback();
 					session.setAttribute("statusError", "error");
-					response.sendRedirect("approveChoose.jsp");
+					request.getServletContext().getRequestDispatcher("/ApprovePick").forward(request, response);
 				}
 			} else {
 				// ステータスが空白でなかった場合、排他を閉じるためコミット
 				con.commit();
 				session.setAttribute("statusError", status);
-				response.sendRedirect("approveChoose.jsp");
+				request.getServletContext().getRequestDispatcher("/ApprovePick").forward(request, response);
 			}
 
 		} catch (SQLException e) {
 			session.setAttribute("statusError", "error");
-			response.sendRedirect("approveChoose.jsp");
+			request.getServletContext().getRequestDispatcher("/ApprovePick").forward(request, response);
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
