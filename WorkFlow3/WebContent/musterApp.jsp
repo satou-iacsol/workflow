@@ -142,7 +142,7 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 		});
 		$(document).on('click','#cleabtn',function(){
 			let d = document.getElementById("detClea");
-			d.removeAttr("onsubmit");
+			d.removeAttribute("onsubmit");
 		});
 
 		function selectCheck(){
