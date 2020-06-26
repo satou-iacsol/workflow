@@ -38,6 +38,7 @@ public class ApproveFix extends HttpServlet {
 		@SuppressWarnings("unchecked")
 		ArrayList<String> historyList = (ArrayList<String>) session.getAttribute("historyList");
 
+		boolean didntChenge = true;
 		boolean didntFix = false;
 
 		// データベース・テーブルに接続する準備
@@ -69,9 +70,10 @@ public class ApproveFix extends HttpServlet {
 
 				// 申請番号(最新)と一致するデータを取得
 				if (resultData.getString("number").equals(historyList.get(1))) {
-					// ステータスが空白以外だと承認者が編集済
+					// 選択時に空白で実行時に空白以外だと承認者が編集済
 					status = resultData.getString("status");
-					if (!status.equals("")) {
+					if (session.getAttribute("approveedFinish").equals("") && !status.equals("")) {
+						didntChenge = false;
 						break;
 					}
 
@@ -93,8 +95,8 @@ public class ApproveFix extends HttpServlet {
 					break;
 				}
 			}
-			if (status.equals("")) {
-				if (didntFix || request.getAttribute("approver_switch").equals("1")) {
+			if (didntChenge) {
+				if (didntFix || session.getAttribute("approver_switch").equals("1")) {
 
 					String nextNumber = historyList.get(1).substring(0, 14)
 							+ String.format("%02d", Integer.parseInt(historyList.get(1).substring(14)) + 1);
@@ -115,13 +117,17 @@ public class ApproveFix extends HttpServlet {
 					pstmtNextData.setString(13, historyList.get(1));
 
 					try {
-						pstmtData.executeUpdate();
+						if (resultData.getString("status").equals("")) {
+							pstmtData.executeUpdate();
+						}
 						pstmtNextData.executeUpdate();
 						con.commit();
 					} catch (Exception e) {
 						con.rollback();
 						session.setAttribute("statusError", "error");
-						request.getServletContext().getRequestDispatcher("/ApproveHistoryPick").forward(request, response);
+						request.getServletContext().getRequestDispatcher("/ApproveHistoryPick").forward(request,
+								response);
+						e.printStackTrace();
 					}
 
 					String approve1notification = "0";
@@ -162,18 +168,19 @@ public class ApproveFix extends HttpServlet {
 					pstmtNextData.setString(12, historyList.get(1));
 
 					try {
-						pstmtData.executeUpdate();
 						pstmtNextData.executeUpdate();
 						con.commit();
+						response.sendRedirect("menu.jsp");
 					} catch (Exception e) {
 						con.rollback();
 						session.setAttribute("statusError", "error");
-						request.getServletContext().getRequestDispatcher("/ApproveHistoryPick").forward(request, response);
+						request.getServletContext().getRequestDispatcher("/ApproveHistoryPick").forward(request,
+								response);
+						e.printStackTrace();
 					}
-					response.sendRedirect("menu.jsp");
 				}
 			} else {
-				// ステータスが空白でなかった場合、排他を閉じるためコミット
+				// 上記処理を通らないため、排他を閉じるためコミット
 				con.commit();
 				session.setAttribute("statusError", status);
 				request.getServletContext().getRequestDispatcher("/ApproveHistoryPick").forward(request, response);

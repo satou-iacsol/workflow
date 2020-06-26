@@ -37,9 +37,9 @@ public class ApproveHistoryCreate extends HttpServlet {
 
 		ArrayList<String> historyList = new ArrayList<>();
 		@SuppressWarnings("unchecked")
-		ArrayList<ArrayList<String>> historysList = (ArrayList<ArrayList<String>>)session.getAttribute("historysList");
+		ArrayList<ArrayList<String>> historysList = (ArrayList<ArrayList<String>>) session.getAttribute("historysList");
 		for (ArrayList<String> list : historysList) {
-			if(list.get(1).equals(request.getParameter("number"))) {
+			if (list.get(1).equals(request.getParameter("number"))) {
 				historyList = list;
 				break;
 			}
@@ -90,6 +90,7 @@ public class ApproveHistoryCreate extends HttpServlet {
 					flag = resultData.getString("flag");
 					fix_delete_comment = resultData.getString("fix_delete_comment");
 					approverComment = resultData.getString("approverComment");
+					session.setAttribute("approveedFinish", resultData.getString("approverComment"));
 					break;
 				}
 			}
@@ -151,7 +152,9 @@ public class ApproveHistoryCreate extends HttpServlet {
 		session.setAttribute("historyList", list);
 
 		if (request.getParameter("action").equals("history")) {
-			session.setAttribute("flowList", flowListCreate(number.substring(0, 14), (String) session.getAttribute("approverNumber_1") , (String) session.getAttribute("approverNumber_2")));
+			session.setAttribute("flowList",
+					flowListCreate(number.substring(0, 14), (String) session.getAttribute("approverNumber_1"),
+							(String) session.getAttribute("approverNumber_2")));
 			response.sendRedirect("approveHistory.jsp");
 		} else if (request.getParameter("action").equals("fix")) {
 			response.sendRedirect("approveFixAction.jsp");
@@ -160,7 +163,8 @@ public class ApproveHistoryCreate extends HttpServlet {
 		}
 	}
 
-	protected ArrayList<ArrayList<String>> flowListCreate(String number14, String approverNumber_1, String approverNumber_2) {
+	protected ArrayList<ArrayList<String>> flowListCreate(String number14, String approverNumber_1,
+			String approverNumber_2) {
 		ArrayList<ArrayList<String>> sortList = new ArrayList<>();
 		ArrayList<ArrayList<String>> flowList = new ArrayList<>();
 

@@ -40,6 +40,7 @@ public class ApproveDelete extends HttpServlet {
 
 		String approvedStatus = historyList.get(7);
 
+		boolean didntChenge = true;
 		// データベース・テーブルに接続する準備
 		Connection con = null;
 		Statement stmtData = null;
@@ -70,12 +71,16 @@ public class ApproveDelete extends HttpServlet {
 				// 申請番号(最新)と一致するデータを取得
 				if (resultData.getString("number").equals(historyList.get(1))) {
 					status = resultData.getString("status");
+					// 選択時に空白で実行時に空白以外だと承認者が編集済
+					if (session.getAttribute("approveedFinish").equals("") && !status.equals("")) {
+						didntChenge = false;
+						break;
+					}
 					break;
 				}
 			}
 
-			// ステータスが空白以外だと承認者が編集済
-			if (status.equals("") || status.equals("差戻")) {
+			if (didntChenge) {
 				// SELECT文の作成・実行
 				stmtData1 = con.createStatement();
 				String sqlData1 = "SELECT * from data";
@@ -118,9 +123,10 @@ public class ApproveDelete extends HttpServlet {
 						con.commit();
 					} catch (Exception e) {
 						con.rollback();
+						e.printStackTrace();
 					}
 				}
-				if (approvedStatus.equals("差戻")) {
+				if (session.getAttribute("approveedFinish").equals("差戻")) {
 					response.sendRedirect("menu.jsp");
 				} else {
 					String approve1notification = "0";
@@ -143,7 +149,7 @@ public class ApproveDelete extends HttpServlet {
 					request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
 				}
 			} else {
-				// ステータスが空白でなかった場合、排他を閉じるためコミット
+				// 上記処理を通らないため、排他を閉じるためコミット
 				con.commit();
 				session.setAttribute("statusError", status);
 				request.getServletContext().getRequestDispatcher("/ApproveHistoryPick").forward(request, response);

@@ -79,6 +79,7 @@ public class ApproveHistoryPick extends HttpServlet {
 				String approverId = "";
 				String flow = "";
 				String result = "";
+				String fix = "";
 
 				if (resultData.getString("id").equals(id) && resultData.getString("delete_flag").equals("0")
 						&& resultData.getString("number").substring(14).equals("01")) {
@@ -118,6 +119,7 @@ public class ApproveHistoryPick extends HttpServlet {
 								break;
 							}
 							status = resultData2.getString("status");
+							fix = resultData2.getString("fix_delete_comment");
 							break;
 						}
 					}
@@ -150,7 +152,7 @@ public class ApproveHistoryPick extends HttpServlet {
 						String beforeApprover = "";
 						String afterApprover = "";
 
-						if (numberNow.substring(14).equals("01")) {
+						if (numberNow.substring(14).equals("01") || !fix.equals("")) {
 							stmtEmployee = con.createStatement();
 							String sqlEmployee = "SELECT * from employee_muster";
 							resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
