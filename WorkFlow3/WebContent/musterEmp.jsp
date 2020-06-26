@@ -41,8 +41,7 @@ String uploadResult = (String) session.getAttribute("uploadResult");
 						}
 					%>
 				</select>
-				<button type="submit" id="deterbtn" name="submitbtn"
-					value="determination">決定</button>
+				<button type="submit" id="deterbtn" name="submitbtn" value="determination">決定</button>
 				<button type="submit" id="cleabtn" name="submitbtn" value="clea">クリア</button>
 			</form>
 			</div>
@@ -194,7 +193,7 @@ String uploadResult = (String) session.getAttribute("uploadResult");
 		});
 		$(document).on('click','#cleabtn',function(){
 			let d = document.getElementById("detClea");
-			d.removeAttr("onsubmit");
+			d.removeAttribute("onsubmit");
 		});
 
 		function selectCheck(){
