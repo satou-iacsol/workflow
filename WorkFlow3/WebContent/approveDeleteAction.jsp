@@ -148,7 +148,7 @@ img {
 			<tr>
 				<td align="left" id="delete_col">取消コメント:</td>
 				<td colspan="3"><textarea id="fix_delete_comment"
-						name="fix_delete_comment" rows="1" cols="38" maxlength="30"
+						name="fix_delete_comment" rows="1" cols="38" maxlength="50"
 						required="required"></textarea></td>
 			</tr>
 			<tr>

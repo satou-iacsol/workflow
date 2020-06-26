@@ -175,7 +175,7 @@ img {
 			<tr>
 				<td align="left" id="reason_col">取得事由:</td>
 				<td colspan="3"><textarea id="fix_comment" name="fix_comment"
-						rows="1" cols="38" maxlength="30" required="required"><%=historyList.get(8)%></textarea></td>
+						rows="1" cols="38" maxlength="50" required="required"><%=historyList.get(8)%></textarea></td>
 			</tr>
 			<tr>
 				<td align="left" id="tell_col">連絡先:</td>
@@ -187,12 +187,12 @@ img {
 			<tr>
 				<td align="left" id="bikou">備考:</td>
 				<td colspan="3"><textarea name="fix_bikou" rows="1" cols="38"
-						maxlength="30"><%=historyList.get(10)%></textarea></td>
+						maxlength="50"><%=historyList.get(10)%></textarea></td>
 			</tr>
 			<tr>
 				<td align="left" id="fix_col">修正コメント:</td>
 				<td colspan="3"><textarea id="fix_delete_comment"
-						name="fix_delete_comment" rows="1" cols="38" maxlength="30"
+						name="fix_delete_comment" rows="1" cols="38" maxlength="50"
 						required="required"></textarea></td>
 			</tr>
 			<tr>
