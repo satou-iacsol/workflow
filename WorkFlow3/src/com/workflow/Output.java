@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -70,6 +72,8 @@ public class Output extends HttpServlet {
 		//		String approver = (String) session.getAttribute("approver");
 		String approver_1_2 = (String) session.getAttribute("approver_1_2");
 		String flag = (String) session.getAttribute("flag");
+		//申請結果通知用変数
+		String notification = "";
 
 		String type_1 = "01", type_2 = "02", type_3 = "03", type_4 = "04", type_5 = "05", type_6 = "06", type_7 = "07",
 				type_8 = "08", type_9 = "09", type_10 = "10", type_11 = "11", type_12 = "12", type_13 = "13",
@@ -98,6 +102,8 @@ public class Output extends HttpServlet {
 		// データベース・テーブルに接続する準備
 		Connection con = null;
 		PreparedStatement ps = null;
+		Statement stmtData = null;
+		ResultSet resultData = null;
 
 		// 接続文字列の設定
 		String url = Keyword.url();
@@ -112,6 +118,20 @@ public class Output extends HttpServlet {
 			con = DriverManager.getConnection(url, user, password);
 			con.setAutoCommit(false);
 
+			//申請する日付が既にDBに登録されていないかチェック
+			stmtData = con.createStatement();
+			String sqlData = "SELECT * FROM data";
+			resultData = stmtData.executeQuery(sqlData);
+			while (resultData.next()) {
+				String ver = resultData.getString("number");
+				if (approvednumber.contentEquals(ver)) {
+					notification = "既に申請されたデータです。";
+					break;
+				}
+			}
+
+			if (notification == "") {
+			//★DB登録★
 			//実行するSQL文とパラメータを指定する
 			ps = con.prepareStatement(sql);
 			ps.setString(1, approvednumber);
@@ -151,9 +171,9 @@ public class Output extends HttpServlet {
 			ps.setString(7, time_2);
 			ps.setString(8, comment);
 			ps.setString(9, tellnumber);
-			if(bikou != null) {
+			if (bikou != null) {
 				ps.setString(10, bikou);
-			}else {
+			} else {
 				ps.setString(10, "");
 			}
 			ps.setString(11, flag);
@@ -174,7 +194,12 @@ public class Output extends HttpServlet {
 			//コミット
 			con.commit();
 
-		} catch (Exception e) {
+			notification = "申請が完了しました。";
+			}
+
+		} catch (
+
+		Exception e) {
 			e.printStackTrace();
 		} finally {
 			// クローズ処理
@@ -184,6 +209,12 @@ public class Output extends HttpServlet {
 				}
 				if (con != null) {
 					con.close();
+				}
+				if (stmtData != null) {
+					stmtData.close();
+				}
+				if (resultData != null) {
+					resultData.close();
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -202,7 +233,9 @@ public class Output extends HttpServlet {
 		session.setAttribute("approverName_2", approverName_2);
 		session.setAttribute("sendAction", "申請");
 		session.setAttribute("approvedNumber", approvednumber);
+		//申請結果通知用変数
+		session.setAttribute("notification", notification);
 
-		request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
+		response.sendRedirect("shinsei.jsp");
 	}
 }
