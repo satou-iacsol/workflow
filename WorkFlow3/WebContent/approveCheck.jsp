@@ -135,6 +135,12 @@ img {
 				<td align="left">備考:</td>
 				<td colspan="3"><%=session.getAttribute("approvedRemarks")%></td>
 			</tr>
+			<%if (!session.getAttribute("approvedFixComment").equals("")) {%>
+			<tr>
+				<td align="left">修正コメント:</td>
+				<td colspan="3"><%=session.getAttribute("approvedFixComment")%></td>
+			</tr>
+			<%} %>
 			<tr>
 				<td><br></td>
 			</tr>
