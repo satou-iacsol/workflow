@@ -6,6 +6,7 @@
 	// Shinsei.javaのデータ受け取り
 request.setCharacterEncoding("UTF8");
 final String referenceDirectory = (String) session.getAttribute("referenceDirectory");
+String notification = (String) session.getAttribute("notification");
 %>
 
 <!DOCTYPE html>
@@ -40,6 +41,8 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 	<div class="hoge">
 		<h1>有給休暇取得申請システム 申請画面</h1>
 	</div>
+
+	<%if(notification != null){ %><div style="color:red;font-weight:bold;text-align:center;"><%=notification %></div><%} %>
 
 	<br>
 	<div class="margin">
@@ -90,7 +93,7 @@ final String referenceDirectory = (String) session.getAttribute("referenceDirect
 
 		</form>
 		<button type="submit" form="Confirmation">確認</button>
-		<button onclick="history.back()">キャンセル</button>
+		<button onclick="location.href='menu.jsp'">キャンセル</button>
 	</div>
 	<%
 		} catch (Exception e) {
