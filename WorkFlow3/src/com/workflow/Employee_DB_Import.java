@@ -60,6 +60,8 @@ public class Employee_DB_Import extends HttpServlet {
 		String userN = request.getParameter("userN");
 		String sel = request.getParameter("select");
 		ArrayList<String> emp = new ArrayList<>();
+		//通知用
+		String uploadResult = "";
 		//データベース・テーブルに接続する準備
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -79,14 +81,14 @@ public class Employee_DB_Import extends HttpServlet {
 			//PostgreSQLに接続
 			con = DriverManager.getConnection(url, user, password);
 			con.setAutoCommit(false);
+			//SELECT文の実行
+			stmtEmployee = con.createStatement();
+			String sqlEmployee = "SELECT * from employee_muster";
+			resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
 			//★決定ボタン押下時の処理★
 			if (submitbtn.equals("determination")) {
-				//SELECT文の実行
-				stmtEmployee = con.createStatement();
-				String sqlEmployee = "SELECT * from employee_muster";
-				resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
 				while (resultEmployee.next()) {
-					String ver = resultEmployee.getString("fullname");
+					String ver = resultEmployee.getString("id");
 					if (ver.equals(select)) {
 						emp.add(resultEmployee.getString("fullname"));
 						emp.add(resultEmployee.getString("id"));
@@ -100,58 +102,90 @@ public class Employee_DB_Import extends HttpServlet {
 				flag_M = "1";
 			}
 			//★クリアボタン押下時の処理★
-			if(submitbtn.contentEquals("clea")) {
+			if (submitbtn.contentEquals("clea")) {
 				flag_M = "0";
 			}
 			//★新規登録ボタン押下時の処理★
 			if (submitbtn.equals("new")) {
-				//SQL文
-				String sql = "INSERT INTO employee_muster values(?,?,?,?,?,?)";
-				//実行するSQL文とパラメータを指定する
-				ps = con.prepareStatement(sql);
-				ps.setString(1, numberE);
-				ps.setString(2, pass);
-				ps.setString(3, approvalP);
-				ps.setString(4, nameF);
-				ps.setString(5, affiliationC);
-				ps.setString(6, userN);
-				//INSERT文を実行
-				ps.executeUpdate();
-				//コミット
-				con.commit();
+				//idの重複チェック
+				resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
+				while (resultEmployee.next()) {
+					String ver = resultEmployee.getString("id");
+					if (numberE.equals(ver)) {
+						uploadResult = "idが重複しています。";
+						break;
+					}
+				}
+				//idが重複していなければ以下の処理を実行
+				if (uploadResult == "") {
+					//SQL文
+					String sql = "INSERT INTO employee_muster values(?,?,?,?,?,?)";
+					//実行するSQL文とパラメータを指定する
+					ps = con.prepareStatement(sql);
+					ps.setString(1, numberE);
+					ps.setString(2, pass);
+					ps.setString(3, approvalP);
+					ps.setString(4, nameF);
+					ps.setString(5, affiliationC);
+					ps.setString(6, userN);
+					//INSERT文を実行
+					ps.executeUpdate();
+					//コミット
+					con.commit();
+
+					uploadResult = "登録が完了しました。";
+				}
 			}
 			//★更新ボタン押下時の処理★
 			if (submitbtn.equals("update")) {
-				//SQL文
-				String sql = "UPDATE employee_muster SET pass=?, authority=?, fullname=?, affiliationcode=?, username=? WHERE id=?";
-				ps = con.prepareStatement(sql);
-				ps.setString(1, pass);
-				ps.setString(2, approvalP);
-				ps.setString(3, nameF);
-				ps.setString(4, affiliationC);
-				ps.setString(5, userN);
-				ps.setString(6, numberE);
-				//UPDATE文を実行
-				ps.executeUpdate();
-				//コミット
-				con.commit();
+				//存在するidかチェック
+				resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
+				while (resultEmployee.next()) {
+					String ver = resultEmployee.getString("id");
+					if (numberE.equals(ver)) {
+						//SQL文
+						String sql = "UPDATE employee_muster SET pass=?, authority=?, fullname=?, affiliationcode=?, username=? WHERE id=?";
+						ps = con.prepareStatement(sql);
+						ps.setString(1, pass);
+						ps.setString(2, approvalP);
+						ps.setString(3, nameF);
+						ps.setString(4, affiliationC);
+						ps.setString(5, userN);
+						ps.setString(6, numberE);
+						//UPDATE文を実行
+						ps.executeUpdate();
+						//コミット
+						con.commit();
 
+						uploadResult = "更新が完了しました。";
+						break;
+					}
+				}
+				if(uploadResult == "") {uploadResult = "idが存在しません。";}
 			}
 			//★削除ボタン押下時の処理★
 			if (submitbtn.equals("delete")) {
-				//SQL文
-				String sql = "DELETE FROM employee_muster WHERE id = ?";
-				ps = con.prepareStatement(sql);
-				ps.setString(1, numberE);
-				//DELETE文を実行
-				ps.executeUpdate();
-				//コミット
-				con.commit();
+				//存在するidかチェック
+				resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
+				while (resultEmployee.next()) {
+					String ver = resultEmployee.getString("id");
+					if (numberE.equals(ver)) {
+						//SQL文
+						String sql = "DELETE FROM employee_muster WHERE id = ?";
+						ps = con.prepareStatement(sql);
+						ps.setString(1, numberE);
+						//DELETE文を実行
+						ps.executeUpdate();
+						//コミット
+						con.commit();
+
+						uploadResult = "削除が完了しました。";
+					}
+				}
+				if(uploadResult == "") {uploadResult = "idが存在しません。";}
 			}
 
 			//名前一覧出力用
-			stmtEmployee = con.createStatement();
-			String sqlEmployee = "SELECT * from employee_muster";
 			resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
 			while (resultEmployee.next()) {
 				ArrayList<String> list = new ArrayList<>();
@@ -193,7 +227,7 @@ public class Employee_DB_Import extends HttpServlet {
 			session.setAttribute("username_M", emp.get(5));
 			session.setAttribute("flag_M", flag_M);
 		}
-		if(submitbtn.equals("clea")) {
+		if (submitbtn.equals("clea")) {
 			session.setAttribute("fullname_M", "");
 			session.setAttribute("id_M", "");
 			session.setAttribute("pass_M", "");
@@ -202,7 +236,7 @@ public class Employee_DB_Import extends HttpServlet {
 			session.setAttribute("username_M", "");
 			session.setAttribute("flag_M", flag_M);
 		}
-		if(submitbtn.equals("update")) {
+		if (submitbtn.equals("update")) {
 			session.setAttribute("fullname_M", nameF);
 			session.setAttribute("id_M", numberE);
 			session.setAttribute("pass_M", pass);
@@ -210,8 +244,10 @@ public class Employee_DB_Import extends HttpServlet {
 			session.setAttribute("affiliationcode_M", affiliationC);
 			session.setAttribute("username_M", userN);
 		}
+		session.setAttribute("uploadResult", uploadResult);
 		session.setAttribute("lists", lists);
 		session.setAttribute("sel", sel);
 		response.sendRedirect("musterEmp.jsp");
+
 	}
 }

@@ -27,6 +27,14 @@ String uploadResult = (String) session.getAttribute("uploadResult");
 </head>
 <body>
 	<h1 class="h1">社員マスタメンテナンス</h1>
+					<%=lists.get(0).get(0) %>
+					<%
+						if (uploadResult != null) {
+					%><div style="color:red;font-weight:bold;text-align:center;margin-top:10px;margin-bottom:0;"><%=uploadResult%></div>
+					<%
+						}
+					session.setAttribute("uploadResult", "");
+					%>
 	<div class="content">
 		<div class="selectionE">
 			<div class="deter_select">
@@ -36,7 +44,7 @@ String uploadResult = (String) session.getAttribute("uploadResult");
 					<%
 						for (int i = 0; i < lists.size(); i++) {
 					%>
-					<option value=<%=lists.get(i).get(3)%>><%=lists.get(i).get(3)%></option>
+					<option value=<%=lists.get(i).get(0)%>><%=lists.get(i).get(3)%> (<%=lists.get(i).get(0) %>)</option>
 					<%
 						}
 					%>
@@ -85,13 +93,6 @@ String uploadResult = (String) session.getAttribute("uploadResult");
 					<input type="text" id="userN" name="userN" maxlength="50"
 						<%if (username_M != null) {%> value=<%=username_M%> <%}%>>
 					<p class="slack_name">(slack)</p>
-					<%
-						if (uploadResult != null) {
-					%><%=uploadResult%>
-					<%
-						}
-					session.setAttribute("uploadResult", "");
-					%>
 				</div>
 			</div>
 		</form>
