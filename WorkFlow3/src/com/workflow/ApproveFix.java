@@ -133,6 +133,9 @@ public class ApproveFix extends HttpServlet {
 							} else if (historyList.get(5).equals("2")
 									&& historyList.get(11).equals("1")) {
 								approve2notification = "1";
+							} else {
+								approve1notification = "1";
+								approve2notification = "1";
 							}
 						} else {
 							approve1notification = "1";
