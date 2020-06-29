@@ -27,7 +27,6 @@ String uploadResult = (String) session.getAttribute("uploadResult");
 </head>
 <body>
 	<h1 class="h1">社員マスタメンテナンス</h1>
-					<%=lists.get(0).get(0) %>
 					<%
 						if (uploadResult != null) {
 					%><div style="color:red;font-weight:bold;text-align:center;margin-top:10px;margin-bottom:0;"><%=uploadResult%></div>
