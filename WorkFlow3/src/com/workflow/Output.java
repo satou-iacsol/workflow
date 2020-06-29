@@ -236,6 +236,6 @@ public class Output extends HttpServlet {
 		//申請結果通知用変数
 		session.setAttribute("notification", notification);
 
-		response.sendRedirect("shinsei.jsp");
+		request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
 	}
 }

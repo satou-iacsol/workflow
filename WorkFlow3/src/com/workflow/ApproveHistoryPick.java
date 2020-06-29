@@ -76,6 +76,7 @@ public class ApproveHistoryPick extends HttpServlet {
 				String type = "";
 				String fromDateTime = "";
 				String toDateTime = "";
+				String approverNumber = "";
 				String approverId = "";
 				String flow = "";
 				String result = "";
@@ -112,12 +113,13 @@ public class ApproveHistoryPick extends HttpServlet {
 							toDateTime = resultData2.getString("date_2") + resultData2.getString("date_4");
 							switch (resultData2.getString("approverNumber")) {
 							case "1":
-								approverId = (String) session.getAttribute("approverNumber_1");
+								approverNumber = (String) session.getAttribute("approverNumber_1");
 								break;
 							case "2":
-								approverId = (String) session.getAttribute("approverNumber_2");
+								approverNumber = (String) session.getAttribute("approverNumber_2");
 								break;
 							}
+							approverId = resultData2.getString("approverNumber");
 							status = resultData2.getString("status");
 							fix = resultData2.getString("fix_delete_comment");
 							break;
@@ -131,7 +133,7 @@ public class ApproveHistoryPick extends HttpServlet {
 						String sqlEmployee = "SELECT * from employee_muster";
 						resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
 						while (resultEmployee.next()) {
-							if (resultEmployee.getString("id").equals(approverId)) {
+							if (resultEmployee.getString("id").equals(approverNumber)) {
 								flow = resultEmployee.getString("fullname");
 								break;
 							}
@@ -142,7 +144,7 @@ public class ApproveHistoryPick extends HttpServlet {
 						String sqlEmployee = "SELECT * from employee_muster";
 						resultEmployee = stmtEmployee.executeQuery(sqlEmployee);
 						while (resultEmployee.next()) {
-							if (resultEmployee.getString("id").equals(approverId)) {
+							if (resultEmployee.getString("id").equals(approverNumber)) {
 								flow = resultEmployee.getString("fullname");
 								break;
 							}
@@ -198,7 +200,7 @@ public class ApproveHistoryPick extends HttpServlet {
 						String sqlEmployee1 = "SELECT * from employee_muster";
 						resultEmployee1 = stmtEmployee1.executeQuery(sqlEmployee1);
 						while (resultEmployee1.next()) {
-							if (resultEmployee1.getString("id").equals(approverId)) {
+							if (resultEmployee1.getString("id").equals(approverNumber)) {
 								afterApprover = resultEmployee1.getString("fullname");
 								break;
 							}

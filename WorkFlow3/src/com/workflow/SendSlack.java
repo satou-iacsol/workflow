@@ -42,7 +42,7 @@ public class SendSlack extends HttpServlet {
 
 		String sendAction = (String) session.getAttribute("sendAction");
 
-		if(((String) session.getAttribute("sendAction")).equals("申請")) {
+		if (((String) session.getAttribute("sendAction")).equals("申請")) {
 			String number = (String) session.getAttribute("approvedNumber");
 			String approverId = (String) session.getAttribute("approverNumber_1");
 
@@ -121,8 +121,11 @@ public class SendSlack extends HttpServlet {
 
 			}
 		}
-
-		response.sendRedirect("menu.jsp");
+		if (((String) session.getAttribute("sendAction")).equals("申請")) {
+			response.sendRedirect("shinsei.jsp");
+		} else {
+			response.sendRedirect("menu.jsp");
+		}
 	}
 
 	private void sendSlack(String userName, String message) throws IOException {
