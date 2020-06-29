@@ -77,7 +77,7 @@ public class ApproveFix extends HttpServlet {
 						break;
 					}
 
-					if (resultData.getString("fix_delete_comment").equals("")) {
+					if (resultData.getString("fix_delete_comment").equals("") || session.getAttribute("approver_switch").equals("1")) {
 
 						didntFix = true;
 
@@ -96,7 +96,7 @@ public class ApproveFix extends HttpServlet {
 				}
 			}
 			if (didntChenge) {
-				if (didntFix || session.getAttribute("approver_switch").equals("1")) {
+				if (didntFix) {
 
 					String nextNumber = historyList.get(1).substring(0, 14)
 							+ String.format("%02d", Integer.parseInt(historyList.get(1).substring(14)) + 1);
@@ -122,6 +122,27 @@ public class ApproveFix extends HttpServlet {
 						}
 						pstmtNextData.executeUpdate();
 						con.commit();
+
+						String approve1notification = "0";
+						String approve2notification = "0";
+
+						if (session.getAttribute("approver_switch").equals("0")) {
+							if (historyList.get(5).equals("1")
+									&& historyList.get(11).equals("0")) {
+								approve1notification = "1";
+							} else if (historyList.get(5).equals("2")
+									&& historyList.get(11).equals("1")) {
+								approve2notification = "1";
+							}
+						} else {
+							approve1notification = "1";
+							approve2notification = "1";
+						}
+
+						session.setAttribute("sendAction", "修正");
+						session.setAttribute("approve1notification", approve1notification);
+						session.setAttribute("approve2notification", approve2notification);
+						request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
 					} catch (Exception e) {
 						con.rollback();
 						session.setAttribute("statusError", "error");
@@ -129,27 +150,6 @@ public class ApproveFix extends HttpServlet {
 								response);
 						e.printStackTrace();
 					}
-
-					String approve1notification = "0";
-					String approve2notification = "0";
-
-					if (session.getAttribute("approver_switch").equals("0")) {
-						if (historyList.get(5).equals("1")
-								&& historyList.get(11).equals("0")) {
-							approve1notification = "1";
-						} else if (historyList.get(5).equals("2")
-								&& historyList.get(11).equals("1")) {
-							approve2notification = "1";
-						}
-					} else {
-						approve1notification = "1";
-						approve2notification = "1";
-					}
-
-					session.setAttribute("sendAction", "修正");
-					session.setAttribute("approve1notification", approve1notification);
-					session.setAttribute("approve2notification", approve2notification);
-					request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
 				} else {
 
 					pstmtNextData = con.prepareStatement(
