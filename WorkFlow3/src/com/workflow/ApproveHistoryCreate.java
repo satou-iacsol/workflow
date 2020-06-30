@@ -68,6 +68,7 @@ public class ApproveHistoryCreate extends HttpServlet {
 			String tellnumber = "";
 			String bikou = "";
 			String flag = "";
+			String approverNumber = "";
 			String fix_delete_comment = "";
 			String approverComment = "";
 			String approve1Comment = "";
@@ -88,6 +89,7 @@ public class ApproveHistoryCreate extends HttpServlet {
 					tellnumber = resultData.getString("tellnumber");
 					bikou = resultData.getString("bikou");
 					flag = resultData.getString("flag");
+					approverNumber = resultData.getString("approverNumber");
 					fix_delete_comment = resultData.getString("fix_delete_comment");
 					approverComment = resultData.getString("approverComment");
 					session.setAttribute("approveedFinish", resultData.getString("approverComment"));
@@ -96,8 +98,14 @@ public class ApproveHistoryCreate extends HttpServlet {
 			}
 
 			if (flag.equals("0")) {
-				approve1Comment = approverComment;
-
+				switch (approverNumber) {
+				case "1":
+					approve1Comment = approverComment;
+					break;
+				case "2":
+					approve2Comment = approverComment;
+					break;
+				}
 				// SELECT文の作成・実行
 				stmtData1 = con.createStatement();
 				String sqlData1 = "SELECT * from data";
@@ -107,7 +115,14 @@ public class ApproveHistoryCreate extends HttpServlet {
 
 					if (resultData1.getString("number").equals(number.substring(0, 14)
 							+ String.format("%02d", Integer.parseInt(number.substring(14)) - 1))) {
-						approve2Comment = resultData1.getString("approverComment");
+						switch (approverNumber) {
+						case "1":
+							approve2Comment = resultData1.getString("approverComment");
+							break;
+						case "2":
+							approve1Comment = resultData1.getString("approverComment");
+							break;
+						}
 						break;
 					}
 				}
