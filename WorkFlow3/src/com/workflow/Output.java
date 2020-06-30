@@ -74,6 +74,7 @@ public class Output extends HttpServlet {
 		String flag = (String) session.getAttribute("flag");
 		//申請結果通知用変数
 		String notification = "";
+		String ver = "";
 
 		String type_1 = "01", type_2 = "02", type_3 = "03", type_4 = "04", type_5 = "05", type_6 = "06", type_7 = "07",
 				type_8 = "08", type_9 = "09", type_10 = "10", type_11 = "11", type_12 = "12", type_13 = "13",
@@ -113,7 +114,6 @@ public class Output extends HttpServlet {
 		// SQL文
 		String sql = "INSERT INTO data values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-		String ver = "";
 
 		try {
 			// PostgreSQLに接続
@@ -125,8 +125,8 @@ public class Output extends HttpServlet {
 			String sqlData = "SELECT * FROM data";
 			resultData = stmtData.executeQuery(sqlData);
 			while (resultData.next()) {
-				ver = resultData.getString("number");
-				if (approvednumber.contentEquals(ver)) {
+				ver = resultData.getString("date_1");
+				if (approvednumber.equals(ver)) {
 					notification = "既に申請されたデータです。";
 					break;
 				}
