@@ -126,6 +126,7 @@ public class Output extends HttpServlet {
 				String ver = resultData.getString("number");
 				if (approvednumber.contentEquals(ver)) {
 					notification = "既に申請されたデータです。";
+					response.sendRedirect("shinsei.jsp");
 					break;
 				}
 			}
