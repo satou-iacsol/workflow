@@ -9,7 +9,6 @@
 <link rel="icon" href="./imge/favicon.ico">
 <style>
 body {
-	background-image: url(./imge/p0496_l.png);
 	margin: 8px 0 0 0;
 }
 
