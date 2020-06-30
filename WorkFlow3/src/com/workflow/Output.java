@@ -113,6 +113,8 @@ public class Output extends HttpServlet {
 		// SQL文
 		String sql = "INSERT INTO data values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
+		String ver = "";
+
 		try {
 			// PostgreSQLに接続
 			con = DriverManager.getConnection(url, user, password);
@@ -123,10 +125,9 @@ public class Output extends HttpServlet {
 			String sqlData = "SELECT * FROM data";
 			resultData = stmtData.executeQuery(sqlData);
 			while (resultData.next()) {
-				String ver = resultData.getString("number");
+				ver = resultData.getString("number");
 				if (approvednumber.contentEquals(ver)) {
 					notification = "既に申請されたデータです。";
-					response.sendRedirect("shinsei.jsp");
 					break;
 				}
 			}
@@ -236,7 +237,10 @@ public class Output extends HttpServlet {
 		session.setAttribute("approvedNumber", approvednumber);
 		//申請結果通知用変数
 		session.setAttribute("notification", notification);
-
-		request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
+		if (approvednumber.contentEquals(ver)) {
+			response.sendRedirect("shinsei.jsp");
+		}else {
+			request.getServletContext().getRequestDispatcher("/SendSlack").forward(request, response);
+		}
 	}
 }
