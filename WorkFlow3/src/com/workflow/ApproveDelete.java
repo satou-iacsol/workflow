@@ -126,7 +126,7 @@ public class ApproveDelete extends HttpServlet {
 						e.printStackTrace();
 					}
 				}
-				if (session.getAttribute("approveedFinish").equals("差戻")) {
+				if (session.getAttribute("approvedFinish").equals("差戻")) {
 					response.sendRedirect("menu.jsp");
 				} else {
 					String approve1notification = "0";
