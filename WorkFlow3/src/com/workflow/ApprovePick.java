@@ -199,7 +199,7 @@ public class ApprovePick extends HttpServlet {
 				}
 
 				if (approverId.equals(id)
-						&& resultData.getString("delete_flag").equals("0")
+						&& resultData1.getString("delete_flag").equals("0")
 						&& resultData1.getString("status").equals("差戻")) {
 					ArrayList<String> listSub = new ArrayList<>();
 
@@ -272,7 +272,7 @@ public class ApprovePick extends HttpServlet {
 				}
 
 				if (approverId.equals(id)
-						&& resultData.getString("delete_flag").equals("0")
+						&& resultData2.getString("delete_flag").equals("0")
 						&& resultData2.getString("status").equals("承認")) {
 					ArrayList<String> listSub = new ArrayList<>();
 
