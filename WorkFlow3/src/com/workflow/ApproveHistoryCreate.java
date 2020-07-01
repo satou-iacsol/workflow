@@ -92,7 +92,7 @@ public class ApproveHistoryCreate extends HttpServlet {
 					approverNumber = resultData.getString("approverNumber");
 					fix_delete_comment = resultData.getString("fix_delete_comment");
 					approverComment = resultData.getString("approverComment");
-					session.setAttribute("approveedFinish", resultData.getString("approverComment"));
+					session.setAttribute("approvedFinish", resultData.getString("status"));
 					break;
 				}
 			}

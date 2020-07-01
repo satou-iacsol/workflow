@@ -117,13 +117,14 @@ public class ApproveDelete extends HttpServlet {
 							// 更新する申請番号
 							pstmtData.setString(3, number);
 						}
-					}
-					try {
-						pstmtData.executeUpdate();
-						con.commit();
-					} catch (Exception e) {
-						con.rollback();
-						e.printStackTrace();
+
+						try {
+							pstmtData.executeUpdate();
+							con.commit();
+						} catch (Exception e) {
+							con.rollback();
+							e.printStackTrace();
+						}
 					}
 				}
 				if (session.getAttribute("approvedFinish").equals("差戻")) {
