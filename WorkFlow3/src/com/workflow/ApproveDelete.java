@@ -72,7 +72,7 @@ public class ApproveDelete extends HttpServlet {
 				if (resultData.getString("number").equals(historyList.get(1))) {
 					status = resultData.getString("status");
 					// 選択時に空白で実行時に空白以外だと承認者が編集済
-					if (session.getAttribute("approveedFinish").equals("") && !status.equals("")) {
+					if (session.getAttribute("approvedFinish").equals("") && !status.equals("")) {
 						didntChenge = false;
 						break;
 					}
