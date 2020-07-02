@@ -164,7 +164,7 @@ img {
 				<td colspan="3"><%=session.getAttribute("approve2Name")%></td>
 			</tr>
 			<tr>
-				<td align="left" colspan="4">承認者１コメント: <%
+				<td align="left" colspan="4">承認者１コメント:<%
 					if (session.getAttribute("approvedStatus").equals("")) {
 				%><textarea name="comment" rows="1" cols="28" maxlength="50"></textarea>
 					<%
