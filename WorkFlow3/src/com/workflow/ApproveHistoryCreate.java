@@ -98,14 +98,6 @@ public class ApproveHistoryCreate extends HttpServlet {
 			}
 
 			if (flag.equals("0")) {
-				switch (approverNumber) {
-				case "1":
-					approve1Comment = approverComment;
-					break;
-				case "2":
-					approve2Comment = approverComment;
-					break;
-				}
 				// SELECT文の作成・実行
 				stmtData1 = con.createStatement();
 				String sqlData1 = "SELECT * from data";
@@ -126,6 +118,15 @@ public class ApproveHistoryCreate extends HttpServlet {
 						}
 						break;
 					}
+				}
+
+				switch (approverNumber) {
+				case "1":
+					approve1Comment = approverComment;
+					break;
+				case "2":
+					approve2Comment = approverComment;
+					break;
 				}
 			} else if (flag.equals("1")) {
 				approve1Comment = "承認者１をスキップしました。";
