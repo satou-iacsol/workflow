@@ -188,9 +188,16 @@ img {
 			%>
 		</table>
 		<!-- ループ終了後に実行ボタン表示 -->
+		<br>
 		<div align="center">
-			<br> <span style="margin-right: 200px"><input
-				type="submit" value=" 実行 " class="btn"></span>
+			<%
+				if (list.size() > 0) {
+			%>
+			<span style="margin-right: 200px"><input type="submit"
+				value=" 実行 " class="btn"></span>
+			<%
+				}
+			%>
 			<button type="button" onclick="history.back()">&nbsp;戻る&nbsp;</button>
 		</div>
 	</form>

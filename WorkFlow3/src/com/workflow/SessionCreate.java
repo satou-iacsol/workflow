@@ -52,9 +52,12 @@ public class SessionCreate extends HttpServlet {
 		String approvedReason = "";
 		String approvedAddress = "";
 		String approvedRemarks = "";
-		String approvedOverComment = "";
+		String approverNumber = "";
+		String preApproverNumber = "";
+		String approverComment = "";
+		String approve1Comment = "";
+		String approve2Comment = "";
 		String approvedStatus = "";
-		String preComment = "";
 		String approvedFixComment = "";
 
 		// データベース・テーブルに接続する準備
@@ -98,7 +101,8 @@ public class SessionCreate extends HttpServlet {
 					approvedReason = resultData.getString("comment");
 					approvedAddress = resultData.getString("tellnumber");
 					approvedRemarks = resultData.getString("bikou");
-					approvedOverComment = resultData.getString("approverComment");
+					approverNumber = resultData.getString("approverNumber");
+					approverComment = resultData.getString("approverComment");
 					approvedStatus = resultData.getString("status");
 					approvedFixComment = resultData.getString("fix_delete_comment");
 					break;
@@ -153,7 +157,8 @@ public class SessionCreate extends HttpServlet {
 			}
 
 			// 申請データの連番 -1 の連番を作成
-			String preNumber = number.substring(0, 14) + String.format("%02d",Integer.parseInt(number.substring(14)) - 1);
+			String preNumber = number.substring(0, 14)
+					+ String.format("%02d", Integer.parseInt(number.substring(14)) - 1);
 
 			stmtPreData = con.createStatement();
 			String sqlPreData = "SELECT * from data";
@@ -161,7 +166,15 @@ public class SessionCreate extends HttpServlet {
 
 			while (resultPreData.next()) {
 				if (resultPreData.getString("number").equals(preNumber)) {
-					preComment = resultPreData.getString("approverComment");
+					preApproverNumber = resultPreData.getString("approverNumber");
+					switch (preApproverNumber) {
+					case "1":
+						approve1Comment = resultPreData.getString("approverComment");
+						break;
+					case "2":
+						approve2Comment = resultPreData.getString("approverComment");
+						break;
+					}
 					break;
 				}
 			}
@@ -233,6 +246,15 @@ public class SessionCreate extends HttpServlet {
 		toTime.append(date_4.substring(0, 2) + "時");
 		toTime.append(date_4.substring(2, 4) + "分");
 
+		if (approverNumber.equals("1")) {
+			approve1Comment = approverComment;
+		} else if (approverNumber.equals("2")) {
+			approve2Comment = approverComment;
+		}
+
+		if (flag.equals("1")) {
+			approve1Comment = "承認者１はスキップされました。";
+		}
 
 		session.setAttribute("approvedNumber", request.getParameter("radio"));
 		session.setAttribute("approvedId", approvedId);
@@ -256,14 +278,10 @@ public class SessionCreate extends HttpServlet {
 		session.setAttribute("approvedAddress", approvedAddress);
 		session.setAttribute("approvedRemarks", approvedRemarks);
 		session.setAttribute("approvedSkip", flag);
-		session.setAttribute("approvedOverComment", approvedOverComment);
+		session.setAttribute("approve1Comment", approve1Comment);
+		session.setAttribute("approve2Comment", approve2Comment);
 		session.setAttribute("approvedStatus", approvedStatus);
 		session.setAttribute("approvedFixComment", approvedFixComment);
-		if (flag.equals("1")) {
-			session.setAttribute("preComment", "承認者１はスキップされました。");
-		} else {
-			session.setAttribute("preComment", preComment);
-		}
 
 		response.sendRedirect("approveAction.jsp");
 	}
