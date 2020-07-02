@@ -160,16 +160,12 @@ img {
 			<tr>
 				<td align="left" colspan="4">承認者１コメント:<%=session.getAttribute("approvedComment")%></td>
 			</tr>
-			<%
-				if (!((String) session.getAttribute("approvedNumber")).substring(14).equals("01")) {
-			%>
 			<tr>
 				<td align="left" colspan="4">承認者２コメント:<%=session.getAttribute("approve2Comment")%></td>
 			</tr>
 
 			<%
-				}
-			} else {
+				} else {
 			%>
 
 			<tr>
