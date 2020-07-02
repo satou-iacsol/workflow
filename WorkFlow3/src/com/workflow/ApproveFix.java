@@ -77,7 +77,7 @@ public class ApproveFix extends HttpServlet {
 						break;
 					}
 
-					if (resultData.getString("fix_delete_comment").equals("") || session.getAttribute("status").equals("差戻") || session.getAttribute("approver_switch").equals("1")) {
+					if (resultData.getString("fix_delete_comment").equals("") || resultData.getString("status").equals("差戻") || session.getAttribute("approver_switch").equals("1")) {
 
 						didntFix = true;
 
