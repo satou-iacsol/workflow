@@ -27,39 +27,44 @@ String uploadResult = (String) session.getAttribute("uploadResult");
 </head>
 <body>
 	<h1 class="h1">社員マスタメンテナンス</h1>
-					<%
-						if (uploadResult != null) {
-					%><div style="color:red;font-weight:bold;text-align:center;margin-top:10px;margin-bottom:0;"><%=uploadResult%></div>
-					<%
-						}
-					session.setAttribute("uploadResult", "");
-					%>
+	<%
+		if (uploadResult != null) {
+	%><div
+		style="color: red; font-weight: bold; text-align: center; margin-top: 10px; margin-bottom: 0;"><%=uploadResult%></div>
+	<%
+		}
+	session.setAttribute("uploadResult", "");
+	%>
 	<div class="content">
 		<div class="selectionE">
 			<div class="deter_select">
-			<form action="Employee_DB_Import" method="post" id="detClea">
-				社員選択：<select class="select" name="select" id="select">
-					<option value="">--- 更新・削除する場合は選択してください ---</option>
-					<%
-						for (int i = 0; i < lists.size(); i++) {
-					%>
-					<option value=<%=lists.get(i).get(0)%>><%=lists.get(i).get(3)%> (<%=lists.get(i).get(0) %>)</option>
-					<%
-						}
-					%>
-				</select>
-				<button type="submit" id="deterbtn" name="submitbtn" value="determination">決定</button>
-				<button type="submit" id="cleabtn" name="submitbtn" value="clea">クリア</button>
-			</form>
+				<form action="Employee_DB_Import" method="post" id="detClea">
+					社員選択：<select class="select" name="select" id="select">
+						<option value="">--- 更新・削除する場合は選択してください ---</option>
+						<%
+							for (int i = 0; i < lists.size(); i++) {
+						%>
+						<option value=<%=lists.get(i).get(0)%>><%=lists.get(i).get(3)%>
+							(<%=lists.get(i).get(0)%>)
+						</option>
+						<%
+							}
+						%>
+					</select>
+					<button type="submit" id="deterbtn" name="submitbtn"
+						value="determination">決定</button>
+					<button type="submit" id="cleabtn" name="submitbtn" value="clea">クリア</button>
+				</form>
 			</div>
 			<p class="warnning_note">※新規登録の場合は未選択のまま、下記項目へ入力してください</p>
 		</div>
-		<form action="Employee_DB_Import" method="post" id="Employee_DB_Import"
-			onsubmit="return check()">
+		<form action="Employee_DB_Import" method="post"
+			id="Employee_DB_Import" onsubmit="return check()">
 			<div class="item">
 				<div class="employee_number" id="employee_number">
 					<div class="type">社員番号：</div>
-					<input type="text" id="numberE" name="numberE" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]+/i,'')"
+					<input type="text" id="numberE" name="numberE" maxlength="4"
+						onKeyup="this.value=this.value.replace(/[^0-9]+/i,'')"
 						<%if (flag_M.equals("1")) {%> readonly <%}%>
 						<%if (id_M != null) {%> value=<%=id_M%> <%}%>>
 				</div>
@@ -76,14 +81,21 @@ String uploadResult = (String) session.getAttribute("uploadResult");
 				<div class="approval" id="approval">
 					<div class="type">承認権限 ：</div>
 					<select class="approval_select" name="approvalP">
-						<option value="0" <%if (authority_M != null && authority_M.equals("0")) {%> selected <%}%>>0(承認権限なし)</option>
-						<option value="1" <%if (authority_M != null && authority_M.equals("1")) {%> selected <%}%>>1(承認権限あり)</option>
-						<option value="2" <%if (authority_M != null && authority_M.equals("2")) {%> selected <%}%>>2(管理者権限)</option>
+						<option value="0"
+							<%if (authority_M != null && authority_M.equals("0")) {%>
+							selected <%}%>>0(承認権限なし)</option>
+						<option value="1"
+							<%if (authority_M != null && authority_M.equals("1")) {%>
+							selected <%}%>>1(承認権限あり)</option>
+						<option value="2"
+							<%if (authority_M != null && authority_M.equals("2")) {%>
+							selected <%}%>>2(管理者権限)</option>
 					</select>
 				</div>
 				<div class="affiliation" id="affiliation">
 					<div class="type">所属コード：</div>
-					<input type="text" id="affiliationC" name="affiliationC" onKeyup="this.value=this.value.replace(/[^0-9]+/i,'')"
+					<input type="text" id="affiliationC" name="affiliationC"
+						onKeyup="this.value=this.value.replace(/[^0-9]+/i,'')"
 						maxlength="4" <%if (affiliationcode_M != null) {%>
 						value=<%=affiliationcode_M%> <%}%>>
 				</div>
@@ -105,7 +117,7 @@ String uploadResult = (String) session.getAttribute("uploadResult");
 			<form action="UploadEmployeeCSV" method="post"
 				enctype="multipart/form-data">
 				<div class="button">
-					<input type="file" id="upFile" name="upCSV" />
+					<input type="file" accept=".csv" id="upFile" name="upCSV" />
 					<button id="csvbtn" type="submit">.csvアップロード</button>
 				</div>
 			</form>
@@ -113,7 +125,8 @@ String uploadResult = (String) session.getAttribute("uploadResult");
 		<div class="actionbtn">
 			<div class="button">
 				<button type="submit" id="newbtn" form="Employee_DB_Import"
-					name="submitbtn" value="new" <%if (flag_M.equals("1")) {%> disabled <%}%>>新規登録</button>
+					name="submitbtn" value="new" <%if (flag_M.equals("1")) {%> disabled
+					<%}%>>新規登録</button>
 				<button type="submit" id="updatebtn" form="Employee_DB_Import"
 					name="submitbtn" value="update">更新</button>
 				<button type="submit" id="deletebtn" form="Employee_DB_Import"
@@ -152,7 +165,8 @@ String uploadResult = (String) session.getAttribute("uploadResult");
 			let aff = document.getElementById("affiliationC").value;
 			let user = document.getElementById("userN").value;
 
-			if (num == "" || name == "" || pass == "" || aff == "" || user == "") {
+			if (num == "" || name == "" || pass == "" || aff == ""
+					|| user == "") {
 				if (num == "") {
 					document.getElementById("employee_number").style.color = "red";
 				} else {
@@ -187,21 +201,21 @@ String uploadResult = (String) session.getAttribute("uploadResult");
 		}
 
 		/*社員選択欄：未選択時のエラー処理*/
-		$(document).on('click','#deterbtn',function(){
+		$(document).on('click', '#deterbtn', function() {
 			let d = document.getElementById("detClea");
-			d.setAttribute("onsubmit","return selectCheck()");
+			d.setAttribute("onsubmit", "return selectCheck()");
 		});
-		$(document).on('click','#cleabtn',function(){
+		$(document).on('click', '#cleabtn', function() {
 			let d = document.getElementById("detClea");
 			d.removeAttribute("onsubmit");
 		});
 
-		function selectCheck(){
+		function selectCheck() {
 			let select = document.getElementById('select').value;
-				if(select == ""){
-					return false;
-				}
-				return true;
+			if (select == "") {
+				return false;
+			}
+			return true;
 		}
 	</script>
 </body>

@@ -68,7 +68,7 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 			</form>
 			<form action="UploadBelongsCSV" method="post" enctype="multipart/form-data">
 				<div class="button">
-					<input type="file" id="upFile" name="upCSV" /><button id="csvbtn"type="submit">.csvアップロード</button>
+					<input type="file" accept=".csv" id="upFile" name="upCSV" /><button id="csvbtn"type="submit">.csvアップロード</button>
 				</div>
 			</form>
 		</div>
