@@ -66,8 +66,8 @@ img {
 </head>
 <body>
 	<header>
-		<img src="./imge/apple-touch-icon-120x120.png"
-			alt="IACロゴ" title="IACロゴ" width="100px" height="25px">
+		<img src="./imge/apple-touch-icon-120x120.png" alt="IACロゴ"
+			title="IACロゴ" width="100px" height="25px">
 		<form name="login_logout" action="login.jsp" method="post"
 			onsubmit="return logout()">
 			<div align="right">
@@ -135,12 +135,16 @@ img {
 				<td align="left">備考:</td>
 				<td colspan="3"><%=session.getAttribute("approvedRemarks")%></td>
 			</tr>
-			<%if (!session.getAttribute("approvedFixComment").equals("")) {%>
+			<%
+				if (!session.getAttribute("approvedFixComment").equals("")) {
+			%>
 			<tr>
 				<td align="left">修正コメント:</td>
 				<td colspan="3"><%=session.getAttribute("approvedFixComment")%></td>
 			</tr>
-			<%} %>
+			<%
+				}
+			%>
 			<tr>
 				<td><br></td>
 			</tr>
@@ -156,20 +160,16 @@ img {
 			<tr>
 				<td align="left" colspan="4">承認者１コメント:<%=session.getAttribute("approvedComment")%></td>
 			</tr>
-			<%
-				if (!((String) session.getAttribute("approvedNumber")).substring(14).equals("01")) {
-			%>
 			<tr>
-				<td align="left" colspan="4">承認者２コメント:<%=session.getAttribute("preComment")%></td>
+				<td align="left" colspan="4">承認者２コメント:<%=session.getAttribute("approve2Comment")%></td>
 			</tr>
 
 			<%
-				}
-			} else {
+				} else {
 			%>
 
 			<tr>
-				<td align="left" colspan="4">承認者１コメント:<%=session.getAttribute("preComment")%></td>
+				<td align="left" colspan="4">承認者１コメント:<%=session.getAttribute("approve1Comment")%></td>
 			</tr>
 			<tr>
 				<td align="left" colspan="4">承認者２コメント:<%=session.getAttribute("approvedComment")%></td>

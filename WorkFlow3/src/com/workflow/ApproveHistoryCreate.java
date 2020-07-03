@@ -98,14 +98,6 @@ public class ApproveHistoryCreate extends HttpServlet {
 			}
 
 			if (flag.equals("0")) {
-				switch (approverNumber) {
-				case "1":
-					approve1Comment = approverComment;
-					break;
-				case "2":
-					approve2Comment = approverComment;
-					break;
-				}
 				// SELECT文の作成・実行
 				stmtData1 = con.createStatement();
 				String sqlData1 = "SELECT * from data";
@@ -115,16 +107,26 @@ public class ApproveHistoryCreate extends HttpServlet {
 
 					if (resultData1.getString("number").equals(number.substring(0, 14)
 							+ String.format("%02d", Integer.parseInt(number.substring(14)) - 1))) {
-						switch (approverNumber) {
+
+						switch (resultData1.getString("approverNumber")) {
 						case "1":
-							approve2Comment = resultData1.getString("approverComment");
+							approve1Comment = resultData1.getString("approverComment");
 							break;
 						case "2":
-							approve1Comment = resultData1.getString("approverComment");
+							approve2Comment = resultData1.getString("approverComment");
 							break;
 						}
 						break;
 					}
+				}
+
+				switch (approverNumber) {
+				case "1":
+					approve1Comment = approverComment;
+					break;
+				case "2":
+					approve2Comment = approverComment;
+					break;
 				}
 			} else if (flag.equals("1")) {
 				approve1Comment = "承認者１をスキップしました。";
