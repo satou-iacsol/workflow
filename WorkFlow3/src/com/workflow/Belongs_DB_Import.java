@@ -58,6 +58,8 @@ public class Belongs_DB_Import extends HttpServlet {
 		String app2 = request.getParameter("app2");
 		String sel = request.getParameter("select");
 		ArrayList<String> bel = new ArrayList<>();
+		//通知用
+		String uploadResult_Belongs = "";
 		//データベース・テーブルに接続する準備
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -77,14 +79,14 @@ public class Belongs_DB_Import extends HttpServlet {
 			//PostgreSQLに接続
 			con = DriverManager.getConnection(url, user, password);
 			con.setAutoCommit(false);
+			//SELECT文の実行
+			stmtBelongs = con.createStatement();
+			String sqlBelongs = "SELECT * from belongs";
+			resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
 			//★決定ボタン押下時の処理★
 			if (submitbtn.equals("determination")) {
-				//SELECT文の実行
-				stmtBelongs = con.createStatement();
-				String sqlBelongs = "SELECT * from belongs";
-				resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
 				while (resultBelongs.next()) {
-					String ver = resultBelongs.getString("affiliationname");
+					String ver = resultBelongs.getString("affiliationcode");
 					if (ver.equals(select)) {
 						bel.add(resultBelongs.getString("affiliationname"));
 						bel.add(resultBelongs.getString("affiliationcode"));
@@ -96,41 +98,72 @@ public class Belongs_DB_Import extends HttpServlet {
 				flag_M = "1";
 			}
 			//★クリアボタン押下時の処理★
-			if(submitbtn.contentEquals("clea")) {
+			if (submitbtn.contentEquals("clea")) {
 				flag_M = "0";
 			}
 			//★新規登録ボタン押下時の処理★
 			if (submitbtn.equals("new")) {
-				//SQL文
-				String sql = "INSERT INTO belongs values(?,?,?,?)";
-				//実行するSQL文とパラメータを指定する
-				ps = con.prepareStatement(sql);
-				ps.setString(1, belongsC);
-				ps.setString(2, belongsN);
-				ps.setString(3, app1);
-				ps.setString(4, app2);
-				//INSERT文を実行
-				ps.executeUpdate();
-				//コミット
-				con.commit();
+				//部署コードの重複チェック
+				resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
+				while (resultBelongs.next()) {
+					String ver = resultBelongs.getString("affiliationcode");
+					if (belongsC.equals(ver)) {
+						uploadResult_Belongs = "部署コードが重複しています。";
+						break;
+					}
+				}
+				//部署コードが重複していなければ以下の処理を実行
+				if (uploadResult_Belongs == "") {
+					//SQL文
+					String sql = "INSERT INTO belongs values(?,?,?,?)";
+					//実行するSQL文とパラメータを指定する
+					ps = con.prepareStatement(sql);
+					ps.setString(1, belongsC);
+					ps.setString(2, belongsN);
+					ps.setString(3, app1);
+					ps.setString(4, app2);
+					//INSERT文を実行
+					ps.executeUpdate();
+					//コミット
+					con.commit();
+
+					uploadResult_Belongs = "登録が完了しました。";
+				}
 			}
 			//★更新ボタン押下時の処理★
 			if (submitbtn.equals("update")) {
-				//SQL文
-				String sql = "UPDATE belongs SET affiliationname=?, approvernumber_1=?, approvernumber_2=? WHERE affiliationcode=?";
-				ps = con.prepareStatement(sql);
-				ps.setString(1, belongsN);
-				ps.setString(2, app1);
-				ps.setString(3, app2);
-				ps.setString(4, belongsC);
-				//UPDATE文を実行
-				ps.executeUpdate();
-				//コミット
-				con.commit();
+				//存在する部署コードかチェックする
+				resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
+				while (resultBelongs.next()) {
+					String ver = resultBelongs.getString("affiliationcode");
+					if (belongsC.equals(ver)) {
+						//SQL文
+						String sql = "UPDATE belongs SET affiliationname=?, approvernumber_1=?, approvernumber_2=? WHERE affiliationcode=?";
+						ps = con.prepareStatement(sql);
+						ps.setString(1, belongsN);
+						ps.setString(2, app1);
+						ps.setString(3, app2);
+						ps.setString(4, belongsC);
+						//UPDATE文を実行
+						ps.executeUpdate();
+						//コミット
+						con.commit();
 
+						uploadResult_Belongs = "更新が完了しました。";
+						break;
+					}
+				}
+				if (uploadResult_Belongs == "") {
+					uploadResult_Belongs = "部署コードが存在しません。";
+				}
 			}
 			//★削除ボタン押下時の処理★
 			if (submitbtn.equals("delete")) {
+				//存在する部署コードかチェックする
+				resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
+				while (resultBelongs.next()) {
+					String ver = resultBelongs.getString("affiliationcode");
+					if (belongsC.equals(ver)) {
 				//SQL文
 				String sql = "DELETE FROM belongs WHERE affiliationcode = ?";
 				ps = con.prepareStatement(sql);
@@ -139,12 +172,17 @@ public class Belongs_DB_Import extends HttpServlet {
 				ps.executeUpdate();
 				//コミット
 				con.commit();
+				uploadResult_Belongs = "削除が完了しました。";
+				break;
+			}
+		}
+		if (uploadResult_Belongs == "") {
+			uploadResult_Belongs = "部署コードが存在しません。";
+		}
 			}
 
 			//名前一覧出力用
-			stmtBelongs = con.createStatement();
-			String sqlEmployee = "SELECT * from belongs";
-			resultBelongs = stmtBelongs.executeQuery(sqlEmployee);
+			resultBelongs = stmtBelongs.executeQuery(sqlBelongs);
 			while (resultBelongs.next()) {
 				ArrayList<String> list = new ArrayList<>();
 				list.add(resultBelongs.getString("affiliationcode"));
@@ -168,7 +206,7 @@ public class Belongs_DB_Import extends HttpServlet {
 					stmtBelongs.close();
 				}
 				if (resultBelongs != null) {
-					resultBelongs .close();
+					resultBelongs.close();
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -181,13 +219,14 @@ public class Belongs_DB_Import extends HttpServlet {
 			session.setAttribute("app2", bel.get(3));
 			session.setAttribute("flag_M", flag_M);
 		}
-		if(submitbtn.equals("clea")) {
+		if (submitbtn.equals("clea")) {
 			session.setAttribute("belongsN", "");
 			session.setAttribute("belongsC", "");
 			session.setAttribute("app1", "");
 			session.setAttribute("app2", "");
 			session.setAttribute("flag_M", flag_M);
 		}
+		session.setAttribute("uploadResult_Belongs", uploadResult_Belongs);
 		session.setAttribute("belongs_lists", belongs_lists);
 		session.setAttribute("sel", sel);
 		response.sendRedirect("musterApp.jsp");

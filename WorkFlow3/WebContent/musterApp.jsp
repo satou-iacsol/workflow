@@ -13,7 +13,7 @@ String belongsC = (String)session.getAttribute("belongsC");
 String app1 = (String)session.getAttribute("app1");
 String app2 = (String)session.getAttribute("app2");
 String flag_M = (String)session.getAttribute("flag_M");
-String uploadResult = (String)session.getAttribute("uploadResult");
+String uploadResult_Belongs = (String)session.getAttribute("uploadResult_Belongs");
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -25,13 +25,21 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 </head>
 <body>
 	<h1 class="h1">部署マスタメンテナンス</h1>
+		<%
+		if (uploadResult_Belongs != null) {
+	%><div
+		style="color: red; font-weight: bold; text-align: center; margin-top: 10px; margin-bottom: 0;"><%=uploadResult_Belongs%></div>
+	<%
+		}
+	session.setAttribute("uploadResult_Belongs", "");
+	%>
 	<div class="content">
 		<div class="selectionE">
 			<form action="<%=request.getContextPath()%>/Belongs_DB_Import" method="post" id="detClea">
 				部署選択：<select class="select" name="select" id="select">
 				<option value="">--- 更新・削除する場合は選択してください ---</option>
 				<% for(int i = 0;i < belongs_lists.size();i++){ %>
-					<option value=<%=belongs_lists.get(i).get(1)%>><%=belongs_lists.get(i).get(1) %></option>
+					<option value=<%=belongs_lists.get(i).get(0)%>><%=belongs_lists.get(i).get(1) %></option>
 				<%} %>
 			</select>
 			<button type="submit" id="deterbtn" name="submitbtn" value="determination">決定</button>
@@ -57,7 +65,6 @@ String uploadResult = (String)session.getAttribute("uploadResult");
 					<div class="type">承認者2(社員番号)：</div><input type="text" id="app2" name="app2" maxlength="4"
 					<%if(app2 != null){ %>value=<%=app2 %><%} %>>
 				</div>
-					<%if(uploadResult != null){ %><%=uploadResult%><%} %>
 		</form>
 			</div>
 		<div class="csv">
